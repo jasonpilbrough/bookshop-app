@@ -167,11 +167,14 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
         layout.row().group(usersGroup).grid(new JLabel("Default password:")).add(password).empty();
         
         RowGroup fileGroup = new RowGroup();
-        addGroup(layout, "Default file paths", fileGroup);
-        layout.row().group(fileGroup).grid(new JLabel("App logs:")).add(appLogs);
-        layout.row().group(fileGroup).grid(new JLabel("Bug reports:")).add(bugReports);
+        addGroup(layout, "User files", fileGroup);
         layout.row().group(fileGroup).grid(new JLabel("Cash ups:")).add(cashUps);
         layout.row().group(fileGroup).grid(new JLabel("Sales reports:")).add(salesReport);
+        
+        RowGroup devGroup = new RowGroup();
+        addGroup(layout, "Dev files", devGroup);
+        layout.row().group(devGroup).grid(new JLabel("App logs:")).add(appLogs);
+        layout.row().group(devGroup).grid(new JLabel("Bug reports:")).add(bugReports);
         
         JPanel parent2 = new JPanel();
         DesignGridLayout layout2 = new DesignGridLayout(parent2);
