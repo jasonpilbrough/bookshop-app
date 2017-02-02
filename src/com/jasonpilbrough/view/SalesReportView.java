@@ -232,9 +232,10 @@ public class SalesReportView extends JFrame implements Drawable {
 		}
 		
 	}
-	
+	//not opperational
 	private void formatJLabels(JLabel[] labels){
-		int maxLength = 0;
+		return;
+		/*int maxLength = 0;
 		for (JLabel label : labels){ 
 			
 			if(label.getText().length()>maxLength){
@@ -248,7 +249,7 @@ public class SalesReportView extends JFrame implements Drawable {
 			for (int i = 0; i < maxLength - len; i++) {
 				label.setText("_"+label.getText());
 			}
-		}
+		}*/
 		
 	}
 	
