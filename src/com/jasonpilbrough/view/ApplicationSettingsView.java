@@ -34,54 +34,47 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
 	private SmartJSpinner floatAmount;
 	private SmartJTextField password, appLogs, bugReports, cashUps, salesReport;
 	private SmartJButton confirm, cancel;
+	private boolean devAccess = false;
 	
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch(evt.getPropertyName()){
+		case "dev_access":
+			devAccess = (boolean)evt.getNewValue();
+			break;
 		case "loan_duration":
 			loanDuration.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "loan_extension":
 			loanExtension.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "membership_duration":
 			membershipDuration.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "loan_cap":
 			loanCap.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "membership_fee":
 			membershipFee.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "fine":
 			fine.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "float":
 			floatAmount.setValue(Integer.parseInt(evt.getNewValue().toString()));
-			draw();
 			break;
 		case "password":
 			password.setText(evt.getNewValue().toString());
-			draw();
 			break;
 		case "app_logs_path":
 			appLogs.setText(evt.getNewValue().toString());
-			draw();
 			break;
 		case "bug_reports_path":
 			bugReports.setText(evt.getNewValue().toString());
-			draw();
 			break;
 		case "cash_ups_path":
 			cashUps.setText(evt.getNewValue().toString());
-			draw();
 			break;
 		case "sales_reports_path":
 			salesReport.setText(evt.getNewValue().toString());
@@ -171,10 +164,13 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
         layout.row().group(fileGroup).grid(new JLabel("Cash ups:")).add(cashUps);
         layout.row().group(fileGroup).grid(new JLabel("Sales reports:")).add(salesReport);
         
-        RowGroup devGroup = new RowGroup();
-        addGroup(layout, "Dev files", devGroup);
-        layout.row().group(devGroup).grid(new JLabel("App logs:")).add(appLogs);
-        layout.row().group(devGroup).grid(new JLabel("Bug reports:")).add(bugReports);
+        if(devAccess){
+        	RowGroup devGroup = new RowGroup();
+            addGroup(layout, "Dev files", devGroup);
+            layout.row().group(devGroup).grid(new JLabel("App logs:")).add(appLogs);
+            layout.row().group(devGroup).grid(new JLabel("Bug reports:")).add(bugReports);
+        }
+        
         
         JPanel parent2 = new JPanel();
         DesignGridLayout layout2 = new DesignGridLayout(parent2);

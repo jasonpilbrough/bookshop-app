@@ -171,7 +171,7 @@ public class ViewHandler {
 					new AboutView());
 			break;
 		case "ApplicationSettingsView":
-			ApplicationSettingsController asc= new ApplicationSettingsController(this,new ApplicationSettingsModel(db), 
+			ApplicationSettingsController asc= new ApplicationSettingsController(this,new ApplicationSettingsModel(db,am), 
 					new ApplicationSettingsView());
 			break;
 		case "UserSettingsView":

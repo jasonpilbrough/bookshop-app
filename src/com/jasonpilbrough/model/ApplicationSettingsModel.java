@@ -2,21 +2,21 @@ package com.jasonpilbrough.model;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
 
+import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.Database;
 
 public class ApplicationSettingsModel {
 	
 	private Database db;
+	private AccessManager am;
 	private PropertyChangeSupport changefirer;
 	
 	
-	public ApplicationSettingsModel(Database db) {
+	public ApplicationSettingsModel(Database db, AccessManager am) {
 		super();
 		this.db = db;
+		this.am = am;
 		changefirer = new PropertyChangeSupport(this);
 		
 	}
@@ -26,6 +26,7 @@ public class ApplicationSettingsModel {
 	}
 	
 	public void setAllValues() {
+		changefirer.firePropertyChange("dev_access", "", am.allowedAccess("ACDS"));
 		changefirer.firePropertyChange("loan_duration", "", getSettingVal("loan_duration"));	
 		changefirer.firePropertyChange("loan_extension", "", getSettingVal("loan_extension"));	
 		changefirer.firePropertyChange("membership_duration", "", getSettingVal("membership_duration"));	
