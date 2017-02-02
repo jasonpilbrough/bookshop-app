@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import com.jasonpilbrough.helper.Database;
+import com.jasonpilbrough.helper.SmartFile;
 
 public class AboutModel {
 	private Database db;
@@ -35,16 +36,10 @@ public class AboutModel {
 		String filepath = db.sql("SELECT value FROM settings WHERE name = 'resources_path' LIMIT 1")
 				.retrieve().get("value").toString();
 		
-		String ans = "";
+		
 		String filename = filepath+"about.txt";
-		try {
-			Scanner sc = new Scanner(new File(filename));
-			while(sc.hasNext()){
-				ans += sc.nextLine()+"\n";
-			}
-		} catch (FileNotFoundException e) {
-			throw new FileNotFoundException("File '"+filename+"' not found");
-		}
+		SmartFile file = new SmartFile(filename);
+		String ans = file.read();
 
 		changefirer.firePropertyChange("title", "", ans.split("\n\n")[0].replaceAll("\n", "---"));	
 		changefirer.firePropertyChange("version", "", ans.split("\n\n")[1].replaceAll("\n", "---"));	

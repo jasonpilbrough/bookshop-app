@@ -1,7 +1,10 @@
 package com.jasonpilbrough.helper;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class SmartFile {
 	
@@ -12,8 +15,16 @@ public class SmartFile {
 		this.filePath = filePath;
 	}
 	
-	public String read(){
-		return "";
+	public String read() throws FileNotFoundException{
+		String ans = "";
+		try(Scanner sc = new Scanner(new File(filePath))) {
+			while(sc.hasNext()){
+				ans += sc.nextLine()+"\n";
+			}
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException("File '"+filePath+"' not found");
+		} 
+		return ans;
 	}
 
 	
