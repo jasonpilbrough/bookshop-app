@@ -8,15 +8,22 @@ import java.util.Scanner;
 
 public class SettingsFile {
 
-	private static final String settingsFilePath = "res/settings.txt";
+	private final String settingsFilePath;
 	
+	public SettingsFile(String settingsFilePath) {
+		super();
+		this.settingsFilePath = settingsFilePath;
+	}
+
 	public Map<String,String> getSettings() throws FileNotFoundException{
 		Map<String,String> map = new HashMap<>();
 		try(Scanner sc = new Scanner(new File(settingsFilePath))) {
 			while(sc.hasNext()){
 				String line = sc.nextLine();
-				if(line.substring(0, 1).equals("#")){
-					map.put(line.split(":")[0], line.split(":")[1]);
+				if(line.length()==0){
+					
+				}else if(line.substring(0, 1).equals("#")){
+					map.put(line.substring(1).split("--")[0], line.split("--")[1]);
 				}
 			}
 		} catch (FileNotFoundException e) {
