@@ -7,6 +7,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -38,10 +39,9 @@ public class Logger {
 						}
 					} catch (IOException e1) {
 						e1.printStackTrace();
-						throw new FileException(e1);
-					} catch (NullPointerException e1){
-						e1.printStackTrace();
-					}
+						//TODO dont like
+						JOptionPane.showMessageDialog(null, "Error writing to app logs: "+e1.toString());
+					} 
 					
 					e.printStackTrace();
 					
@@ -73,30 +73,25 @@ public class Logger {
 		}else{
 			user = am.formatUsername(am.getLoggedInUser());
 		}
+		SmartFile file = new SmartFile("dev/app_logs/"+fmt1.print(new DateTime())+"-log.txt");
+		String text = "";
+	
+		text +="\nLOG ENTRY";
+		text +="\n-----------------------------------------------------------------------\n";
+		text +=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
+		text +=String.format("\n%-20s %s","USER",user);
+		text +="\n\n-----------------------------------------------------------------------\n\n";
+		text +="STACK TRACE\n\n";
+		text +=format(t.toString()+"\n");
+		for (int i = 0; i < t.getStackTrace().length; i++) {
+			text +=format(t.getStackTrace()[i]+"\n");
+		}
 		
-    	try(FileWriter fw = new FileWriter(new File("dev/"+fmt1.print(new DateTime()))+"-log.txt",true)) {
-    		fw.write("\nLOG ENTRY");
-    		fw.write("\n-----------------------------------------------------------------------");
-    		fw.write("\n");
-    		fw.write(String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime())));
-    		fw.write(String.format("\n%-20s %s","USER",user));
-    		fw.write("\n");
-    		fw.write("\n-----------------------------------------------------------------------\n");
-    		fw.write("\n");
-    		fw.write("STACK TRACE");
-    		fw.write("\n");
-    		fw.write("\n");
-    		fw.write(format(t.toString()+"\n"));
-    		for (int i = 0; i < t.getStackTrace().length; i++) {
-    			fw.write(format(t.getStackTrace()[i]+"\n"));
-			}
-    		
-    		fw.write("\n");
-    		fw.write("\n=======================================================================\n");
-    		
+		text +="\n\n=======================================================================\n";
+		file.write(text);
 	       
 	    	
-	    }
+	    
 	}
 	
 	

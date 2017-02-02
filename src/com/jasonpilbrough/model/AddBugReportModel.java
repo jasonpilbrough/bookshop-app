@@ -17,6 +17,7 @@ import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
 import com.jasonpilbrough.helper.FailedValidationException;
+import com.jasonpilbrough.helper.SmartFile;
 
 public class AddBugReportModel {
 
@@ -57,26 +58,22 @@ public class AddBugReportModel {
 	    int retrival = chooser.showSaveDialog(null);
 	    
 	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	try(FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt")) {
-	    		fw.write("\nBUG REPORT");
-	    		fw.write("\n-----------------------------------------------------------");
-	    		fw.write("\n");
-	    		fw.write(String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime())));
-	    		fw.write(String.format("\n%-20s %s","REPORTED BY",user));
-	    		fw.write(String.format("\n%-20s %s","STATUS","001"));
-	    		fw.write("\n");
-	    		fw.write("\n-----------------------------------------------------------\n");
-	    		fw.write("\n");
-	    		fw.write("MESSAGE");
-	    		fw.write("\n");
-	    		fw.write("\n");
-	    		fw.write(formatString(message));
-	    		//fw.write(String.format("\n%-20s %s","EXPLANATION ",formatString(explaination)));
-	    		fw.write("\n");
-	    		fw.write("\n-----------------------------------------------------------");
-	    		changefirer.firePropertyChange("close", null, null);
-	    		return true;
-	    	}
+	    	SmartFile file = new SmartFile(chooser.getSelectedFile()+".txt");
+	    	String text = "";
+	    	
+    		text+="\nBUG REPORT";
+    		text+="\n-----------------------------------------------------------\n";
+    		text+=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
+    		text+=String.format("\n%-20s %s","REPORTED BY",user);
+    		text+=String.format("\n%-20s %s","STATUS","001");
+    		text+="\n\n-----------------------------------------------------------\n\n";
+    		text+="MESSAGE\n\n";
+    		text+=formatString(message);
+    		text+="\n\n-----------------------------------------------------------";
+    		file.write(text);
+    		changefirer.firePropertyChange("close", null, null);
+    		return true;
+	    	
 	       
 	    }
 		

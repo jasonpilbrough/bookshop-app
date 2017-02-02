@@ -16,6 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.SmartFile;
 import com.jasonpilbrough.tablemodel.CachedTableModel;
 import com.jasonpilbrough.tablemodel.NonEditableTableModel;
 import com.jasonpilbrough.tablemodel.SalesReportTableModel;
@@ -79,6 +80,7 @@ public class SalesReportModel {
 	}
 	
 	public boolean save(String date1, String date2) throws IOException{
+	
 
 		String filepath = db.sql("SELECT value FROM settings WHERE name = 'sales_reports_path' LIMIT 1")
 				.retrieve().get("value").toString();
@@ -91,37 +93,40 @@ public class SalesReportModel {
 	    chooser.setSelectedFile(new File("salesreport__"+fmt1.print(new DateTime())));
 	    int retrival = chooser.showSaveDialog(null);
 	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	try(FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt")) {
-	    		fw.write("\nSALES REPORT\n");
-	    		fw.write(String.format("%-20s %s -> %s", "DATE" ,fmt2.print(new DateTime(date1)),fmt2.print(new DateTime(date2))));
-	    		fw.write("\n===============================================================\n\n");
-
-	    		fw.write("TRANSACTIONS");
-	    		fw.write("\n===============================================================\n\n");
+	    	SmartFile file = new SmartFile(chooser.getSelectedFile()+".txt");
+	    	String text = "";
 	    	
-	    		String[] columnName = new String[]{"TITLE", "QTY","TOTAL"};
-	    		fw.write(String.format("%-40s %-5s %-15s", columnName[0], columnName[1], columnName[2]));
-	    		fw.write("\n---------------------------------------------------------------");
-	    		
-	    		for (int i = 0; i < tableModel.getRowCount(); i++) {
-	    			fw.write(String.format("\n%-40s %-5s R %-15s", trim(tableModel.getValueAt(i, 0).toString()), 
-	    					tableModel.getValueAt(i, 1) , tableModel.getValueAt(i, 2)));
-				}
-	    		
-	    		fw.write("\n\n\nCASHFLOW");
-	    		fw.write("\n===============================================================\n");
-	    		fw.write(String.format("\n%-20s R %-10s %-20s R %s", "CASH PAYMENTS" ,getCashPayments(date1, date2), "COST OF SALES" ,getCostOfSales(date1, date2)));
-	    		fw.write(String.format("\n%-20s R %-10s %-20s R %s", "CARD PAYMENTS" ,getCardPayments(date1, date2), "REFUNDS" ,getRefunds(date1, date2)));
-	    		fw.write(String.format("\n%-20s R %-10s %-20s R %s", "EFT PAYMENTS" ,getEftPayments(date1, date2), "PURCHASES " ,getPurchases(date1, date2)));
-	    		fw.write("\n-----------------------------     -----------------------------");
-	    		fw.write(String.format("\n%-20s R %-10s %-20s R %s", "TOTAL INCOME" ,getTotalIncome(date1, date2), "TOTAL EXPENSES" ,getTotalExpense(date1, date2)));
-	    		
-	    		fw.write("\n\n------------------------------\n");
-	    		fw.write(String.format("%-20s R %s", "PROFIT" ,getProfit(date1, date2)));
-	    		fw.write("\n------------------------------\n");
-	    		changefirer.firePropertyChange("close", null, null);
-	    		return true;
-	    	}
+    		text+="\nSALES REPORT\n";
+    		text+=String.format("%-20s %s -> %s", "DATE" ,fmt2.print(new DateTime(date1)),fmt2.print(new DateTime(date2)));
+    		text+="\n===============================================================\n\n";
+    		text+="TRANSACTIONS";
+    		text+="\n===============================================================\n\n";
+   
+    		String[] columnName = new String[]{"TITLE", "QTY","TOTAL"};
+    		text+=String.format("%-40s %-5s %-15s", columnName[0], columnName[1], columnName[2]);
+    		text+="\n---------------------------------------------------------------";
+    		
+    		for (int i = 0; i < tableModel.getRowCount(); i++) {
+    			text+=String.format("\n%-40s %-5s R %-15s", trim(tableModel.getValueAt(i, 0).toString()), 
+    					tableModel.getValueAt(i, 1) , tableModel.getValueAt(i, 2));
+			}
+    		
+    		text+="\n\n\nCASHFLOW";
+    		text+="\n===============================================================\n";
+    		text+=String.format("\n%-20s R %-10s %-20s R %s", "CASH PAYMENTS" ,getCashPayments(date1, date2), "COST OF SALES" ,getCostOfSales(date1, date2));
+    		text+=String.format("\n%-20s R %-10s %-20s R %s", "CARD PAYMENTS" ,getCardPayments(date1, date2), "REFUNDS" ,getRefunds(date1, date2));
+    		text+=String.format("\n%-20s R %-10s %-20s R %s", "EFT PAYMENTS" ,getEftPayments(date1, date2), "PURCHASES " ,getPurchases(date1, date2));
+    		text+="\n-----------------------------     -----------------------------";
+    		text+=String.format("\n%-20s R %-10s %-20s R %s", "TOTAL INCOME" ,getTotalIncome(date1, date2), "TOTAL EXPENSES" ,getTotalExpense(date1, date2));
+    		
+    		text+="\n\n------------------------------\n";
+    		text+=String.format("%-20s R %s", "PROFIT" ,getProfit(date1, date2));
+    		text+="\n------------------------------\n";
+    		
+    		file.write(text);
+    		changefirer.firePropertyChange("close", null, null);
+    		return true;
+	    	
 	       
 	    }
 	    return false;

@@ -16,6 +16,7 @@ import org.joda.time.format.DateTimeFormatter;
 import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.SmartFile;
 
 public class CashUpModel {
 
@@ -60,29 +61,27 @@ public class CashUpModel {
 	    chooser.setSelectedFile(new File("cashup__"+fmt1.print(new DateTime())));
 	    int retrival = chooser.showSaveDialog(null);
 	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	try(FileWriter fw = new FileWriter(chooser.getSelectedFile()+".txt")) {
-	    		fw.write("\nCASH UP REPORT");
-	    		fw.write("\n-----------------------------------------------------------");
-	    		fw.write("\n");
-	    		fw.write(String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime())));
-	    		fw.write(String.format("\n%-20s %s","PERFORMED BY",user));
-	    		fw.write("\n");
-	    		fw.write("\n-----------------------------------------------------------");
-	    		fw.write("\n");
-	    		fw.write(String.format("\n%-20s %s","CASH IN BOX" ,"R "+cashInBox));
-	    		fw.write(String.format("\n%-20s %s","FLOAT", "R "+getFloat()));
-	    		fw.write(String.format("\n%-20s %s","CASH SALES ",cashStr));
-	    		fw.write(String.format("\n%-20s %s","RECORDED SALES","R "+getRecordedCashSales()));
-	    		fw.write(String.format("\n%-20s %s","VARIENCE", varStr));
-	    		fw.write("\n");
-	    		fw.write(String.format("\n%-20s %s","EXPLANATION ",formatString(explaination)));
-	    		fw.write("\n");
-	    		fw.write("\n-----------------------------------------------------------");
-	    		
-	    		changefirer.firePropertyChange("close", null, null);
-	    		
-	    		return true;
-	    	}
+	    	SmartFile file = new SmartFile(chooser.getSelectedFile()+".txt");
+	    	String text = "";
+	    	
+    		text+="\nCASH UP REPORT";
+    		text+="\n-----------------------------------------------------------\n";
+    		text+=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
+    		text+=String.format("\n%-20s %s","PERFORMED BY",user);
+    		text+="\n\n-----------------------------------------------------------\n";
+    		text+=String.format("\n%-20s %s","CASH IN BOX" ,"R "+cashInBox);
+    		text+=String.format("\n%-20s %s","FLOAT", "R "+getFloat());
+    		text+=String.format("\n%-20s %s","CASH SALES ",cashStr);
+    		text+=String.format("\n%-20s %s","RECORDED SALES","R "+getRecordedCashSales());
+    		text+=String.format("\n%-20s %s","VARIENCE", varStr);
+    		text+=String.format("\n\n%-20s %s","EXPLANATION ",formatString(explaination));
+    		text+="\n\n-----------------------------------------------------------";
+    		
+    		file.write(text);
+    		changefirer.firePropertyChange("close", null, null);
+    		
+    		return true;
+	    	
 	       
 	    }
 	    return false;
