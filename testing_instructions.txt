@@ -1,0 +1,56 @@
+TESTING
+
+Launch application
+
+Log in with username bill and password 1234 
+
+Steve Wheeler wishes to loan the book Finding joy, process the loan. 
+	BARCODE  2000
+
+A customer wishes to purchases the books Right Believing and Power of the Mind, process these sales
+	BARCODE 1000 AND 2000
+	CARD
+
+You forgot the titles of the books you just sold, find out what they were
+
+Joy Miller wishes to return the book Into the Nevernight, process this return
+
+The customer comes back and wishes to return the book Right Believing, process the refund
+	BARCODE 1000
+	PRICE 120
+	QTY 1
+	CARD
+
+Lucy May wishes to renew her membership, process the renewal
+	CASH
+
+A new member wishes to join the library, he promises to pay the membership fee next week
+process this
+	NAME Jim  Smith
+	PHONE 0823548492
+
+You decide that the default loan duration should be 3 weeks instead of two weeks, make a change in the application to reflect your decision
+
+A person wishes to make a donation of R1000 into the bookshop, record this in the application
+	EFT
+
+It was a mistake added Lucy May as a new member, delete the record of her
+	[CHECK IF ViewMember or Search is used]
+
+Its time to cash up, perform a cash up in the application and save the result
+	CIB 2000
+	EXP Oops!
+
+The shop item called Unlimited is spelt incorrectly in the system, find it and fix the mistake
+	BARCODE 3000
+
+You find a bug in the system, report it
+	MES N/A
+
+Generate a sales report for January and save it
+
+Log out and sign in as jan with password 1234
+
+Change your username to jannet
+
+	
