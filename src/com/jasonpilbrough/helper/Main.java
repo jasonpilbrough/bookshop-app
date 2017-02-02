@@ -4,10 +4,11 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		
-		Logger logger = new Logger();
 
-		Database db = new Database(new MysqlSource().get());
+		SettingsFile settingsFile = new SettingsFile("res/settings.txt");
+		Logger logger = new Logger(settingsFile);
+
+		Database db = new Database(new MysqlSource(settingsFile).get());
 		AccessManager am = new AccessManager(db);
 		
 		logger.setAccessManager(am);
@@ -16,7 +17,8 @@ public class Main {
 		
 		viewHandler.displayView("Application");
 		
-		logger = new Logger();
+		//to handle all new threads created
+		logger = new Logger(settingsFile);
 		logger.setAccessManager(am);
 		
 	

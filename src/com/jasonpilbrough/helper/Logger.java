@@ -1,12 +1,9 @@
 package com.jasonpilbrough.helper;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Set;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import org.joda.time.DateTime;
@@ -18,11 +15,13 @@ import com.jasonpilbrough.model.ConsoleModel;
 public class Logger {
 
 	private AccessManager am;
-	private Database db;
 	private static ConsoleModel cm;
+	private final SettingsFile settings;
 	
-	public Logger(){
-		this.db = db;
+	
+	
+	public Logger(SettingsFile settings){
+		this.settings = settings;
 		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
 		Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
 		
@@ -55,15 +54,12 @@ public class Logger {
 		cm = model;
 	}
 	
-	
 	public void setAccessManager(AccessManager am){
 		this.am = am;
 	}
 	
 	public void log(Throwable t) throws IOException{
 		
-		//String filepath = db.sql("SELECT value FROM settings WHERE name = 'app_logs_path' LIMIT 1")
-				//.retrieve().get("value").toString();
 		
 		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM");
 		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss aa");
@@ -73,7 +69,7 @@ public class Logger {
 		}else{
 			user = am.formatUsername(am.getLoggedInUser());
 		}
-		SmartFile file = new SmartFile("dev/app_logs/"+fmt1.print(new DateTime())+"-log.txt");
+		SmartFile file = new SmartFile(settings.getSettings().get("path")+fmt1.print(new DateTime())+"-log.txt");
 		String text = "";
 	
 		text +="\nLOG ENTRY";

@@ -20,8 +20,15 @@ import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
  * @author Jason
  */
 public class MysqlSource implements Source{
+	
+	private final SettingsFile settingsFile;
 
-    @Override
+    public MysqlSource(SettingsFile settingsFile) {
+		super();
+		this.settingsFile = settingsFile;
+	}
+
+	@Override
     public DataSource get(){
        
         /*HikariConfig config = new HikariConfig();
@@ -37,9 +44,9 @@ public class MysqlSource implements Source{
     	MysqlDataSource ds = null;
         try {
             ds = new MysqlDataSource();
-            ds.setURL("jdbc:mysql://localhost:3307/bookshop_app");
-            ds.setUser("java");
-            ds.setPassword("user");
+            ds.setURL(settingsFile.getSettings().get("url"));
+            ds.setUser(settingsFile.getSettings().get("user"));
+            ds.setPassword(settingsFile.getSettings().get("password"));
             
         } catch (Exception e) {
             e.printStackTrace();
