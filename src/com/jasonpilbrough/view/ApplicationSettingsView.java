@@ -32,7 +32,7 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
 
 	private SmartJSpinner loanDuration, loanExtension, membershipDuration, loanCap, membershipFee, fine;
 	private SmartJSpinner floatAmount;
-	private SmartJTextField password, appLogs, bugReports, cashUps, salesReport;
+	private SmartJTextField password, bugReports, cashUps, salesReport;
 	private SmartJButton confirm, cancel;
 	private boolean devAccess = false;
 	
@@ -67,9 +67,6 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
 		case "password":
 			password.setText(evt.getNewValue().toString());
 			break;
-		case "app_logs_path":
-			appLogs.setText(evt.getNewValue().toString());
-			break;
 		case "bug_reports_path":
 			bugReports.setText(evt.getNewValue().toString());
 			break;
@@ -100,7 +97,6 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
 	    fine = new SmartJSpinner(new  SpinnerNumberModel(0, 0, 1000, 5));
 	    floatAmount = new SmartJSpinner(new  SpinnerNumberModel(0, 0, 10000, 100));
 	    password = new SmartJTextField();
-	    appLogs = new SmartJTextField();
 	    bugReports = new SmartJTextField();
 	    cashUps = new SmartJTextField();
 	    salesReport = new SmartJTextField();
@@ -124,7 +120,6 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
 	    floatAmount = new SmartJSpinner().withSomeState(floatAmount);
 	    password = new SmartJTextField().withSomeState(password);
 	    
-	    appLogs = new SmartJTextField().withSomeState(appLogs);
 	    bugReports = new SmartJTextField().withSomeState(bugReports);
 	    cashUps = new SmartJTextField().withSomeState(cashUps);
 	    salesReport = new SmartJTextField().withSomeState(salesReport);
@@ -167,7 +162,6 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
         if(devAccess){
         	RowGroup devGroup = new RowGroup();
             addGroup(layout, "Dev files", devGroup);
-            layout.row().group(devGroup).grid(new JLabel("App logs:")).add(appLogs);
             layout.row().group(devGroup).grid(new JLabel("Bug reports:")).add(bugReports);
         }
         
@@ -199,7 +193,6 @@ public class ApplicationSettingsView extends JFrame implements Drawable {
 		settings.add(new Object[]{"fine", fine.getValue()});
 		settings.add(new Object[]{"float", floatAmount.getValue()});
 		settings.add(new Object[]{"default_password", password.getText()});
-		settings.add(new Object[]{"app_logs_path", appLogs.getText()});
 		settings.add(new Object[]{"bug_reports_path", bugReports.getText()});
 		settings.add(new Object[]{"cash_ups_path", cashUps.getText()});
 		settings.add(new Object[]{"sales_reports_path", salesReport.getText()});

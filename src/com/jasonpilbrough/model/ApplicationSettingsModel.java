@@ -34,8 +34,7 @@ public class ApplicationSettingsModel {
 		changefirer.firePropertyChange("membership_fee", "", getSettingVal("membership_fee"));	
 		changefirer.firePropertyChange("fine", "", getSettingVal("fine"));	
 		changefirer.firePropertyChange("float", "", getSettingVal("float"));
-		changefirer.firePropertyChange("password", "", getSettingVal("default_password"));	
-		changefirer.firePropertyChange("app_logs_path", "", getSettingVal("app_logs_path"));	
+		changefirer.firePropertyChange("password", "", getSettingVal("default_password"));		
 		changefirer.firePropertyChange("bug_reports_path", "", getSettingVal("bug_reports_path"));	
 		changefirer.firePropertyChange("cash_ups_path", "", getSettingVal("cash_ups_path"));	
 		changefirer.firePropertyChange("sales_reports_path", "", getSettingVal("sales_reports_path"));			
