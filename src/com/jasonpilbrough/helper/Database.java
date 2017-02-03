@@ -86,8 +86,7 @@ public class Database {
             return map;
         } catch (SQLException ex) {
             System.out.println(query);
-            System.out.println();
-            ex.printStackTrace();
+            throw new LogException(ex);
         }finally {
         	try {
         		if(rs!=null)
@@ -97,10 +96,9 @@ public class Database {
         		if(conn!=null)
         			conn.close();
     		} catch (SQLException e) {
-    			e.printStackTrace();
+    			 throw new LogException(e);
     		}
 		}
-        return null;
     }
     
     public void update(){
@@ -114,7 +112,7 @@ public class Database {
             statement.executeUpdate(query);
         } catch (SQLException ex) {
             System.out.println(query);
-            ex.printStackTrace();
+            throw new LogException(ex);
         }finally {
         	try {
         		if(statement!=null)
@@ -122,7 +120,7 @@ public class Database {
         		if(conn!=null)
         			conn.close();
     		} catch (SQLException e) {
-    			e.printStackTrace();
+    			 throw new LogException(e);
     		}
 		}
     }
