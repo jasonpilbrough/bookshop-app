@@ -2,20 +2,21 @@ package com.jasonpilbrough.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ComboBoxModel;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.table.TableModel;
 
+import com.jasonpilbrough.helper.FileException;
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.vcontroller.Controller;
 
@@ -82,14 +83,37 @@ public class WelcomeView extends JPanel implements Drawable {
 		goStore = new SmartJButton("Go to Store").withSomeState(goStore);
 		
 		goLib.setHorizontalTextPosition(SwingConstants.CENTER);
-		goLib.setIcon(new ImageIcon(resourcesPath+"book_shelf.png"));
-		goLib.setFont (goLib.getFont().deriveFont (20.0f));
+		goLib.setFont (goLib.getFont().deriveFont (12.0f));
 		goLib.setVerticalTextPosition(SwingConstants.BOTTOM);
 		
 		goStore.setHorizontalTextPosition(SwingConstants.CENTER);
-		goStore.setIcon(new ImageIcon(resourcesPath+"coins.png"));
-		goStore.setFont (goLib.getFont().deriveFont (20.0f));
+		goStore.setFont (goLib.getFont().deriveFont (12.0f));
 		goStore.setVerticalTextPosition(SwingConstants.BOTTOM);
+		
+		try {
+			InputStream stream = getClass().getClassLoader().getResourceAsStream(resourcesPath+"book_shelf.png");
+			if(stream!=null){
+				ImageIcon book= new ImageIcon(ImageIO.read(stream));
+				goLib.setIcon(book);
+			}
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+			throw new FileException("File '"+resourcesPath+"book_shelf.png"+"' not found");
+		}
+		
+		try {
+			InputStream stream2 = getClass().getClassLoader().getResourceAsStream(resourcesPath+"coins.png");
+			if(stream2!=null){
+				ImageIcon coin= new ImageIcon(ImageIO.read(stream2));
+				goStore.setIcon(coin);
+			}
+			
+		}catch (IOException e) {
+			e.printStackTrace();
+			throw new FileException("File '"+resourcesPath+"book.png"+"' not found");
+		}
+			
 		
 		
 		DesignGridLayout layout = new DesignGridLayout(parent);

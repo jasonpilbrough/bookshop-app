@@ -18,11 +18,12 @@ public class SmartFile {
 	
 	public String read() throws FileNotFoundException{
 		String ans = "";
-		try(Scanner sc = new Scanner(new File(filePath))) {
+		try(Scanner sc = new Scanner(getClass().getClassLoader().getResourceAsStream(filePath))) {
 			while(sc.hasNext()){
 				ans += sc.nextLine()+"\n";
 			}
-		} catch (FileNotFoundException e) {
+			//TODO remove
+		} catch (NullPointerException e) {
 			throw new FileNotFoundException("File '"+filePath+"' not found");
 		} 
 		return ans;
