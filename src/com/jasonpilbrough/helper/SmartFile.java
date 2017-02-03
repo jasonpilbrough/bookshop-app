@@ -37,5 +37,12 @@ public class SmartFile {
     	}
 	}
 	
+	public void append(String text) throws IOException{
+		try(FileWriter fw = new FileWriter(filePath,true)) {
+    		fw.write(text);
+    		
+    	}
+	}
+	
 	
 }

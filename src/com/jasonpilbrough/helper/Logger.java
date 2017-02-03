@@ -84,7 +84,7 @@ public class Logger {
 		}
 		
 		text +="\n\n=======================================================================\n";
-		file.write(text);
+		file.append(text);
 	       
 	    	
 	    
