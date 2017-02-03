@@ -51,33 +51,27 @@ public class AddBugReportModel {
 		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
 		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss aa");
 		String user = am.formatUsername(am.getLoggedInUser());
-		
-	    JFileChooser chooser = new JFileChooser();
-	    chooser.setCurrentDirectory(new File(filepath));
-	    chooser.setSelectedFile(new File("bugreport__"+fmt1.print(new DateTime())));
-	    int retrival = chooser.showSaveDialog(null);
+	
 	    
-	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	SmartFile file = new SmartFile(chooser.getSelectedFile()+".txt");
-	    	String text = "";
-	    	
-    		text+="\nBUG REPORT";
-    		text+="\n-----------------------------------------------------------\n";
-    		text+=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
-    		text+=String.format("\n%-20s %s","REPORTED BY",user);
-    		text+=String.format("\n%-20s %s","STATUS","001");
-    		text+="\n\n-----------------------------------------------------------\n\n";
-    		text+="MESSAGE\n\n";
-    		text+=formatString(message);
-    		text+="\n\n-----------------------------------------------------------";
-    		file.write(text);
-    		changefirer.firePropertyChange("close", null, null);
-    		return true;
+    	SmartFile file = new SmartFile(filepath+"bugreport__"+fmt1.print(new DateTime())+".txt");
+    	String text = "";
+    	
+		text+="\nBUG REPORT";
+		text+="\n-----------------------------------------------------------\n";
+		text+=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
+		text+=String.format("\n%-20s %s","REPORTED BY",user);
+		text+=String.format("\n%-20s %s","STATUS","001");
+		text+="\n\n-----------------------------------------------------------\n\n";
+		text+="MESSAGE\n\n";
+		text+=formatString(message);
+		text+="\n\n-----------------------------------------------------------";
+		file.write(text);
+		changefirer.firePropertyChange("close", null, null);
+		return true;
 	    	
 	       
-	    }
+	    
 		
-		return false;
 	}
 	
 	
