@@ -3,7 +3,7 @@ package com.jasonpilbrough.vcontroller;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 
-import com.jasonpilbrough.helper.FileException;
+import com.jasonpilbrough.helper.LogException;
 import com.jasonpilbrough.helper.ViewHandler;
 import com.jasonpilbrough.model.SalesReportModel;
 import com.jasonpilbrough.view.Drawable;
@@ -45,7 +45,7 @@ public class SalesReportController extends Controller {
 			} catch (IOException e1) {
 				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save Sales report. "+e1.getMessage(),this);
 				dialog4.draw();
-				throw new FileException(e1);
+				throw new LogException(e1);
 			}
 			break;
 		default:

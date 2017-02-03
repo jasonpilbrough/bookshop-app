@@ -16,7 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import com.jasonpilbrough.helper.FileException;
+import com.jasonpilbrough.helper.LogException;
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.vcontroller.Controller;
 
@@ -99,7 +99,7 @@ public class WelcomeView extends JPanel implements Drawable {
 			
 		}catch (IOException e) {
 			e.printStackTrace();
-			throw new FileException("File '"+resourcesPath+"book_shelf.png"+"' not found");
+			throw new LogException("File '"+resourcesPath+"book_shelf.png"+"' not found");
 		}
 		
 		try {
@@ -111,7 +111,7 @@ public class WelcomeView extends JPanel implements Drawable {
 			
 		}catch (IOException e) {
 			e.printStackTrace();
-			throw new FileException("File '"+resourcesPath+"book.png"+"' not found");
+			throw new LogException("File '"+resourcesPath+"book.png"+"' not found");
 		}
 			
 		

@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 
 import com.jasonpilbrough.helper.FailedValidationException;
-import com.jasonpilbrough.helper.FileException;
+import com.jasonpilbrough.helper.LogException;
 import com.jasonpilbrough.helper.ViewHandler;
 import com.jasonpilbrough.model.AddLibraryItemModel;
 import com.jasonpilbrough.model.CashUpModel;
@@ -41,7 +41,7 @@ public class CashUpController extends Controller {
 			} catch (NumberFormatException e1) {
 				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected",this);
 				dialog4.draw();
-				throw new FileException(e1);
+				throw new LogException(e1);
 			}
 			break;
 		case "save":
