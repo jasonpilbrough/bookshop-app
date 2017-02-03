@@ -61,7 +61,7 @@ public class Logger {
 	public void log(Throwable t) throws IOException{
 		
 		
-		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM");
+		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd");
 		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss aa");
 		String user = "";
 		if(am==null){
