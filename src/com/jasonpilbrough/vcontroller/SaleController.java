@@ -39,14 +39,12 @@ public class SaleController extends Controller {
 					Drawable dialog1 = viewHandler.makeConfirmDialog("This item is marked as out of stock.\nDo you"
 							+ " wish to continue?", this);
 					dialog1.draw();
-					try {
-						boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
-						if(!confirmed){
-							return;
-						}
-					} catch (NullPointerException ex) {
-						ex.printStackTrace();
-					} 
+					
+					boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
+					if(!confirmed){
+						return;
+					}
+					
 				}
 				model.addToCart(barcode, 
 						Double.parseDouble(view.getFields().get("price").toString()),

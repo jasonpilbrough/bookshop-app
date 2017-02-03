@@ -41,14 +41,12 @@ public class SearchController extends Controller {
 				if(ids.length>0){
 					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone", this);
 					dialog3.draw();
-					try {
-						boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
-						if(confirmed){
-							model.delete(ids);
-						}
-					} catch (NullPointerException ex) {
-						ex.printStackTrace();
+					
+					boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
+					if(confirmed){
+						model.delete(ids);
 					}
+					
 				}else{
 					Drawable dialog4 = viewHandler.makeMessageDialog("No rows selected",this);
 					dialog4.draw();

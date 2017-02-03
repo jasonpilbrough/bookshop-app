@@ -5,6 +5,7 @@ import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.DateInTime;
 import com.jasonpilbrough.helper.FailedValidationException;
+import com.jasonpilbrough.helper.LogException;
 import com.jasonpilbrough.helper.ViewHandler;
 import com.jasonpilbrough.view.Drawable;
 

@@ -41,7 +41,6 @@ public class CashUpController extends Controller {
 			} catch (NumberFormatException e1) {
 				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected",this);
 				dialog4.draw();
-				throw new LogException(e1);
 			}
 			break;
 		case "save":
@@ -60,6 +59,7 @@ public class CashUpController extends Controller {
 			} catch (IOException e1) {
 				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save cash up. "+e1.getMessage(),this);
 				dialog4.draw();
+				throw new LogException(e1);
 			}
 			
 			break;

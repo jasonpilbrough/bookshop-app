@@ -6,6 +6,7 @@ import javax.swing.table.TableModel;
 import com.jasonpilbrough.helper.AccessException;
 import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.FailedValidationException;
+import com.jasonpilbrough.helper.LogException;
 import com.jasonpilbrough.helper.ViewHandler;
 import com.jasonpilbrough.view.Drawable;
 

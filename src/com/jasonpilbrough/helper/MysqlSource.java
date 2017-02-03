@@ -9,6 +9,7 @@ package com.jasonpilbrough.helper;
 
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -42,15 +43,18 @@ public class MysqlSource implements Source{
         //FileInputStream fis = null;
         
     	MysqlDataSource ds = null;
-        try {
+       
             ds = new MysqlDataSource();
-            ds.setURL(settingsFile.getSettings().get("url"));
-            ds.setUser(settingsFile.getSettings().get("user"));
-            ds.setPassword(settingsFile.getSettings().get("password"));
+            try {
+				ds.setURL(settingsFile.getSettings().get("url"));
+				ds.setUser(settingsFile.getSettings().get("user"));
+	            ds.setPassword(settingsFile.getSettings().get("password"));
+			} catch (FileNotFoundException e) {
+				throw new LogException(e);
+			}
             
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            
+        
         return ds;
     }
     

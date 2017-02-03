@@ -31,6 +31,7 @@ public class Logger {
 				
 				@Override
 				public void uncaughtException(Thread t, Throwable e) {
+					e.printStackTrace();
 					try {
 						log(e);
 						if(cm!=null){
@@ -42,7 +43,7 @@ public class Logger {
 						JOptionPane.showMessageDialog(null, "Error writing to app logs: "+e1.toString());
 					} 
 					
-					e.printStackTrace();
+					
 					
 				}
 			});

@@ -33,23 +33,21 @@ public class UserSettingsController extends Controller {
 		case "confirm":
 			Drawable dialog3 = viewHandler.makePasswordDialog(this);
 			dialog3.draw();
-			try {
-				Object password = dialog3.getFields().get("dialog_input");
-				if(password==null){
-					return;
-				}
-				if(model.checkPassword(password.toString())){
-					model.changeUserDetails(view.getFields().get("username").toString(), 
-							new String((char[])view.getFields().get("password")));
-					Drawable dialog4 = viewHandler.makeMessageDialog("Changes saved",this);
-					dialog4.draw();
-				}else{
-					Drawable dialog4 = viewHandler.makeMessageDialog("Incorrect password",this);
-					dialog4.draw();
-				}
-			} catch (NullPointerException ex) {
-				ex.printStackTrace();
+			
+			Object password = dialog3.getFields().get("dialog_input");
+			if(password==null){
+				return;
 			}
+			if(model.checkPassword(password.toString())){
+				model.changeUserDetails(view.getFields().get("username").toString(), 
+						new String((char[])view.getFields().get("password")));
+				Drawable dialog4 = viewHandler.makeMessageDialog("Changes saved",this);
+				dialog4.draw();
+			}else{
+				Drawable dialog4 = viewHandler.makeMessageDialog("Incorrect password",this);
+				dialog4.draw();
+			}
+			
 			
 			break;
 		case "cancel":

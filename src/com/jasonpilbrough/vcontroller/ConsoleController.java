@@ -29,9 +29,6 @@ public class ConsoleController extends Controller {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		switch(e.getActionCommand()){
-		case "init":
-			
-			break;
 		default:
 			throw new RuntimeException("Command "+e.getActionCommand()+" not registered with controller");
 	}

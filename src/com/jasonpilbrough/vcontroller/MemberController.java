@@ -62,14 +62,12 @@ public class MemberController extends Controller {
 					}
 					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone", this);
 					dialog3.draw();
-					try {
-						boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
-						if(confirmed){
-							model.deleteMember();
-						}
-					} catch (NullPointerException ex) {
-						ex.printStackTrace();
+					
+					boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
+					if(confirmed){
+						model.deleteMember();
 					}
+					
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
 				} catch (AccessException e2) {
 					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
@@ -174,14 +172,12 @@ public class MemberController extends Controller {
 						Drawable dialog1 = viewHandler.makeConfirmDialog("This member has already reached their outstanding loan limit"
 								+ "\nDo you wish to continue?", this);
 						dialog1.draw();
-						try {
-							boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
-							if(!confirmed){
-								return;
-							}
-						} catch (NullPointerException ex) {
-							ex.printStackTrace();
+						
+						boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
+						if(!confirmed){
+							return;
 						}
+						
 					}
 					
 					Drawable dialog = viewHandler.makeInputDialog("Enter Barcode", this);
@@ -193,14 +189,12 @@ public class MemberController extends Controller {
 						Drawable dialog1 = viewHandler.makeConfirmDialog("This item is marked as out of stock.\nDo you"
 								+ " wish to continue?", this);
 						dialog1.draw();
-						try {
-							boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
-							if(!confirmed){
-								return;
-							}
-						} catch (NullPointerException ex) {
-							ex.printStackTrace();
-						} 
+						
+						boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
+						if(!confirmed){
+							return;
+						}
+						
 					}
 					
 					//handles item with hire fee

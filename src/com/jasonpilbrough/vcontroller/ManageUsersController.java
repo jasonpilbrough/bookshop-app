@@ -35,15 +35,13 @@ public class ManageUsersController extends Controller {
 		case "delete":
 			Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone", this);
 			dialog3.draw();
-			try {
-				//System.out.println(dialog3.getFields().get("dialog_input").toString());
-				boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
-				if(confirmed){
-					model.deleteUser(Integer.parseInt(view.getFields().get("selected_row_id").toString()));
-				}
-			} catch (NullPointerException ex) {
-				ex.printStackTrace();
+			
+			//System.out.println(dialog3.getFields().get("dialog_input").toString());
+			boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
+			if(confirmed){
+				model.deleteUser(Integer.parseInt(view.getFields().get("selected_row_id").toString()));
 			}
+			
 			break;
 		default:
 			throw new RuntimeException("Command "+e.getActionCommand()+" not registered with controller");
