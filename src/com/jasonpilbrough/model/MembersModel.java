@@ -39,13 +39,16 @@ public class MembersModel implements TableModelListener{
 	
 	//Fires a change on all values to update all views
 	public void setAllValues(){
-		tableModel = new NonEditableTableModel(new CachedTableModel(new MembersTableModel(db)));
-		tableModel.addTableModelListener(this);
-		changefirer.firePropertyChange("table_model", null, tableModel);
+		setTable("");
+		
 	}
 	
 	public void setFilter(String text){
-		tableModel = new CachedTableModel(new MembersTableModel(db,text));
+		setTable(text);
+	}
+	
+	private void setTable(String text){
+		tableModel = new NonEditableTableModel(new CachedTableModel(new MembersTableModel(db,text)));
 		tableModel.addTableModelListener(this);
 		changefirer.firePropertyChange("table_model", null, tableModel);
 	}
