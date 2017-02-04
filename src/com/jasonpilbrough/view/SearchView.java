@@ -42,10 +42,12 @@ public class SearchView extends JFrame implements Drawable {
 				break;
 			case "table_model":
 				table.setModel((TableModel)evt.getNewValue());
-				//draw();
+				draw();
 				setLeftAlignment();
 				resizeColumns();
-				revalidate();
+				filterTxt.requestFocusInWindow();
+				filterTxt.getCaret().setDot(filterTxt.getText().length());
+				
 			break;
 			default:
 				throw new RuntimeException("Property " + evt.getPropertyName() + " not registered with view");
@@ -98,6 +100,7 @@ public class SearchView extends JFrame implements Drawable {
 		setLeftAlignment();
 		
         DesignGridLayout layout = new DesignGridLayout(parent);
+        System.out.println(combobox.getParent());
         layout.row().grid().add(combobox).add(filterTxt,2).add(filterBtn);
         layout.row().grid().add(scrollPane);
         layout.row().grid().empty().empty().empty().add(delete);

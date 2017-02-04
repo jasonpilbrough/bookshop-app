@@ -57,6 +57,7 @@ public class SearchModel implements TableModelListener{
 	public void setAllValues(){
 		tableModel = makeTableModel(selectedLabel);
 		tableModel.addTableModelListener(this);
+		comboModel = makeComboModel();
 		
 		// the order of this commands must stay the same, weird i know
 		changefirer.firePropertyChange("combo_model", null, comboModel);
