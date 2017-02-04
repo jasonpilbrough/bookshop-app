@@ -1,6 +1,7 @@
 bin/
 dev/
 lib/
+dist/
 user_files/
 .*
 !/.gitignore
