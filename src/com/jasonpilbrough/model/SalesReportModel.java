@@ -88,6 +88,8 @@ public class SalesReportModel {
 		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
 		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 		
+		SmartFile dir = new SmartFile(directory, "");
+		dir.makeDirs();
 	    JFileChooser chooser = new JFileChooser();
 	    chooser.setCurrentDirectory(new File(directory));
 	    chooser.setSelectedFile(new File("salesreport__"+fmt1.print(new DateTime())+".txt"));

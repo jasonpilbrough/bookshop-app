@@ -1,11 +1,10 @@
 package com.jasonpilbrough.helper;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class SmartFile {
@@ -38,6 +37,7 @@ public class SmartFile {
     		fw.write(text);
     		
     	}
+		
 	}
 	
 	public void append(String text) throws IOException{
@@ -45,6 +45,13 @@ public class SmartFile {
     		fw.write(text);
     		
     	}
+	}
+	
+	public void makeDirs(){
+		File directoryFile = new File(String.valueOf(directory));
+	    if (! directoryFile.exists()){
+	    	directoryFile.mkdirs();
+	    }
 	}
 	
 	

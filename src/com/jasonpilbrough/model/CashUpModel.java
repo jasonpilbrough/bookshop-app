@@ -56,6 +56,8 @@ public class CashUpModel {
 		double cashSales = cashInBox-getFloat();
 		String cashStr = cashSales<0 ? "(R "+Math.abs(cashSales)+")" : "R "+cashSales ;
 		
+		SmartFile dir = new SmartFile(directory, "");
+		dir.makeDirs();
 	    JFileChooser chooser = new JFileChooser();
 	    chooser.setCurrentDirectory(new File(directory));
 	    chooser.setSelectedFile(new File("cashup__"+fmt1.print(new DateTime())+".txt"));
