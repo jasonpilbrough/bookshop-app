@@ -259,7 +259,7 @@ public class ViewHandler {
 	}
 	
 	public Drawable makePasswordDialog(Controller c){
-		Drawable d = new DialogView("password","Enter password");
+		Drawable d = new DialogView("password","Enter current password");
 		d.initialise(c);
 		return d;
 	}
