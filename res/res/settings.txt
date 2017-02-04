@@ -1,7 +1,7 @@
 Database
 #url--jdbc:mysql://localhost:3307/bookshop_app
-#user--java
-#password--user
+#user--bookshop
+#password--hcc
 
 App logs
 #path--dev/app_logs/
