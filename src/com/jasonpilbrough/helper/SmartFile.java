@@ -33,6 +33,7 @@ public class SmartFile {
 
 	
 	public void write(String text) throws IOException{
+		makeDirs();
 		try(FileWriter fw = new FileWriter(directory+filename)) {
     		fw.write(text);
     		
@@ -41,6 +42,7 @@ public class SmartFile {
 	}
 	
 	public void append(String text) throws IOException{
+		makeDirs();
 		try(FileWriter fw = new FileWriter(directory+filename,true)) {
     		fw.write(text);
     		
