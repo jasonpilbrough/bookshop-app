@@ -58,6 +58,20 @@ public class MembersView extends JPanel implements Drawable{
        table.setShowVerticalLines(false);
 	   table.setAutoCreateRowSorter(true);
 	   table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
+	   table.addMouseListener(new java.awt.event.MouseAdapter() {
+		    @Override
+		    public void mouseClicked(java.awt.event.MouseEvent evt) {
+		        int row = table.rowAtPoint(evt.getPoint());
+		        int col = table.columnAtPoint(evt.getPoint());
+		        if (row >= 0 && col >= 0) {
+		        	if(evt.getClickCount()==2){
+		        		controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "select"));
+		        	}
+		            
+
+		        }
+		    }
+		});
        
        add = new SmartJButton("Add").withRegisteredController(controller);
        select = new SmartJButton("Select").withRegisteredController(controller);
