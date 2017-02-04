@@ -74,7 +74,12 @@ public class SmartJTextField extends JTextField {
 				
 				@Override
 				public void keyReleased(KeyEvent e) {
-					controller.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "key pressed"));
+					if(e.getKeyCode()==KeyEvent.VK_ENTER){
+						controller.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "filter search"));
+					}else{
+						//controller.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "key pressed"));
+					}
+					
 					
 					
 				}

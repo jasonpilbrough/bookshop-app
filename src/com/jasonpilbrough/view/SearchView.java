@@ -42,7 +42,10 @@ public class SearchView extends JFrame implements Drawable {
 				break;
 			case "table_model":
 				table.setModel((TableModel)evt.getNewValue());
-				draw();
+				//draw();
+				setLeftAlignment();
+				resizeColumns();
+				revalidate();
 			break;
 			default:
 				throw new RuntimeException("Property " + evt.getPropertyName() + " not registered with view");
@@ -65,7 +68,7 @@ public class SearchView extends JFrame implements Drawable {
        
 	    delete = new SmartJButton("Delete").withRegisteredController(controller);
 	    filterBtn = new SmartJButton("Filter Search").withRegisteredController(controller);
-	    filterTxt = new SmartJTextField();
+	    filterTxt = new SmartJTextField().withKeyListener(controller);
 	    
 	    //init command from view causes the model to push all values view
 	    controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
@@ -116,6 +119,7 @@ public class SearchView extends JFrame implements Drawable {
 		map.put("selected_ids", ids);
 		return map;
 	}
+	
 	
 	private void setLeftAlignment(){
 		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
