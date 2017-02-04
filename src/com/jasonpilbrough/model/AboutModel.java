@@ -33,12 +33,12 @@ public class AboutModel {
 	
 	private String getText() throws FileNotFoundException{
 		
-		String filepath = db.sql("SELECT value FROM settings WHERE name = 'resources_path' LIMIT 1")
+		String directory = db.sql("SELECT value FROM settings WHERE name = 'resources_path' LIMIT 1")
 				.retrieve().get("value").toString();
 		
 		
-		String filename = filepath+"about.txt";
-		SmartFile file = new SmartFile(filename);
+		String filename = "about.txt";
+		SmartFile file = new SmartFile(directory, filename);
 		String ans = file.read();
 
 		changefirer.firePropertyChange("title", "", ans.split("\n\n")[0].replaceAll("\n", "---"));	

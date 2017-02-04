@@ -41,7 +41,7 @@ public class AddBugReportModel {
 	
 	public boolean save(String message) throws IOException, FailedValidationException{
 		
-		String filepath = db.sql("SELECT value FROM settings WHERE name = 'bug_reports_path' LIMIT 1")
+		String directory = db.sql("SELECT value FROM settings WHERE name = 'bug_reports_path' LIMIT 1")
 				.retrieve().get("value").toString();
 		
 		if(message.length()==0){
@@ -53,7 +53,7 @@ public class AddBugReportModel {
 		String user = am.formatUsername(am.getLoggedInUser());
 	
 	    
-    	SmartFile file = new SmartFile(filepath+"bugreport__"+fmt1.print(new DateTime())+".txt");
+    	SmartFile file = new SmartFile(directory, "bugreport__"+fmt1.print(new DateTime())+".txt");
     	String text = "";
     	
 		text+="\nBUG REPORT";

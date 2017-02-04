@@ -44,7 +44,7 @@ public class CashUpModel {
 			explaination = "N/A";
 		}
 		
-		String filepath = db.sql("SELECT value FROM settings WHERE name = 'cash_ups_path' LIMIT 1")
+		String directory = db.sql("SELECT value FROM settings WHERE name = 'cash_ups_path' LIMIT 1")
 				.retrieve().get("value").toString();
 		
 		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
@@ -57,11 +57,11 @@ public class CashUpModel {
 		String cashStr = cashSales<0 ? "(R "+Math.abs(cashSales)+")" : "R "+cashSales ;
 		
 	    JFileChooser chooser = new JFileChooser();
-	    chooser.setCurrentDirectory(new File(filepath));
-	    chooser.setSelectedFile(new File("cashup__"+fmt1.print(new DateTime())));
+	    chooser.setCurrentDirectory(new File(directory));
+	    chooser.setSelectedFile(new File("cashup__"+fmt1.print(new DateTime())+".txt"));
 	    int retrival = chooser.showSaveDialog(null);
 	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	SmartFile file = new SmartFile(chooser.getSelectedFile()+".txt");
+	    	SmartFile file = new SmartFile(chooser.getCurrentDirectory().getPath()+"/",chooser.getName(chooser.getSelectedFile()));
 	    	String text = "";
 	    	
     		text+="\nCASH UP REPORT";

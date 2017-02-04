@@ -82,18 +82,18 @@ public class SalesReportModel {
 	public boolean save(String date1, String date2) throws IOException{
 	
 
-		String filepath = db.sql("SELECT value FROM settings WHERE name = 'sales_reports_path' LIMIT 1")
+		String directory = db.sql("SELECT value FROM settings WHERE name = 'sales_reports_path' LIMIT 1")
 				.retrieve().get("value").toString();
 		
 		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
 		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd");
 		
 	    JFileChooser chooser = new JFileChooser();
-	    chooser.setCurrentDirectory(new File(filepath));
-	    chooser.setSelectedFile(new File("salesreport__"+fmt1.print(new DateTime())));
+	    chooser.setCurrentDirectory(new File(directory));
+	    chooser.setSelectedFile(new File("salesreport__"+fmt1.print(new DateTime())+".txt"));
 	    int retrival = chooser.showSaveDialog(null);
 	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	SmartFile file = new SmartFile(chooser.getSelectedFile()+".txt");
+	    	SmartFile file = new SmartFile(chooser.getCurrentDirectory().getPath()+"/",chooser.getName(chooser.getSelectedFile()));
 	    	String text = "";
 	    	
     		text+="\nSALES REPORT\n";

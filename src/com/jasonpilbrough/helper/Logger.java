@@ -70,7 +70,7 @@ public class Logger {
 		}else{
 			user = am.formatUsername(am.getLoggedInUser());
 		}
-		SmartFile file = new SmartFile(settings.getSettings().get("path")+fmt1.print(new DateTime())+"-log.txt");
+		SmartFile file = new SmartFile(settings.getSettings().get("path"),fmt1.print(new DateTime())+"-log.txt");
 		String text = "";
 	
 		text +="\nLOG ENTRY";
