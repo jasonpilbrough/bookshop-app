@@ -41,8 +41,7 @@ public class ConsoleView extends JFrame implements Drawable {
 	     setTitle("Console");
 	     
 	     text = new JTextArea();
-	     
-	     controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
+
 
 	}
 
