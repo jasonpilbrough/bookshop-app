@@ -1,5 +1,5 @@
 Database
-#url--jdbc:mysql://localhost:3307/bookshop_app
+#url--jdbc:mysql://localhost:3306/bookshop_app
 #user--bookshop
 #password--hcc
 
