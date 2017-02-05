@@ -22,4 +22,12 @@ Double clicking on members table now selects member
 Search now activated by enter key
 Default directories are now created on file save if 
 	they are missing
+
+--------------------------------------------  
+VERSION		0.9.1a
+RELEASE         2017-02-05
+
+Changed look and feel to default for running OS
+Changed compiler to java 1.7
+
 --------------------------------------------  
