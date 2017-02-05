@@ -23,7 +23,7 @@ public class SmartJRadioButton extends JRadioButton {
         this("");
     }
     
-    public SmartJRadioButton withRegisteredController(Controller controller){
+    public SmartJRadioButton withRegisteredController(final Controller controller){
     	this.addActionListener(new ActionListener() {
 			
 			@Override

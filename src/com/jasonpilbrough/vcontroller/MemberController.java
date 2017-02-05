@@ -117,7 +117,7 @@ public class MemberController extends Controller {
 					if(!am.allowedAccess("BLOP")){
 						throw new AccessException();
 					}
-					int id = Integer.parseInt(view.getFields().get("selected_row_id").toString());
+					final int id = Integer.parseInt(view.getFields().get("selected_row_id").toString());
 					double fine = model.getFine(id);
 					if(fine>0){
 						viewHandler.displayView("AddIncidental", "FINE", fine, new Controller() {
@@ -182,7 +182,7 @@ public class MemberController extends Controller {
 					
 					Drawable dialog = viewHandler.makeInputDialog("Enter Barcode", this);
 					dialog.draw();
-					String barcode = dialog.getFields().get("dialog_input").toString();
+					final String barcode = dialog.getFields().get("dialog_input").toString();
 					
 					//handles items that are out of stock
 					if(!model.isItemInStock(barcode)){

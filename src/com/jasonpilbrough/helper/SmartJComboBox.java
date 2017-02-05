@@ -25,7 +25,7 @@ public class SmartJComboBox<E> extends JComboBox<E> {
 		super();
 	}
 	
-	public SmartJComboBox withRegisteredController(Controller controller){
+	public SmartJComboBox withRegisteredController(final Controller controller){
 		this.addActionListener(new ActionListener() {
 			
 			@Override

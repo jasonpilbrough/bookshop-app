@@ -21,7 +21,7 @@ public class SmartJMenuItem extends JMenuItem {
 	}
 	
     
-    public SmartJMenuItem withRegisteredController(Controller c) {
+    public SmartJMenuItem withRegisteredController(final Controller c) {
         addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -20,7 +20,7 @@ public class SmartJTextField extends JTextField {
 	
 	
 	//TODO not working
-	public SmartJTextField withFocusListener(String prompt){
+	public SmartJTextField withFocusListener(final String prompt){
 		this.addFocusListener(new FocusListener() {
 			
 			@Override
@@ -66,7 +66,7 @@ public class SmartJTextField extends JTextField {
 	}
 	
 		//TODO not working
-		public SmartJTextField withKeyListener(Controller controller){
+		public SmartJTextField withKeyListener(final Controller controller){
 			addKeyListener(new KeyListener() {
 				
 				@Override

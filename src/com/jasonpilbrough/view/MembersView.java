@@ -50,7 +50,7 @@ public class MembersView extends JPanel implements Drawable{
 	}
 
 	@Override
-	public void initialise(Controller controller) {
+	public void initialise(final Controller controller) {
 	   setVisible(true);
        setBounds(0, 0, 450, 400);
        table = new JTable();

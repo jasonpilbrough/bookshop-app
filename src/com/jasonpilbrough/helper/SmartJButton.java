@@ -32,7 +32,7 @@ public class SmartJButton extends JButton{
     }
    
       
-    public SmartJButton withRegisteredController(Controller c) {
+    public SmartJButton withRegisteredController(final Controller c) {
         addActionListener(new ActionListener() {
 			
 			@Override
