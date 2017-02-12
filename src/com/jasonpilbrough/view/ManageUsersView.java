@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,12 +16,12 @@ import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.SmartJButton;
-import com.jasonpilbrough.helper.SmartJRadioButton;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 
-public class ManageUsersView extends JFrame implements Drawable {
+public class ManageUsersView extends SmartJFrame implements Drawable {
 
 
     private SmartJButton delete, add;

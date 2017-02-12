@@ -1,24 +1,19 @@
 package com.jasonpilbrough.view;
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
-import com.jasonpilbrough.helper.LogException;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.ViewHandler;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 
-public class ApplicationView extends JFrame implements Drawable{
+public class ApplicationView extends SmartJFrame implements Drawable{
 	
 	private ViewHandler viewHandler;
 	private String context;
@@ -47,17 +42,7 @@ public class ApplicationView extends JFrame implements Drawable{
        setVisible(true);
        setBounds(0, 0, 540, 540);
        
-       try {
-			InputStream stream = getClass().getClassLoader().getResourceAsStream("res/book_shelf.png");
-			if(stream!=null){
-				Image book= ImageIO.read(stream);
-				setIconImage(book);
-			}
-			
-		}catch (IOException e) {
-			e.printStackTrace();
-			throw new LogException("File 'res/book_shelf.png"+"' not found");
-		}
+      
        setTitle("Highway Christian Community Bookshop");
        
 

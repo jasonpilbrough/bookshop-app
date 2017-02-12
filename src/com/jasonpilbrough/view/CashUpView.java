@@ -1,29 +1,25 @@
 package com.jasonpilbrough.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.DateInTime;
 import com.jasonpilbrough.helper.SmartJButton;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.SmartJTextField;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
-import net.java.dev.designgridlayout.Tag;
 
-public class CashUpView extends JFrame implements Drawable {
+public class CashUpView extends SmartJFrame implements Drawable {
 
 	private SmartJTextField cashInBox;
 	private JLabel cashFloat, cashSales, recordedCashSales, varience;

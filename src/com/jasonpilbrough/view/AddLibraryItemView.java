@@ -9,14 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
-import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 
 import com.jasonpilbrough.helper.SmartJButton;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.SmartJRadioButton;
 import com.jasonpilbrough.helper.SmartJSpinner;
 import com.jasonpilbrough.helper.SmartJTextField;
@@ -26,7 +25,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 import net.java.dev.designgridlayout.RowGroup;
 import net.java.dev.designgridlayout.Tag;
 
-public class AddLibraryItemView extends JFrame implements Drawable {
+public class AddLibraryItemView extends SmartJFrame implements Drawable {
 
 	private SmartJTextField barcode, title, author;
     private SmartJButton confirm;

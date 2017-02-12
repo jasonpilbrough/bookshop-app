@@ -9,7 +9,6 @@ import java.util.Map;
 import java.util.Properties;
 
 import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -25,11 +24,12 @@ import org.joda.time.DateTime;
 
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJDatePicker;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 
-public class SalesReportView extends JFrame implements Drawable {
+public class SalesReportView extends SmartJFrame implements Drawable {
 
 	
 	private JLabel cashPayments, cardPayments, eftPayments, totalIncome, costSales, refunds, purchases,totalExpense, profit;

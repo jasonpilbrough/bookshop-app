@@ -3,12 +3,10 @@ package com.jasonpilbrough.view;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.ComboBoxModel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -20,13 +18,13 @@ import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJComboBox;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.SmartJTextField;
 import com.jasonpilbrough.vcontroller.Controller;
-import com.mysql.fabric.xmlrpc.base.Array;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 
-public class SearchView extends JFrame implements Drawable {
+public class SearchView extends SmartJFrame implements Drawable {
 
 	private SmartJComboBox<String> combobox;
 	private SmartJTextField filterTxt;

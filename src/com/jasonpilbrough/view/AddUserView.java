@@ -6,25 +6,21 @@ import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.ButtonGroup;
 import javax.swing.ComboBoxModel;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SpinnerNumberModel;
 
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJCheckBox;
 import com.jasonpilbrough.helper.SmartJComboBox;
-import com.jasonpilbrough.helper.SmartJRadioButton;
-import com.jasonpilbrough.helper.SmartJSpinner;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.SmartJTextField;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 import net.java.dev.designgridlayout.Tag;
 
-public class AddUserView extends JFrame implements Drawable {
+public class AddUserView extends SmartJFrame implements Drawable {
 
 
 	private SmartJTextField username,password;

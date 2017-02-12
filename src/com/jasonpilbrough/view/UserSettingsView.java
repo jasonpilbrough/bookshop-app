@@ -9,13 +9,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JSeparator;
 
 import com.jasonpilbrough.helper.SmartJButton;
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.SmartJTextField;
 import com.jasonpilbrough.vcontroller.Controller;
 
@@ -23,7 +23,7 @@ import net.java.dev.designgridlayout.DesignGridLayout;
 import net.java.dev.designgridlayout.RowGroup;
 import net.java.dev.designgridlayout.Tag;
 
-public class UserSettingsView extends JFrame implements Drawable {
+public class UserSettingsView extends SmartJFrame implements Drawable {
 
 	private SmartJTextField username;
 	private JPasswordField password;
