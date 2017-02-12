@@ -65,7 +65,7 @@ public class ManageUsersView extends JFrame implements Drawable {
 	       
 	       
 	       setVisible(true);
-	       setBounds(0, 0, 320, 250);
+	       setBounds(0, 0, 330, 260);
 	       setTitle("User Management");
 	       
 	       table = new JTable();
@@ -115,7 +115,7 @@ public class ManageUsersView extends JFrame implements Drawable {
 		DesignGridLayout layout = new DesignGridLayout(parent);
 		
 		
-		layout.row().grid().empty().add(new SmartJButton("View Privlages"));
+		layout.row().grid().empty(2).add(new SmartJButton("View Privlages"));
 		layout.row().grid().add(scrollPane);
 		//layout.row().grid().spanRow().grid(new JLabel("Privlages:"));
 		//layout.row().grid().spanRow().grid(new JLabel("Privlages:")).add(new JLabel("* NOTE - There can only be system at a time."));
@@ -129,7 +129,7 @@ public class ManageUsersView extends JFrame implements Drawable {
 			
 		
 		
-		layout.row().grid().add(add).add(delete);
+		layout.row().grid().add(add).empty().add(delete);
         getContentPane().removeAll();
         getContentPane().add(parent);
         revalidate();
