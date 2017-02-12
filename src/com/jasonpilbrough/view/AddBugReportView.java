@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,6 +51,10 @@ public class AddBugReportView extends JFrame implements Drawable {
 	    setTitle("Report a bug");
 	    
 	    message = new JTextArea();
+	    message.setLineWrap(true);
+	    message.setWrapStyleWord(true);
+	    
+	   
 	    confirm = new SmartJButton("Report bug","confirm").withRegisteredController(controller);
 
 	}
@@ -58,7 +64,10 @@ public class AddBugReportView extends JFrame implements Drawable {
 		JPanel parent = new JPanel();
 		
 		message = new JTextArea(message.getText());
+		message.setLineWrap(true);
+	    message.setWrapStyleWord(true);
 		confirm = new SmartJButton().withSomeState(confirm);
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(400,150));
