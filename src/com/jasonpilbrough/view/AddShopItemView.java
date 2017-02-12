@@ -63,7 +63,7 @@ public class AddShopItemView extends JFrame implements Drawable {
 	@Override
 	public void initialise(Controller controller) {
 		setVisible(true);
-	    setBounds(0, 0, 300, 270);
+	    setBounds(0, 0, 300, 250);
 	    setTitle("Add Shop Item");
 	    
 	    barcode = new SmartJTextField("").withKeyListener(controller);
