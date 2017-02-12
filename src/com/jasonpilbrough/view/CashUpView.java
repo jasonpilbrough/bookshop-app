@@ -102,8 +102,7 @@ public class CashUpView extends JFrame implements Drawable {
 		
         DesignGridLayout layout = new DesignGridLayout(parent);
         layout.row().grid(new JLabel("Date:")).add(new JLabel(new DateInTime().toString())); 
-        layout.row().grid(new JLabel("Cash In Box:")).add(cashInBox); 
-        layout.row().grid().empty(2).add(apply);
+        layout.row().grid(new JLabel("Cash In Box:")).add(cashInBox,2).add(apply); 
         layout.row().grid(new JLabel("Float:")).add(cashFloat);
         layout.row().grid(new JLabel("Cash Sales:")).add(cashSales);
         layout.row().grid(new JLabel("Recorded Cash Sales:")).add(recordedCashSales);
