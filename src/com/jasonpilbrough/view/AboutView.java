@@ -10,7 +10,6 @@ import java.beans.PropertyChangeEvent;
 import java.util.Map;
 
 import javax.swing.JCheckBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -18,12 +17,13 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 import net.java.dev.designgridlayout.RowGroup;
 
-public class AboutView extends JFrame implements Drawable {
+public class AboutView extends SmartJFrame implements Drawable {
 	
 	private String title, version, copyright, developer, disclaimer;
 	
