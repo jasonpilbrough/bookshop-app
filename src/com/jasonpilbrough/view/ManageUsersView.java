@@ -65,7 +65,7 @@ public class ManageUsersView extends JFrame implements Drawable {
 	       
 	       
 	       setVisible(true);
-	       setBounds(0, 0, 330, 260);
+	       setBounds(0, 0, 330, 270);
 	       setTitle("User Management");
 	       
 	       table = new JTable();
