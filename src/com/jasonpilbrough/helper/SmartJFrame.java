@@ -11,7 +11,7 @@ public class SmartJFrame extends JFrame {
 	
 	public SmartJFrame() {
 		 try {
-				InputStream stream = getClass().getClassLoader().getResourceAsStream("res/book.png");
+				InputStream stream = getClass().getClassLoader().getResourceAsStream("res/book_shelf.png");
 				if(stream!=null){
 					Image book= ImageIO.read(stream);
 					setIconImage(book);
@@ -19,7 +19,7 @@ public class SmartJFrame extends JFrame {
 				
 			}catch (IOException e) {
 				e.printStackTrace();
-				throw new LogException("File 'res/book.png"+"' not found");
+				throw new LogException("File 'res/book_shelf.png"+"' not found");
 			}
 	}
 
