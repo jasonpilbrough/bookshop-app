@@ -2,6 +2,7 @@ bin/
 dev/
 lib/
 dist/
+screenshots/
 user_files/
 .*
 !/.gitignore
