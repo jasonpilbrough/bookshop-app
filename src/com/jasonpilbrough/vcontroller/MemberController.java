@@ -182,6 +182,9 @@ public class MemberController extends Controller {
 					
 					Drawable dialog = viewHandler.makeInputDialog("Enter Barcode","Input needed", this);
 					dialog.draw();
+					if(dialog.getFields().get("dialog_input")==null){
+						return;
+					}
 					final String barcode = dialog.getFields().get("dialog_input").toString();
 					
 					//handles items that are out of stock
