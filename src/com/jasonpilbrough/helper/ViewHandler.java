@@ -140,14 +140,14 @@ public class ViewHandler {
 			AddIncidentalController aic = new AddIncidentalController(this, new AddIncidentalModel(db),
 					view);
 
-			Drawable dialog = new DialogView("complex", view);
+			Drawable dialog = new DialogView("complex","Add Other Income", view);
 			dialog.draw();
 		    break;
 		case "AddPurchase":
 			AddIncidentalView apv = new AddIncidentalView();
 			AddPurchaseController apc = new AddPurchaseController(this, new AddPurchaseModel(db),
 					apv);
-			Drawable dialog2 = new DialogView("complex", apv);
+			Drawable dialog2 = new DialogView("complex","Add Purchase", apv);
 			dialog2.draw();
 			break;
 		case "AddUser":
@@ -244,7 +244,7 @@ public class ViewHandler {
 			AddIncidentalController aic = new AddIncidentalController(this, new AddIncidentalModel(db,type,amount),
 					view, parent);
 			
-			Drawable dialog = new DialogView("complex", view);
+			Drawable dialog = new DialogView("complex","Add Other Income", view);
 			dialog.draw();
 			
 			
@@ -259,36 +259,31 @@ public class ViewHandler {
 	}
 	
 	public Drawable makePasswordDialog(Controller c){
-		Drawable d = new DialogView("password","Enter current password");
+		Drawable d = new DialogView("password","Enter current password","");
 		d.initialise(c);
 		return d;
 	}
 	
-	public Drawable makeInputDialog(String message, Controller c){
-		Drawable d = new DialogView("input",message);
+	public Drawable makeInputDialog(String message,String title, Controller c){
+		Drawable d = new DialogView("input",title,message);
 		d.initialise(c);
 		return d;
 	}
 	
-	public Drawable makeInputDialog(String message,String initialValue, Controller c){
-		Drawable d = new DialogView("input",message,initialValue);
+	
+	public Drawable makeConfirmDialog(String message,String title, Controller c){
+		Drawable d = new DialogView("confirm", title, message);
 		d.initialise(c);
 		return d;
 	}
 	
-	public Drawable makeConfirmDialog(String message, Controller c){
-		Drawable d = new DialogView("confirm",message);
+	public Drawable makeMessageDialog(String message,String title, Controller c){
+		Drawable d = new DialogView("message",title, message);
 		d.initialise(c);
 		return d;
 	}
-	
-	public Drawable makeMessageDialog(String message, Controller c){
-		Drawable d = new DialogView("message",message);
-		d.initialise(c);
-		return d;
-	}
-	public Drawable makeMessageDialog(String message){
-		Drawable d = new DialogView("message",message);
+	public Drawable makeMessageDialog(String message, String title){
+		Drawable d = new DialogView("message",title, message);
 		return d;
 	}
 

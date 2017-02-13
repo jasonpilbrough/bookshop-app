@@ -39,7 +39,7 @@ public class CashUpController extends Controller {
 				model.setVarience(Double.parseDouble(view.getFields().get("cash_in_box").toString()));
 				model.setFloat();
 			} catch (NumberFormatException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected","Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -48,16 +48,16 @@ public class CashUpController extends Controller {
 				boolean saved = model.save(Double.parseDouble(view.getFields().get("cash_in_box").toString()), 
 						view.getFields().get("explaination").toString());
 				if(saved){
-					Drawable dialog4 = viewHandler.makeMessageDialog("Cash up successfully saved",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("Cash up successfully saved","Success",this);
 					dialog4.draw();
 				}
 				
 				
 			} catch (NumberFormatException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected","Error",this);
 				dialog4.draw();
 			} catch (IOException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save cash up. "+e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save cash up. "+e1.getMessage(),"Error",this);
 				dialog4.draw();
 				throw new LogException(e1);
 			}

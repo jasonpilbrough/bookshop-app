@@ -97,13 +97,13 @@ public class SalesTableModel implements TableModel {
 			System.out.println((double)getValueAt(rowIndex, columnIndex)+" : "+(double)aValue);
 			if((double)getValueAt(rowIndex, columnIndex)>-1&&(double)aValue<0){
 				//TODO absolutly hate this. NO VIEW HANDLER, and the rest should be in validated table model
-				Drawable d = new ViewHandler(null,null).makeMessageDialog("Warning. Changing transaction to a refunded sale directly\nwill NOT "
-						+ "change the quantity of stock avaliable.\nRather use Add->Refund");
+				Drawable d = new ViewHandler(null,null).makeMessageDialog("Changing transaction to a refunded sale directly\nwill NOT "
+						+ "change the quantity of stock avaliable.\nRather use Add->Refund","Warning");
 				d.draw();
 			} else if((double)getValueAt(rowIndex, columnIndex)<0&&(double)aValue>-1){
 				//TODO absolutly hate this. NO VIEW HANDLER, and the rest should be in validated table model
-				Drawable d = new ViewHandler(null,null).makeMessageDialog("Warning. Changing transaction to a sale directly\n"
-						+ "will NOT change quantity of stock avaliable. \nRather use Go-to-store->Make-a-sale");
+				Drawable d = new ViewHandler(null,null).makeMessageDialog("Changing transaction to a sale directly\n"
+						+ "will NOT change quantity of stock avaliable. \nRather use Go-to-store->Make-a-sale","Warning");
 				d.draw();
 			}
 					

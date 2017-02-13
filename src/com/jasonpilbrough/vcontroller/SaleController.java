@@ -37,7 +37,7 @@ public class SaleController extends Controller {
 				//handles items that are out of stock
 				if(!model.isItemInStock(barcode) && Boolean.parseBoolean(view.getFields().get("sale_transaction").toString())){
 					Drawable dialog1 = viewHandler.makeConfirmDialog("This item is marked as out of stock.\nDo you"
-							+ " wish to continue?", this);
+							+ " wish to continue?","Warning", this);
 					dialog1.draw();
 					
 					boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
@@ -51,10 +51,10 @@ public class SaleController extends Controller {
 						Boolean.parseBoolean(view.getFields().get("sale_transaction").toString()), 
 						Integer.parseInt(view.getFields().get("qty").toString()));
 			} catch (NumberFormatException e2) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("Price wrong format. Number expected",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Price wrong format. Number expected","Error",this);
 				dialog4.draw();
 			} catch (FailedValidationException e2){
-				Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			
@@ -66,10 +66,10 @@ public class SaleController extends Controller {
 			if(model.getCartSize()>0){
 				double total = model.getTotal();
 				model.checkout(view.getFields().get("payment").toString());
-				Drawable dialog4 = viewHandler.makeMessageDialog("Transaction successful. Total: "+total,this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Transaction successful. Total: "+total,"Success",this);
 				dialog4.draw();
 			}else{
-				Drawable dialog4 = viewHandler.makeMessageDialog("No items in cart. Add items to cart before checking out",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("No items in cart. Add items to cart before checking out","Error", this);
 				dialog4.draw();
 			}
 

@@ -34,16 +34,16 @@ public class AddBugReportController extends Controller {
 			try {
 				boolean saved = model.save(view.getFields().get("message").toString());
 				if(saved){
-					Drawable dialog4 = viewHandler.makeMessageDialog("Bug reported. Thank you!",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("Bug reported. Thank you!","Success",this);
 					dialog4.draw();
 				}
 				
 			} catch (IOException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to report bug. "+e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to report bug. "+e1.getMessage(),"Error",this);
 				dialog4.draw();
 				throw new LogException(e1);
 			} catch (FailedValidationException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;

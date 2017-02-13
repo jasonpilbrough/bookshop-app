@@ -39,7 +39,7 @@ public class MemberController extends Controller {
 			case "init":
 				model.setAllValues();
 				if(model.hasMembershipExpired()){
-					Drawable dialog4 = viewHandler.makeMessageDialog("Membership has expired",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("Membership has expired","Error",this);
 					dialog4.draw();
 				}
 				
@@ -51,7 +51,7 @@ public class MemberController extends Controller {
 					}
 					model.setEditable(true);
 				}catch (AccessException e2) {
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 				break;
@@ -60,7 +60,7 @@ public class MemberController extends Controller {
 					if(!am.allowedAccess("ELOP")){
 						throw new AccessException();
 					}
-					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone", this);
+					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone","Confirmation needed", this);
 					dialog3.draw();
 					
 					boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
@@ -70,7 +70,7 @@ public class MemberController extends Controller {
 					
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
 				} catch (AccessException e2) {
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 					
@@ -82,7 +82,7 @@ public class MemberController extends Controller {
 					model.setEditable(false);
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
 				} catch (FailedValidationException e2) {
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 					
@@ -107,7 +107,7 @@ public class MemberController extends Controller {
 						}
 					});
 				} catch (AccessException e2){
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 				
@@ -135,10 +135,10 @@ public class MemberController extends Controller {
 					}
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
 				} catch (NumberFormatException e2) {
-					Drawable dialog4 = viewHandler.makeMessageDialog("No loan selected",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("No loan selected","Error",this);
 					dialog4.draw();
 				} catch (AccessException e2){
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 				
@@ -152,10 +152,10 @@ public class MemberController extends Controller {
 					model.extendLoan(Integer.parseInt(view.getFields().get("selected_row_id").toString()));
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
 				} catch (NumberFormatException e2) {
-					Drawable dialog4 = viewHandler.makeMessageDialog("No loan selected",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("No loan selected","Error",this);
 					dialog4.draw();
 				} catch (AccessException e2){
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 				
@@ -170,7 +170,7 @@ public class MemberController extends Controller {
 					//handles members with more outstanding loans than allowed
 					if(!model.loanLimitReached()){
 						Drawable dialog1 = viewHandler.makeConfirmDialog("This member has already reached their outstanding loan limit"
-								+ "\nDo you wish to continue?", this);
+								+ "\nDo you wish to continue?" ,"Warning", this);
 						dialog1.draw();
 						
 						boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
@@ -180,14 +180,14 @@ public class MemberController extends Controller {
 						
 					}
 					
-					Drawable dialog = viewHandler.makeInputDialog("Enter Barcode", this);
+					Drawable dialog = viewHandler.makeInputDialog("Enter Barcode","Input needed", this);
 					dialog.draw();
 					final String barcode = dialog.getFields().get("dialog_input").toString();
 					
 					//handles items that are out of stock
 					if(!model.isItemInStock(barcode)){
 						Drawable dialog1 = viewHandler.makeConfirmDialog("This item is marked as out of stock.\nDo you"
-								+ " wish to continue?", this);
+								+ " wish to continue?", "Warning", this);
 						dialog1.draw();
 						
 						boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
@@ -207,7 +207,7 @@ public class MemberController extends Controller {
 								try {
 									model.newLoan(barcode);
 								} catch (FailedValidationException e1) {
-									Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+									Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 									dialog4.draw();
 								} 
 								
@@ -220,10 +220,10 @@ public class MemberController extends Controller {
 					}
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
 				} catch (FailedValidationException e2){
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				} catch (AccessException e2){
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 				

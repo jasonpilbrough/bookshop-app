@@ -39,10 +39,10 @@ public class AddMemberController extends Controller {
 				try {
 					model.addMember(view.getFields().get("name").toString(), view.getFields().get("phone_number").toString(),false);
 					parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
-					Drawable dialog4 = viewHandler.makeMessageDialog("Member successfully added",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("Member successfully added","Success",this);
 					dialog4.draw();
 				} catch (FailedValidationException e2) {
-					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+					Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 					dialog4.draw();
 				}
 				
@@ -57,10 +57,10 @@ public class AddMemberController extends Controller {
 								model.addMember(view.getFields().get("name").toString(), view.getFields().get("phone_number").toString(),true);
 								parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));	
 								//dialog.setVisible(false);
-								Drawable dialog4 = viewHandler.makeMessageDialog("Member successfully added",this);
+								Drawable dialog4 = viewHandler.makeMessageDialog("Member successfully added","Success",this);
 								dialog4.draw();
 							} catch (FailedValidationException e2) {
-								Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+								Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 								dialog4.draw();
 							}
 							break;

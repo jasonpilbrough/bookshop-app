@@ -38,12 +38,12 @@ public class SalesReportController extends Controller {
 				boolean saved = model.save(view.getFields().get("date1").toString(), 
 						view.getFields().get("date2").toString());
 				if(saved){
-					Drawable dialog4 = viewHandler.makeMessageDialog("Sales report successfully saved",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("Sales report successfully saved","Success",this);
 					dialog4.draw();
 				}
 				
 			} catch (IOException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save Sales report. "+e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save Sales report. "+e1.getMessage(),"Error",this);
 				dialog4.draw();
 				throw new LogException(e1);
 			}

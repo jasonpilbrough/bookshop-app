@@ -44,14 +44,14 @@ public class AddPurchaseController extends Controller {
 				}
 				
 			} catch (NumberFormatException e2) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("Price wrong format. Number expected",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Price wrong format. Number expected","Error",this);
 				dialog4.draw();
 			}
 			
 			break;
 		case "cancel":
 			model.close();
-			Drawable dialog4 = viewHandler.makeMessageDialog("Transation cancelled",this);
+			Drawable dialog4 = viewHandler.makeMessageDialog("Transation cancelled","",this);
 			dialog4.draw();
 			break;
 		default:

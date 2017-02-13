@@ -33,7 +33,7 @@ public class AboutController extends Controller {
 			try {
 				model.setAllValues();
 			} catch (FileNotFoundException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 				throw new LogException(e1);
 			}

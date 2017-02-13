@@ -33,7 +33,7 @@ public class ManageUsersController extends Controller {
 			viewHandler.displayView("AddUser");
 			break;
 		case "delete":
-			Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone", this);
+			Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone","Confirmation needed", this);
 			dialog3.draw();
 			
 			//System.out.println(dialog3.getFields().get("dialog_input").toString());

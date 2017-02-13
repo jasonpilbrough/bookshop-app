@@ -41,10 +41,10 @@ public class UserSettingsController extends Controller {
 			if(model.checkPassword(password.toString())){
 				model.changeUserDetails(view.getFields().get("username").toString(), 
 						new String((char[])view.getFields().get("password")));
-				Drawable dialog4 = viewHandler.makeMessageDialog("Changes saved",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Changes saved","Success",this);
 				dialog4.draw();
 			}else{
-				Drawable dialog4 = viewHandler.makeMessageDialog("Incorrect password",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Incorrect password","Error",this);
 				dialog4.draw();
 			}
 			

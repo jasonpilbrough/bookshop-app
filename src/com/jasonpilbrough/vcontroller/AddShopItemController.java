@@ -49,13 +49,13 @@ public class AddShopItemController extends Controller {
 							Double.parseDouble(view.getFields().get("selling_price").toString()),
 							Integer.parseInt(view.getFields().get("qty").toString()));
 				}
-						Drawable dialog4 = viewHandler.makeMessageDialog("Shop Item successfully added",this);
+						Drawable dialog4 = viewHandler.makeMessageDialog("Shop Item successfully added","Success",this);
 						dialog4.draw();
 			} catch (NumberFormatException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog("Cost price or selling price wrong format. Number expected",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Cost price or selling price wrong format. Number expected","Error",this);
 				dialog4.draw();
 			} catch (FailedValidationException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;

@@ -26,17 +26,20 @@ public class DialogView implements Drawable {
 	private String initialValue;
 	private String answer;
 	private String type;
+	private String title;
+	
 	//TODO might delete this
 	private Controller controller;
 	
-	public DialogView(String type, Object message) {
-		this(type, message,"");
+	public DialogView(String type,String title, Object message) {
+		this(type,title, message,"");
 	}
 
-	public DialogView(String type, Object message, String initialValue) {
+	public DialogView(String type,String title, Object message, String initialValue) {
 		this.message = message;
 		this.initialValue = initialValue;
 		this.type = type;
+		this.title = title;
 	}
 	
 	
@@ -54,18 +57,19 @@ public class DialogView implements Drawable {
 	public void draw() {
 		switch(type){
 		case "input":
-			answer = JOptionPane.showInputDialog(message, initialValue);
+			answer = JOptionPane.showInputDialog(null,message, title, JOptionPane.QUESTION_MESSAGE);
 			break;
 		case "complex":
 			JOptionPane optionPane = new JOptionPane(message,JOptionPane.PLAIN_MESSAGE,JOptionPane.DEFAULT_OPTION,null,new Object[]{});
 		    JDialog dialog = optionPane.createDialog(null);
+		    dialog.setTitle(title);
 		    dialog.setVisible(true);
 			break;
 		case "message":
-			 JOptionPane.showMessageDialog(null,message);
+			 JOptionPane.showMessageDialog(null,message,title, JOptionPane.INFORMATION_MESSAGE);
 			break;
 		case "confirm":
-			int temp = JOptionPane.showConfirmDialog(null,message,"",JOptionPane.YES_NO_OPTION);
+			int temp = JOptionPane.showConfirmDialog(null,message,title,JOptionPane.YES_NO_OPTION);
 			if(temp==0){
 				answer = true+"";
 			}else{
@@ -74,7 +78,7 @@ public class DialogView implements Drawable {
 			break;
 		case "password":
 			JPasswordField pass = new JPasswordField();
-			int option =  JOptionPane.showConfirmDialog(null,pass,message.toString(),JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
+			int option =  JOptionPane.showConfirmDialog(null,pass,title,JOptionPane.OK_CANCEL_OPTION,JOptionPane.PLAIN_MESSAGE);
 			
 			if(option == 0) // pressing OK button
 			{

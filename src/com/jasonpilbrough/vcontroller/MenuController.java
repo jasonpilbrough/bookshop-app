@@ -47,7 +47,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("ConsoleView");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 		
@@ -69,7 +69,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("AddMember");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;	
@@ -80,7 +80,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("AddLibraryItem");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -90,10 +90,10 @@ public class MenuController extends Controller {
 					throw new AccessException();
 				}
 				parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "library context"));
-				Drawable d = viewHandler.makeMessageDialog("To add a loan, Select a member -> New Loan"); 
+				Drawable d = viewHandler.makeMessageDialog("To add a loan, Select a member -> New Loan",""); 
 				d.draw();
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			
@@ -105,7 +105,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("AddShopItem");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -115,10 +115,10 @@ public class MenuController extends Controller {
 					throw new AccessException();
 				}
 				parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "store context"));
-				Drawable d1 = viewHandler.makeMessageDialog("To add a sale, Enter barcode -> Add to Cart -> Checkout"); 
+				Drawable d1 = viewHandler.makeMessageDialog("To add a sale, Enter barcode -> Add to Cart -> Checkout",""); 
 				d1.draw();
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			
@@ -129,10 +129,10 @@ public class MenuController extends Controller {
 					throw new AccessException();
 				}
 				parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "store context with refund"));
-				Drawable d2 = viewHandler.makeMessageDialog("To add a refund, Enter barcode -> Add to Cart -> Checkout"); 
+				Drawable d2 = viewHandler.makeMessageDialog("To add a refund, Enter barcode -> Add to Cart -> Checkout",""); 
 				d2.draw();
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			
@@ -144,7 +144,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("AddIncidental");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -155,7 +155,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("AddPurchase");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -187,7 +187,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("ManageUsers");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -198,7 +198,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("CashUp");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -209,7 +209,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("SalesReport");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -220,7 +220,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("UserSettingsView");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;
@@ -231,7 +231,7 @@ public class MenuController extends Controller {
 				}
 				viewHandler.displayView("ApplicationSettingsView");
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;

@@ -37,7 +37,7 @@ public class ApplicationSettingsController extends Controller {
 				model.changeSetting(object[0].toString(), object[1]);
 			}
 
-			Drawable dialog4 = viewHandler.makeMessageDialog("Changes saved",this);
+			Drawable dialog4 = viewHandler.makeMessageDialog("Changes saved","Success",this);
 			dialog4.draw();
 			break;
 		case "cancel":

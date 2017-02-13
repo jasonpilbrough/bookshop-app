@@ -35,7 +35,7 @@ public class LoginController extends Controller {
 			if(valid){
 				parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "welcome context"));
 			}else{
-				Drawable dialog4 = viewHandler.makeMessageDialog("Username or password incorrect",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Username or password incorrect","Error",this);
 				dialog4.draw();
 			}
 			

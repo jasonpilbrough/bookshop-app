@@ -47,7 +47,7 @@ public class ApplicationController extends Controller {
 				}
 			model.setStoreContext(true);
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			break;

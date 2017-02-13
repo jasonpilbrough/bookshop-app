@@ -48,10 +48,10 @@ public class AddLibraryItemController extends Controller {
 							Integer.parseInt(view.getFields().get("qty").toString()));
 					
 				}
-				Drawable dialog4 = viewHandler.makeMessageDialog("Library Item successfully added",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("Library Item successfully added","Success",this);
 				dialog4.draw();
 			} catch (FailedValidationException e2) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			

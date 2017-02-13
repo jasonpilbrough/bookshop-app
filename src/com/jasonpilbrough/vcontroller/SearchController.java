@@ -39,7 +39,7 @@ public class SearchController extends Controller {
 				}
 				int[] ids = (int[])view.getFields().get("selected_ids");
 				if(ids.length>0){
-					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone", this);
+					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone","Warning", this);
 					dialog3.draw();
 					
 					boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
@@ -48,11 +48,11 @@ public class SearchController extends Controller {
 					}
 					
 				}else{
-					Drawable dialog4 = viewHandler.makeMessageDialog("No rows selected",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("No rows selected","Error",this);
 					dialog4.draw();
 				}
 			} catch (AccessException e1) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			

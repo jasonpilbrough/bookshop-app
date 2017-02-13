@@ -41,11 +41,11 @@ public class AddUserController extends Controller {
 							view.getFields().get("access").toString());
 				}
 				
-				Drawable dialog4 = viewHandler.makeMessageDialog("User successfully added",this);
+				Drawable dialog4 = viewHandler.makeMessageDialog("User successfully added","Success" ,this);
 				dialog4.draw();
 				parent.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
 			} catch (FailedValidationException e2) {
-				Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),this);
+				Drawable dialog4 = viewHandler.makeMessageDialog(e2.getMessage(),"Error",this);
 				dialog4.draw();
 			}
 			
