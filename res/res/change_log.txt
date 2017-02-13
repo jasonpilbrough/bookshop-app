@@ -31,3 +31,10 @@ Changed look and feel to default for running OS
 Changed compiler to java 1.7
 
 --------------------------------------------  
+VERSION		0.9.2
+RELEASE         2017-02-12
+
+Visual improvements
+Set toolbar icon for all windows
+
+-------------------------------------------- 
