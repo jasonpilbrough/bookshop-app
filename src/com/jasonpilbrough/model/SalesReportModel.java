@@ -3,7 +3,6 @@ package com.jasonpilbrough.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.Money;
 import com.jasonpilbrough.helper.SmartFile;
 import com.jasonpilbrough.tablemodel.CachedTableModel;
 import com.jasonpilbrough.tablemodel.NonEditableTableModel;
@@ -50,15 +50,15 @@ public class SalesReportModel {
 		
 		changefirer.firePropertyChange("table_model", null, tableModel);  
 				
-		changefirer.firePropertyChange("cash_payments", null, 0.0);
-		changefirer.firePropertyChange("card_payments", null, 0.0);
-		changefirer.firePropertyChange("eft_payments", null, 0.0);
-		changefirer.firePropertyChange("total_income", null, 0.0);
-		changefirer.firePropertyChange("cost_sales", null, 0.0);
-		changefirer.firePropertyChange("refunds", null, 0.0);
-		changefirer.firePropertyChange("purchases", null, 0.0);
-		changefirer.firePropertyChange("total_expense", null, 0.0);
-		changefirer.firePropertyChange("profit", null, 0.0);
+		changefirer.firePropertyChange("cash_payments", null, new Money(0));
+		changefirer.firePropertyChange("card_payments", null,new Money(0));
+		changefirer.firePropertyChange("eft_payments", null, new Money(0));
+		changefirer.firePropertyChange("total_income", null, new Money(0));
+		changefirer.firePropertyChange("cost_sales", null, new Money(0));
+		changefirer.firePropertyChange("refunds", null, new Money(0));
+		changefirer.firePropertyChange("purchases", null, new Money(0));
+		changefirer.firePropertyChange("total_expense", null, new Money(0));
+		changefirer.firePropertyChange("profit", null, new Money(0));
 	}
 	
 	public void setAllValues(String date1, String date2){
@@ -68,15 +68,15 @@ public class SalesReportModel {
 		
 		changefirer.firePropertyChange("table_model", null, tableModel);  
 		
-		changefirer.firePropertyChange("cash_payments", null, getCashPayments(date1,date2));
-		changefirer.firePropertyChange("card_payments", null, getCardPayments(date1,date2));
-		changefirer.firePropertyChange("eft_payments", null, getEftPayments(date1,date2));
-		changefirer.firePropertyChange("total_income", null, getTotalIncome(date1,date2));
-		changefirer.firePropertyChange("cost_sales", null, getCostOfSales(date1,date2));
-		changefirer.firePropertyChange("refunds", null, getRefunds(date1,date2));
-		changefirer.firePropertyChange("purchases", null, getPurchases(date1,date2));
-		changefirer.firePropertyChange("total_expense", null, getTotalExpense(date1,date2));
-		changefirer.firePropertyChange("profit", null, getProfit(date1,date2));
+		changefirer.firePropertyChange("cash_payments", null, new Money(getCashPayments(date1,date2)));
+		changefirer.firePropertyChange("card_payments", null, new Money(getCardPayments(date1,date2)));
+		changefirer.firePropertyChange("eft_payments", null, new Money(getEftPayments(date1,date2)));
+		changefirer.firePropertyChange("total_income", null, new Money(getTotalIncome(date1,date2)));
+		changefirer.firePropertyChange("cost_sales", null, new Money(getCostOfSales(date1,date2)));
+		changefirer.firePropertyChange("refunds", null, new Money(getRefunds(date1,date2)));
+		changefirer.firePropertyChange("purchases", null, new Money(getPurchases(date1,date2)));
+		changefirer.firePropertyChange("total_expense", null, new Money(getTotalExpense(date1,date2)));
+		changefirer.firePropertyChange("profit", null, new Money(getProfit(date1,date2)));
 	}
 	
 	public boolean save(String date1, String date2) throws IOException{
