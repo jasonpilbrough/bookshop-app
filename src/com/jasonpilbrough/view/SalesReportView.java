@@ -1,6 +1,7 @@
 package com.jasonpilbrough.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
@@ -147,14 +148,23 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		JPanel parent = new JPanel();
         
 		cashPayments = new JLabel(cashPayments.getText());
+		cashPayments.setFont (new Font("Menlo",Font.PLAIN,12));
 		cardPayments = new JLabel(cardPayments.getText());
+		cardPayments.setFont (new Font("Menlo",Font.PLAIN,12));
 		eftPayments = new JLabel(eftPayments.getText());
+		eftPayments.setFont (new Font("Menlo",Font.PLAIN,12));
 		totalIncome = new JLabel(totalIncome.getText());
+		totalIncome.setFont (new Font("Menlo",Font.PLAIN,12));
 		costSales = new JLabel(costSales.getText());
+		costSales.setFont (new Font("Menlo",Font.PLAIN,12));
 		refunds = new JLabel(refunds.getText());
+		refunds.setFont (new Font("Menlo",Font.PLAIN,12));
 		purchases = new JLabel(purchases.getText());
+		purchases.setFont (new Font("Menlo",Font.PLAIN,12));
 		totalExpense = new JLabel(totalExpense.getText());
+		totalExpense.setFont (new Font("Menlo",Font.PLAIN,12));
 		profit = new JLabel(profit.getText());
+		profit.setFont (new Font("Menlo",Font.PLAIN,12));
 		
 		formatJLabels(new JLabel[]{cashPayments, cardPayments, eftPayments, totalIncome, costSales, refunds, purchases, totalExpense, profit});
 		
