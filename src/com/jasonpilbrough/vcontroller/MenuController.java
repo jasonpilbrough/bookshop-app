@@ -37,6 +37,26 @@ public class MenuController extends Controller {
 		case "about":
 			viewHandler.displayView("AboutView");
 			break;
+		case "update":
+			try{
+				if(!am.allowedAccess("ACAU")){
+					throw new AccessException();
+				}
+				Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This will close the current application","Confirmation needed", this);
+				dialog3.draw();
+				
+				boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
+				if(confirmed){
+					viewHandler.displayView("AutoUpdate");
+					System.exit(0);
+				}
+			}catch(AccessException e1){
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
+				dialog4.draw();
+			}
+			
+			
+			break;
 		case "report bug":
 			viewHandler.displayView("AddBugReportView");
 			break;

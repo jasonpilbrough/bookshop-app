@@ -1,6 +1,10 @@
 package com.jasonpilbrough.helper;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 import com.jasonpilbrough.model.AboutModel;
 import com.jasonpilbrough.model.AddBugReportModel;
@@ -106,6 +110,18 @@ public class ViewHandler {
 			appController = new ApplicationController(this, apm, av,am);
 			appController.initController();
 			break;
+		case "AutoUpdate":
+			// Run a java app in a separate system process
+			Process proc;
+			try {
+				proc = Runtime.getRuntime().exec("java -jar AutoUpdate.jar");
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(null, "Could not launch AutoUpdate");
+				throw new LogException(e);	
+			}
+			// Then retreive the process output
+			InputStream in = proc.getInputStream();
+			InputStream err = proc.getErrorStream();
 		case "LoginView":
 			LoginView lv = new LoginView();
 			LoginController lc = new LoginController(this,appController, new LoginModel(db,am), lv);

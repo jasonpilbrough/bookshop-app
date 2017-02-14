@@ -29,6 +29,8 @@ public class MenuView extends JMenuBar implements Drawable {
     	fileMenu = new JMenu("File");
     	fileMenu.add(new SmartJMenuItem("About","about").withRegisteredController(controller));
     	fileMenu.add(new JMenuItem("Change Log"));
+    	fileMenu.add(new SmartJMenuItem("Auto Update...","update").withRegisteredController(controller));
+    	fileMenu.addSeparator();
     	fileMenu.add(new SmartJMenuItem("Report a bug","report bug").withRegisteredController(controller));
     	fileMenu.add(new SmartJMenuItem("Logout","logout").withRegisteredController(controller));
     	fileMenu.add(new SmartJMenuItem("Exit Application","exit").withRegisteredController(controller));
