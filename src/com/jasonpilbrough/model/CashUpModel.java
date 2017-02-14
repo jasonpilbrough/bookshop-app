@@ -3,7 +3,6 @@ package com.jasonpilbrough.model;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -16,6 +15,7 @@ import org.joda.time.format.DateTimeFormatter;
 import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.Money;
 import com.jasonpilbrough.helper.SmartFile;
 
 public class CashUpModel {
@@ -91,10 +91,10 @@ public class CashUpModel {
 	}
 	
 	public void setAllValues(){
-		changefirer.firePropertyChange("cash_float", null, 0);
-		changefirer.firePropertyChange("cash_sales", null, 0);
-		changefirer.firePropertyChange("recorded_cash_sales", null, 0);
-		changefirer.firePropertyChange("varience", null, 0);
+		changefirer.firePropertyChange("cash_float", null, new Money(0));
+		changefirer.firePropertyChange("cash_sales", null, new Money(0));
+		changefirer.firePropertyChange("recorded_cash_sales", null, new Money(0));
+		changefirer.firePropertyChange("varience", null, new Money(0));
 	}
 	
 	private double getFloat(){
@@ -124,23 +124,21 @@ public class CashUpModel {
 	}
 	
 	public void setFloat(){
-		changefirer.firePropertyChange("cash_float", null, getFloat());
+		changefirer.firePropertyChange("cash_float", null, new Money(getFloat()));
 	}
 	
 	public void setCashSales(double cashInBox){
 		double ans = cashInBox - getFloat();
-		String cashStr = ans<0 ? "("+Math.abs(ans)+")" : ""+ans ;
-		changefirer.firePropertyChange("cash_sales", null, cashStr);
+		changefirer.firePropertyChange("cash_sales", null, new Money(ans));
 	}
 	
 	public void setRecordedCashSales(){
-		changefirer.firePropertyChange("recorded_cash_sales", null, getRecordedCashSales());
+		changefirer.firePropertyChange("recorded_cash_sales", null, new Money(getRecordedCashSales()));
 	}
 	
 	public void setVarience(double cashInBox){
 		double ans =  (cashInBox - getFloat()) - getRecordedCashSales();
-		String cashStr = ans<0 ? "("+Math.abs(ans)+")" : ""+ans ;
-		changefirer.firePropertyChange("varience", null,  cashStr);
+		changefirer.firePropertyChange("varience", null,  new Money(ans));
 	}
 	
 	private String formatString(String exp){
