@@ -8,6 +8,19 @@ public class Money {
 		this.amount = amount;
 	}
 	
+	public String toStringWithoutCurrency(){
+		String[] arr=String.valueOf(amount).split("\\.");
+	    int[] intArr=new int[2];
+	    intArr[0]=Integer.parseInt(arr[0]);
+	    intArr[1]=Integer.parseInt(arr[1]);
+	    if(amount>=0){
+	    	return String.format("%6s.%02d", intArr[0],intArr[1]);
+	    }else{
+	    	return String.format("(%5s.%02d)", Math.abs(intArr[0]),intArr[1]);
+	    }
+		
+	}
+	
 	public String toString(){
 		String[] arr=String.valueOf(amount).split("\\.");
 	    int[] intArr=new int[2];
