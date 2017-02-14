@@ -177,7 +177,7 @@ public class MemberView extends SmartJFrame implements Drawable{
         DesignGridLayout layout = new DesignGridLayout(parent);
         
         RowGroup detailsGroup = new RowGroup();
-        addGroup(layout, "Member Details",detailsGroup);
+        addGroup(layout, "Member Details");
         
         layout.row().group(detailsGroup).grid().empty().add(edit).add(delete);
         layout.row().group(detailsGroup).grid().add(new JLabel("Name:")).add(name,2);
@@ -186,7 +186,7 @@ public class MemberView extends SmartJFrame implements Drawable{
         layout.row().group(detailsGroup).grid().empty().add(cancel).add(confirm);
         
         RowGroup loansGroup = new RowGroup();
-        addGroup(layout, "Loan Actions",loansGroup);
+        addGroup(layout, "Loan Actions");
         
         layout.row().group(loansGroup).grid().add(scrollPane);
         layout.row().group(loansGroup).grid().add(returnLoan, extend).add(loan);;
