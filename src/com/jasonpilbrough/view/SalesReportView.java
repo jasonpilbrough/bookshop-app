@@ -1,18 +1,23 @@
 package com.jasonpilbrough.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
@@ -29,6 +34,7 @@ import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.RowGroup;
 
 public class SalesReportView extends SmartJFrame implements Drawable {
 
@@ -94,7 +100,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 	@Override
 	public void initialise(Controller controller) {
 			setVisible(true);
-			setBounds(0, 0, 550, 450);
+			setBounds(0, 0, 550, 500);
 			setTitle("Sales Report");
 			
 			table = new JTable();
@@ -154,7 +160,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		eftPayments = new JLabel(eftPayments.getText());
 		eftPayments.setFont (new Font("Menlo",Font.PLAIN,12));
 		totalIncome = new JLabel(totalIncome.getText());
-		totalIncome.setFont (new Font("Menlo",Font.PLAIN,12));
+		totalIncome.setFont (new Font("Menlo",Font.BOLD,12));
 		costSales = new JLabel(costSales.getText());
 		costSales.setFont (new Font("Menlo",Font.PLAIN,12));
 		refunds = new JLabel(refunds.getText());
@@ -162,9 +168,9 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		purchases = new JLabel(purchases.getText());
 		purchases.setFont (new Font("Menlo",Font.PLAIN,12));
 		totalExpense = new JLabel(totalExpense.getText());
-		totalExpense.setFont (new Font("Menlo",Font.PLAIN,12));
+		totalExpense.setFont (new Font("Menlo",Font.BOLD,12));
 		profit = new JLabel(profit.getText());
-		profit.setFont (new Font("Menlo",Font.PLAIN,12));
+		profit.setFont (new Font("Menlo",Font.BOLD,12));
 		
 		formatJLabels(new JLabel[]{cashPayments, cardPayments, eftPayments, totalIncome, costSales, refunds, purchases, totalExpense, profit});
 		
@@ -203,18 +209,27 @@ public class SalesReportView extends SmartJFrame implements Drawable {
       
         
         DesignGridLayout layout = new DesignGridLayout(parent);
-
+        addGroup(layout, "Date From -> To");
         layout.row().grid().add(p1).add(p2);
         layout.row().grid().empty().empty().add(generate);
         layout.emptyRow();
-        layout.row().grid(new JLabel("Transactions:")).add(scrollPane);
-        layout.row().grid().add(new JLabel("-- INCOME --")).grid().add(new JLabel("-- EXPENSES --"));
+        addGroup(layout, "Transactions");
+        layout.row().grid(new JLabel()).add(scrollPane);
+        addGroup(layout, "Cashflow");
+        layout.emptyRow();
+        layout.emptyRow();
         layout.row().grid(new JLabel("Cash Payments:")).add(cashPayments).grid(new JLabel("Cost of Sales:")).add(costSales);
         layout.row().grid(new JLabel("Card Payments:")).add(cardPayments).grid(new JLabel("Refunds:")).add(refunds);
         layout.row().grid(new JLabel("EFT Payments:")).add(eftPayments).grid(new JLabel("Purchases:")).add(purchases);
-        layout.row().grid(new JLabel("Total Income:")).add(totalIncome).grid(new JLabel("Total Expense:")).add(totalExpense);
+        JLabel ti = new JLabel("Total Income:");
+        ti.setFont (new Font(ti.getFont().getFontName(),Font.BOLD,13));
+        JLabel te = new JLabel("Total Expenses:");
+        te.setFont (new Font(te.getFont().getFontName(),Font.BOLD,13));
+        layout.row().grid(ti).add(totalIncome).grid(te).add(totalExpense);
         layout.emptyRow();
-        layout.row().grid(new JLabel("Profit:")).add(profit);
+        JLabel p = new JLabel("Profit:");
+        p.setFont (new Font(p.getFont().getFontName(),Font.BOLD,13));
+        layout.row().grid(p).add(profit);
         
         layout.row().grid().empty().empty().add(save);
         getContentPane().removeAll();
@@ -278,4 +293,47 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 	    }
 
 	}
+	
+	private void addGroup(DesignGridLayout layout, String name, RowGroup group)
+  	{
+  		JCheckBox groupBox = new JCheckBox(name);
+  		groupBox.setName(name);
+  		groupBox.setForeground(Color.BLUE);
+  		groupBox.setSelected(true);
+  		groupBox.addItemListener(new ShowHideAction(group));
+  		layout.emptyRow();
+  		layout.row().left().add(groupBox, new JSeparator()).fill();
+  	}
+  	
+  	private void addGroup(DesignGridLayout layout, String name)
+  	{
+  		JLabel group = new JLabel(name);
+  		group.setForeground(Color.BLUE);
+  		layout.emptyRow();
+  		layout.row().left().add(group, new JSeparator()).fill();
+  	}
+  	
+
+	private class ShowHideAction implements ItemListener
+	  	{
+	  		public ShowHideAction(RowGroup group)
+	  		{
+	  			_group = group;
+	  		}
+	  		
+	  		@Override public void itemStateChanged(ItemEvent event)
+	  		{
+	  			if (event.getStateChange() == ItemEvent.SELECTED)
+	  			{
+	  				_group.show();
+	 			}
+	  			else
+	  			{
+	  				_group.hide();
+	  			}
+	  			pack();
+	  		}
+	  		
+	  		final private RowGroup _group;
+	 	}
 }
