@@ -1,15 +1,20 @@
 package com.jasonpilbrough.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
 import com.jasonpilbrough.helper.DateInTime;
@@ -19,6 +24,7 @@ import com.jasonpilbrough.helper.SmartJTextField;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
+import net.java.dev.designgridlayout.RowGroup;
 
 public class CashUpView extends SmartJFrame implements Drawable {
 
@@ -60,7 +66,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
 	@Override
 	public void initialise(Controller controller) {
 	       setVisible(true);
-	       setBounds(0, 0, 420, 355);
+	       setBounds(0, 0, 420, 400);
 	       setTitle("Cash Up");
 	       
 	        cashInBox = new SmartJTextField("");
@@ -103,13 +109,17 @@ public class CashUpView extends SmartJFrame implements Drawable {
      
 		
         DesignGridLayout layout = new DesignGridLayout(parent);
+        RowGroup infoGroup = new RowGroup();
+        addGroup(layout, "Cash Up details");
         layout.row().grid(new JLabel("Date:")).add(new JLabel(new DateInTime().toString())); 
         layout.row().grid(new JLabel("Cash In Box:")).add(cashInBox,2).add(apply); 
+        addGroup(layout, "Generated data");
         layout.row().grid(new JLabel("Float:")).add(cashFloat);
         layout.row().grid(new JLabel("Cash Sales:")).add(cashSales);
         layout.row().grid(new JLabel("Recorded Cash Sales:")).add(recordedCashSales);
         layout.row().grid(new JLabel("Varience:")).add(varience);
         layout.emptyRow();
+        addGroup(layout, "Reason for varience");
         layout.row().grid(new JLabel("Explaination:")).add(scrollPane);
         layout.emptyRow();
         layout.row().grid().empty(2).add(save);
@@ -126,5 +136,49 @@ public class CashUpView extends SmartJFrame implements Drawable {
 		map.put("explaination", explaination.getText());
 		return map;
 	}
+	
+	private void addGroup(DesignGridLayout layout, String name, RowGroup group)
+  	{
+  		JCheckBox groupBox = new JCheckBox(name);
+  		groupBox.setName(name);
+  		groupBox.setForeground(Color.BLUE);
+  		groupBox.setSelected(true);
+  		groupBox.addItemListener(new ShowHideAction(group));
+  		layout.emptyRow();
+  		layout.row().left().add(groupBox, new JSeparator()).fill();
+  	}
+  	
+  	private void addGroup(DesignGridLayout layout, String name)
+  	{
+  		JLabel group = new JLabel(name);
+  		group.setForeground(Color.BLUE);
+  		layout.emptyRow();
+  		layout.row().left().add(group, new JSeparator()).fill();
+  	}
+  	
+
+	private class ShowHideAction implements ItemListener
+	  	{
+	  		public ShowHideAction(RowGroup group)
+	  		{
+	  			_group = group;
+	  		}
+	  		
+	  		@Override public void itemStateChanged(ItemEvent event)
+	  		{
+	  			if (event.getStateChange() == ItemEvent.SELECTED)
+	  			{
+	  				_group.show();
+	 			}
+	  			else
+	  			{
+	  				_group.hide();
+	  			}
+	  			pack();
+	  		}
+	  		
+	  		final private RowGroup _group;
+	 	}
+
 
 }
