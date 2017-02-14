@@ -56,6 +56,7 @@ public class MembersView extends JPanel implements Drawable{
        table = new JTable();
        table.setGridColor(new java.awt.Color(218, 218, 218));
        table.setShowVerticalLines(false);
+       table.setShowHorizontalLines(false);
 	   table.setAutoCreateRowSorter(true);
 	   table.setAutoResizeMode(JTable.AUTO_RESIZE_LAST_COLUMN);
 	   table.addMouseListener(new java.awt.event.MouseAdapter() {

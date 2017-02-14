@@ -106,7 +106,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 			table = new JTable();
 			table.setGridColor(new java.awt.Color(218, 218, 218));
 			table.setShowVerticalLines(false);
-			//table.setShowHorizontalLines(false);
+			table.setShowHorizontalLines(false);
 			//table.setAutoCreateRowSorter(true);
 			
 			AbstractFormatter format = new AbstractFormatter() {

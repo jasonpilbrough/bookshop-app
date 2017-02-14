@@ -1,5 +1,6 @@
 package com.jasonpilbrough.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -14,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -92,8 +95,10 @@ public class SaleView extends JPanel implements Drawable {
 	       cart = new JTable();
 	       cart.setGridColor(new java.awt.Color(218, 218, 218));
 	       cart.setShowVerticalLines(false);
+	       cart.setShowHorizontalLines(false);
 	       cart.setAutoCreateRowSorter(true);
 	       
+		   
 	       add = new SmartJButton("Add to Cart").withRegisteredController(controller);
 	       checkout = new SmartJButton("Checkout").withRegisteredController(controller);
 	       cancel = new SmartJButton("Cancel").withRegisteredController(controller);

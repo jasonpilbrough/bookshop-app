@@ -1,5 +1,6 @@
 package com.jasonpilbrough.view;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -11,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIDefaults;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -62,8 +65,8 @@ public class SearchView extends SmartJFrame implements Drawable {
 	    table = new JTable();
 	    table.setGridColor(new java.awt.Color(218, 218, 218));
 	    table.setShowVerticalLines(false);
+	    table.setShowHorizontalLines(false);
 		table.setAutoCreateRowSorter(true);
-	    
 	    combobox = new SmartJComboBox<>("box selection").withRegisteredController(controller);
        
 	    delete = new SmartJButton("Delete").withRegisteredController(controller);

@@ -94,6 +94,7 @@ public class MemberView extends SmartJFrame implements Drawable{
 	       table = new JTable();
 	       table.setGridColor(new java.awt.Color(218, 218, 218));
 	       table.setShowVerticalLines(false);
+	       table.setShowHorizontalLines(false);
 	       
 	       
 	        name = new SmartJTextField("");
