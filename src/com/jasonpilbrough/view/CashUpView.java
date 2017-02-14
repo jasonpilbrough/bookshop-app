@@ -1,6 +1,7 @@
 package com.jasonpilbrough.view;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
@@ -83,10 +84,15 @@ public class CashUpView extends SmartJFrame implements Drawable {
         
         
         cashInBox = new SmartJTextField().withSomeState(cashInBox);
+        cashInBox.setFont (new Font("Menlo",Font.PLAIN,12));
         cashFloat = new JLabel(cashFloat.getText());
+        cashFloat.setFont (new Font("Menlo",Font.PLAIN,12));
         cashSales = new JLabel(cashSales.getText());
+        cashSales.setFont (new Font("Menlo",Font.PLAIN,12));
         recordedCashSales = new JLabel(recordedCashSales.getText());
+        recordedCashSales.setFont (new Font("Menlo",Font.PLAIN,12));
         varience = new JLabel(varience.getText());
+        varience.setFont (new Font("Menlo",Font.PLAIN,12));
         save = new SmartJButton().withSomeState(save);
         apply = new SmartJButton().withSomeState(apply);
         //TODO component state doesnt persist
