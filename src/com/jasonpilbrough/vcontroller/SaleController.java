@@ -3,6 +3,7 @@ package com.jasonpilbrough.vcontroller;
 import java.awt.event.ActionEvent;
 
 import com.jasonpilbrough.helper.FailedValidationException;
+import com.jasonpilbrough.helper.Money;
 import com.jasonpilbrough.helper.ViewHandler;
 import com.jasonpilbrough.model.SaleModel;
 import com.jasonpilbrough.view.Drawable;
@@ -64,10 +65,20 @@ public class SaleController extends Controller {
 			break;
 		case "checkout":
 			if(model.getCartSize()>0){
+				String payment = view.getFields().get("payment").toString();
 				double total = model.getTotal();
+				
+				
+				Drawable dialog1 = viewHandler.makeConfirmDialog(String.format("Confirm transaction\n%s R%.2f\n%s %s", "Total:", total, "Payment:",payment)
+						,"Confirmation needed", this);
+				dialog1.draw();
+				
+				boolean confirmed = Boolean.parseBoolean(dialog1.getFields().get("dialog_input").toString());
+				if(!confirmed){
+					return;
+				}
 				model.checkout(view.getFields().get("payment").toString());
-				Drawable dialog4 = viewHandler.makeMessageDialog("Transaction successful. Total: "+total,"Success",this);
-				dialog4.draw();
+				
 			}else{
 				Drawable dialog4 = viewHandler.makeMessageDialog("No items in cart. Add items to cart before checking out","Error", this);
 				dialog4.draw();
