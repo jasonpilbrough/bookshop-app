@@ -39,7 +39,7 @@ public class MembersController extends Controller{
 			model.setFilter(view.getFields().get("filter").toString());
 			break;
 		case "key pressed":
-			model.setFilter(view.getFields().get("filter").toString());
+			//model.setFilter(view.getFields().get("filter").toString());
 			break;
 		default:
 			throw new RuntimeException("Command "+e.getActionCommand()+" not registered with controller");

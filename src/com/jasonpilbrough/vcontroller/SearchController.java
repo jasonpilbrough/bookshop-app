@@ -60,6 +60,12 @@ public class SearchController extends Controller {
 		case "enter pressed":
 			model.setFilter(view.getFields().get("filter").toString());
 			break;
+		case "filter search":
+			model.setFilter(view.getFields().get("filter").toString());
+			break;
+		case "key pressed":
+			//model.setFilter(view.getFields().get("filter").toString());
+			break;
 		case "box selection":
 			model.setTable(view.getFields().get("selected_table").toString());
 			break;
