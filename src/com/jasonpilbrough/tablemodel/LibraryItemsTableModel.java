@@ -80,6 +80,7 @@ public class LibraryItemsTableModel implements TableModel{
 					notifyListeners();
 				} else if(evt.getPropertyName().equals("progress")){
 					progress = (double)evt.getNewValue();
+					notifyListeners(progress);
 				}
 				
 			}

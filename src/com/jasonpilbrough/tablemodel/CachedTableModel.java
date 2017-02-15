@@ -84,6 +84,9 @@ public class CachedTableModel implements TableModel {
 		
 	}
 
-	
+	@Override
+	public String toString() {
+		return origin.toString();
+	}
 
 }

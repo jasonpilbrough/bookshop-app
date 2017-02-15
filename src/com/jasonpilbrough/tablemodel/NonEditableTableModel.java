@@ -59,6 +59,9 @@ public class NonEditableTableModel implements TableModel {
 		origin.removeTableModelListener(l);
 
 	}
-	
+	@Override
+	public String toString() {
+		return origin.toString();
+	}
 
 }

@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Set;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
@@ -14,7 +15,6 @@ import javax.swing.table.TableModel;
 import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.tablemodel.AccessControlledTableModel;
-import com.jasonpilbrough.tablemodel.CachedTableModel;
 import com.jasonpilbrough.tablemodel.IncidentalsTableModel;
 import com.jasonpilbrough.tablemodel.LibraryItemsTableModel;
 import com.jasonpilbrough.tablemodel.LoansTableModel;
@@ -144,6 +144,8 @@ public class SearchModel implements TableModelListener{
 	}
 	
 	private TableModel makeTableModel(String tablename,String filter){
+		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+		Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
 		//TODO hate passing in code
 		if(tablename.equalsIgnoreCase("members")){
 			return new AccessControlledTableModel(new ValidatedTableModel(new MembersTableModel(db,filter)), am, "ELOP");
@@ -167,9 +169,12 @@ public class SearchModel implements TableModelListener{
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		//setAllValues();
-		if(e.getType()>0){
-			changefirer.firePropertyChange("progress", null, e.getType());
+		if(e.getSource().toString().equals(tableModel.toString())){
+			if(e.getType()>0){
+				changefirer.firePropertyChange("progress", null, e.getType());
+			}
 		}
+		
 		changefirer.firePropertyChange("table_model", null, tableModel);
 	}
 	

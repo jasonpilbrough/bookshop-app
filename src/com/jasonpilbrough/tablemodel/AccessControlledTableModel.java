@@ -82,4 +82,9 @@ public class AccessControlledTableModel implements TableModel {
 
 	}
 	
+	@Override
+	public String toString() {
+		return origin.toString();
+	}
+	
 }

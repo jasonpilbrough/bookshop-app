@@ -26,6 +26,7 @@ public class MembersTableModel implements TableModel{
 	private String filter;
 	private Database db;
 	private List<TableModelListener> listeners;
+	private double progress = 0;
 	
 	public MembersTableModel(final Database db, final String filter) {
 		this.db = db;
@@ -87,6 +88,9 @@ public class MembersTableModel implements TableModel{
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
+				} else if(evt.getPropertyName().equals("progress")){
+					progress = (double)evt.getNewValue();
+					notifyListeners(progress);
 				}
 				
 			}
@@ -166,6 +170,13 @@ public class MembersTableModel implements TableModel{
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
+	//using percent is a hack to pass it to the searchmodel
+		public void notifyListeners(double percentComplete){
+			int percent = (int) Math.round(percentComplete*100);
+			for (TableModelListener l : listeners) {
+				l.tableChanged(new TableModelEvent(this,0,0,0,percent));
+			}
+		}
 	
 
 }
