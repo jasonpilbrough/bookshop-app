@@ -41,7 +41,6 @@ public class AccessManager {
 		if(map2.get("access_level")==null){
 			throw new RuntimeException("Access code doesnt not exist");
 		}
-		System.out.println(map1.get("access_level") +" : "+map2.get("access_level") );
 		return (int)(long)map1.get("access_level") >= (int)(long)map2.get("access_level");
 		
 	}
