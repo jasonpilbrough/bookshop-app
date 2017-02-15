@@ -47,6 +47,47 @@ public class Database {
     	}
     }
     
+    //used for returning more than one column and row at the same time
+    public List<List<Object>> retrieve2D(){
+    	if(query.contains("?")){
+            throw new IllegalStateException("Query string still has unset parameters");
+        }
+        connections++;
+        print();
+        ResultSet rs = null;
+        
+        try {
+			conn =  src.getConnection();
+			statement = conn.createStatement();
+			rs =  statement.executeQuery(query);
+			int numCols = rs.getMetaData().getColumnCount();
+			List<List<Object>> data = new ArrayList<>();
+			while(rs.next()){
+				List<Object> temp = new ArrayList<>();
+				for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+					temp.add(rs.getObject(i));
+				}
+				data.add(temp);
+			}
+			return data;
+		} catch (SQLException e) {
+            System.out.println(query);
+			throw new LogException(e);
+		} finally {
+        	try {
+        		if(rs!=null)
+        			rs.close();
+        		if(statement!=null)
+        			statement.close();
+        		if(conn!=null)
+        			conn.close();
+    		} catch (SQLException e) {
+    			 throw new LogException(e);
+    		}
+		}
+    
+    }
+    
     public Map<String,Object> retrieve(){
         if(query.contains("?")){
             throw new IllegalStateException("Query string still has unset parameters");
