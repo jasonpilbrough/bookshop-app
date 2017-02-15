@@ -113,7 +113,9 @@ public class MemberView extends SmartJFrame implements Drawable{
 	        loan = new SmartJButton("New Loan").withRegisteredController(controller);
 	        extend = new SmartJButton("Extend").withRegisteredController(controller);
 	        returnLoan = new SmartJButton("Return").withRegisteredController(controller);
-	        
+
+	        //something takes focus away if the member has outstanding loans, this prevents that
+			requestFocus();
 	        //edit.setIcon(new ImageIcon("res/edit.png"));
 	        
 	      //init command from view causes the model to push all values view
