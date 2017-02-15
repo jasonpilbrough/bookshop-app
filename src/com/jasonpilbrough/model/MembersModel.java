@@ -48,14 +48,15 @@ public class MembersModel implements TableModelListener{
 	}
 	
 	private void setTable(String text){
-		tableModel = new NonEditableTableModel(new CachedTableModel(new MembersTableModel(db,text)));
+		tableModel = new NonEditableTableModel(new MembersTableModel(db,text));
 		tableModel.addTableModelListener(this);
 		changefirer.firePropertyChange("table_model", null, tableModel);
 	}
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		setAllValues();
+		//setAllValues();
+		changefirer.firePropertyChange("table_model", null, tableModel);
 		
 	}
 

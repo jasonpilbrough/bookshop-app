@@ -28,14 +28,20 @@ public class MembersView extends JPanel implements Drawable{
 	private JTable table;
 	private SmartJButton add, select,filterBtn;
 	private SmartJTextField filter;
+	private boolean initialDrawn=false;
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch(evt.getPropertyName()){
 		case "table_model":
 			table.setModel((TableModel)evt.getNewValue());
-
-			draw();
+			if(!initialDrawn){
+				draw();
+				initialDrawn = true;
+			}else{
+				setLeftAlignment();
+				resizeColumns();
+			}
 			
 			filter.requestFocusInWindow();
 			filter.getCaret().setDot(filter.getText().length());
@@ -91,6 +97,7 @@ public class MembersView extends JPanel implements Drawable{
 
 	@Override
 	public void draw() {
+		System.out.println("Drawing");
 		JPanel parent = new JPanel();
 		
 		filter = new SmartJTextField().withSomeState(filter);
@@ -143,8 +150,7 @@ public class MembersView extends JPanel implements Drawable{
 		return map;
 	}
 	
-	//SUMS 100%
-		float[] columnWidthPercentage = {7.0f, 44.0f, 26.0f, 23.0f};
+	
 		
 		
 	private void setLeftAlignment(){
@@ -155,7 +161,13 @@ public class MembersView extends JPanel implements Drawable{
 		}
 		
 	}
+	//SUMS 100%
+			float[] columnWidthPercentage = {7.0f, 44.0f, 26.0f, 23.0f};
 	private void resizeColumns() {
+		//have to reset otherwise calc is put off
+		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setPreferredWidth(0);
+		}
 	    int tW = (int)table.getPreferredSize().getWidth();
 	    TableColumn column;
 	    TableColumnModel jTableColumnModel = table.getColumnModel();
