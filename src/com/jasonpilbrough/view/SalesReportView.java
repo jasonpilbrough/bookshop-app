@@ -100,7 +100,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 	@Override
 	public void initialise(Controller controller) {
 			setVisible(true);
-			setBounds(0, 0, 550, 500);
+			setBounds(0, 0, 460, 500);
 			setTitle("Sales Report");
 			
 			table = new JTable();
@@ -218,18 +218,18 @@ public class SalesReportView extends SmartJFrame implements Drawable {
         addGroup(layout, "Cashflow");
         layout.emptyRow();
         layout.emptyRow();
-        layout.row().grid(new JLabel("Cash Payments:")).add(cashPayments).grid(new JLabel("Cost of Sales:")).add(costSales);
-        layout.row().grid(new JLabel("Card Payments:")).add(cardPayments).grid(new JLabel("Refunds:")).add(refunds);
-        layout.row().grid(new JLabel("EFT Payments:")).add(eftPayments).grid(new JLabel("Purchases:")).add(purchases);
+        layout.row().grid().add(new JLabel("Cash Payments:")).add(cashPayments).grid().add(new JLabel("Cost of Sales:")).add(costSales);
+        layout.row().grid().add(new JLabel("Card Payments:")).add(cardPayments).grid().add(new JLabel("Refunds:")).add(refunds);
+        layout.row().grid().add(new JLabel("EFT Payments:")).add(eftPayments).grid().add(new JLabel("Purchases:")).add(purchases);
         JLabel ti = new JLabel("Total Income:");
         ti.setFont (new Font(ti.getFont().getFontName(),Font.BOLD,13));
         JLabel te = new JLabel("Total Expenses:");
         te.setFont (new Font(te.getFont().getFontName(),Font.BOLD,13));
-        layout.row().grid(ti).add(totalIncome).grid(te).add(totalExpense);
+        layout.row().grid().add(ti).add(totalIncome).grid().add(te).add(totalExpense);
         layout.emptyRow();
         JLabel p = new JLabel("Profit:");
         p.setFont (new Font(p.getFont().getFontName(),Font.BOLD,13));
-        layout.row().grid(p).add(profit);
+        layout.row().grid().add(p).add(profit).grid().empty();
         
         layout.row().grid().empty().empty().add(save);
         getContentPane().removeAll();
