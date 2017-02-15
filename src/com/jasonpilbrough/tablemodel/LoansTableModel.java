@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
@@ -35,23 +34,21 @@ public class LoansTableModel implements TableModel {
 		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				Map<String,Object> map = db.sql("SELECT ? FROM loans "
+			public Object getValueAt(int limit, int offset) {
+				
+				List<List<Object>> data = db.sql("SELECT loans.id, name, title, date_issued, date_due FROM loans "
 						+ "INNER JOIN members ON loans.member_id = members.id "
 						+ "INNER JOIN library_items ON loans.library_item_id = library_items.id "
 						+ "WHERE (name LIKE '%?%' OR title LIKE '%?%') AND IF(?>0, member_id = ?, member_id LIKE '%%') "
-						+ "ORDER BY name, loans.id LIMIT 1 OFFSET ?")
-						.set(tableNames[columnIndex])
+						+ "ORDER BY name, loans.id LIMIT ? OFFSET ?")
 						.set(filter)
 						.set(filter)
 						.set(memberId)
 						.set(memberId)
-						.set(rowIndex)
-						.retrieve();
-				if(columnIndex==0)
-					return map.get("id");
-				else
-					return map.get(tableNames[columnIndex]);
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				return data;
 			}
 			
 			@Override

@@ -35,32 +35,29 @@ public class MembersTableModel implements TableModel{
 		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				if(columnIndex<3){
-					String property = columnIndex==0?"id":columnIndex==1?"name":"expire_date";
-					//TODO make more compact like in LoansModel
-					//TODO sql statement may cause problems with sqlite db - OFFSET
-					Map<String,Object> map = db.sql("SELECT ? FROM members WHERE name LIKE '%?%' ORDER BY name,id LIMIT 1 OFFSET ?")
-							.set(property)
-							.set(filter)
-							.set(rowIndex)
-							.retrieve();
-					return map.get(property);
-				}else if(columnIndex==3){
-					//TODO sql statement may cause problems with sqlite db - OFFSET
-					Map<String,Object> map = db.sql("SELECT COUNT(loans.id) AS loans , "
-							+ "COUNT(IF(loans.date_due < NOW(),1,NULL)) AS overdue FROM members "
-							+ "LEFT JOIN loans ON members.id = loans.member_id WHERE name LIKE '%?%' "
-							+ "GROUP BY members.id "
-							+ "ORDER BY name,members.id LIMIT 1 OFFSET ?")
-							.set(filter)
-							.set(rowIndex)
-							.retrieve();
+			public Object getValueAt(int limit, int offset) {
+				List<List<Object>> data = db.sql("SELECT id,name,expire_date FROM members WHERE name LIKE '%?%' ORDER BY name,id LIMIT ? OFFSET ?")
+						.set(filter)
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				
+				
 					
-					
-					return map.get("loans")+"  ("+map.get("overdue")+")";
+				List<List<Object>> data2 = db.sql("SELECT COUNT(loans.id) AS loans , "
+						+ "COUNT(IF(loans.date_due < NOW(),1,NULL)) AS overdue FROM members "
+						+ "LEFT JOIN loans ON members.id = loans.member_id WHERE name LIKE '%?%' "
+						+ "GROUP BY members.id "
+						+ "ORDER BY name,members.id LIMIT ? OFFSET ?")
+						.set(filter)
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				for (int i = 0; i < data.size(); i++) {
+					data.get(i).add(data2.get(i).get(0)+"  ("+data2.get(i).get(1)+")");
 				}
-				return null;
+				
+				return data;
 			}
 			
 			@Override

@@ -35,14 +35,14 @@ public class PurchasesTableModel implements TableModel {
 		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				String property = tableNames[columnIndex];
-				Map<String,Object> map = db.sql("SELECT ? FROM purchases WHERE type LIKE '%?%' ORDER BY date DESC,id DESC LIMIT 1 OFFSET ?")
-						.set(property)
+			public Object getValueAt(int limit, int offset) {
+				List<List<Object>> data = db.sql("SELECT id, date, type, payment, amount FROM purchases "
+						+ "WHERE type LIKE '%?%' ORDER BY date DESC,id DESC LIMIT ? OFFSET ?")
 						.set(filter)
-						.set(rowIndex)
-						.retrieve();
-				return map.get(property);
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				return data;
 			}
 			
 			@Override

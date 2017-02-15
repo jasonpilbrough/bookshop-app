@@ -35,15 +35,14 @@ public class IncidentalsTableModel implements TableModel {
 			SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				String property = tableNames[columnIndex];
-				//TODO sql statement may cause problems with sqlite db - OFFSET
-				Map<String,Object> map = db.sql("SELECT ? FROM incidentals WHERE type LIKE '%?%' ORDER BY date DESC,id DESC LIMIT 1 OFFSET ?")
-						.set(property)
+			public Object getValueAt(int limit, int offset) {
+				List<List<Object>> data = db.sql("SELECT id, date, type, payment, amount FROM incidentals "
+						+ "WHERE type LIKE '%?%' ORDER BY date DESC,id DESC LIMIT ? OFFSET ?")
 						.set(filter)
-						.set(rowIndex)
-						.retrieve();
-				return map.get(property);
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				return data;
 			}
 			
 			@Override

@@ -38,17 +38,15 @@ public class SalesTableModel implements TableModel {
 		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				Map<String,Object> map = db.sql("SELECT sales.id, title, price_per_unit_sold, quantity_sold, sale_date, payment "
+			public Object getValueAt(int limit, int offset) {
+				List<List<Object>> data = db.sql("SELECT sales.id,sale_date, title,payment, price_per_unit_sold, quantity_sold "
 						+ "FROM sales INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
-						+ "WHERE title LIKE '%?%' ORDER BY sale_date DESC,id DESC LIMIT 1 OFFSET ?")
+						+ "WHERE title LIKE '%?%' ORDER BY sale_date DESC,id DESC LIMIT ? OFFSET ?")
 						.set(filter)
-						.set(rowIndex)
-						.retrieve();
-				if(columnIndex==0)
-					return map.get("id");
-				else
-					return map.get(tableNames[columnIndex]);
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				return data;
 			}
 			
 			@Override

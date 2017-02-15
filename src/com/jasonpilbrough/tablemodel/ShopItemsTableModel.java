@@ -35,18 +35,16 @@ public class ShopItemsTableModel implements TableModel {
 		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
-			public Object getValueAt(int rowIndex, int columnIndex) {
-				String property = tableNames[columnIndex];
-				//TODO sql statement may cause problems with sqlite db - OFFSET
-				Map<String,Object> map = db.sql("SELECT ? FROM shop_items WHERE title LIKE '%?%' OR author LIKE '%?%' OR barcode LIKE '%?%' "
-						+ "ORDER BY barcode,id LIMIT 1 OFFSET ?")
-						.set(property)
+			public Object getValueAt(int limit, int offset) {
+				List<List<Object>> data = db.sql("SELECT * FROM shop_items WHERE title LIKE '%?%' OR author LIKE '%?%' OR barcode LIKE '%?%' "
+						+ "ORDER BY barcode,id LIMIT ? OFFSET ?")
 						.set(filter)
 						.set(filter)
 						.set(filter)
-						.set(rowIndex)
-						.retrieve();
-				return map.get(property);
+						.set(limit)
+						.set(offset)
+						.retrieve2D();
+				return data;
 			}
 			
 			@Override
