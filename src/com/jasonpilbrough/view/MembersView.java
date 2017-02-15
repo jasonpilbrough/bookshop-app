@@ -97,7 +97,6 @@ public class MembersView extends JPanel implements Drawable{
 
 	@Override
 	public void draw() {
-		System.out.println("Drawing");
 		JPanel parent = new JPanel();
 		
 		filter = new SmartJTextField().withSomeState(filter);
