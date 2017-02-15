@@ -66,7 +66,7 @@ public class MemberModel implements TableModelListener{
 	}
 	
 	private void setTable(){
-		tableModel = new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new LoansTableModel(db,id)))
+		tableModel = new AccessControlledTableModel(new ValidatedTableModel(new LoansTableModel(db,id))
 				, am, "ELOP");
 		tableModel.addTableModelListener(this);
 		changefirer.firePropertyChange("loans_table_model", "", tableModel);
@@ -287,7 +287,7 @@ public class MemberModel implements TableModelListener{
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		setAllValues();
+		changefirer.firePropertyChange("loans_table_model", "", tableModel);
 		
 	}
 	
