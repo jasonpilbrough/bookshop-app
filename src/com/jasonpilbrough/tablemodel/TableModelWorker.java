@@ -49,6 +49,9 @@ public class TableModelWorker extends SwingWorker<Object[][], Object> {
 	}
 	
 	private Object[][] toArray(List<List<Object>> list){
+		if(list.size()==0){
+			return new Object[0][0];
+		}
 		Object[][] arr = new Object[list.size()][list.get(0).size()];
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[0].length; j++) {

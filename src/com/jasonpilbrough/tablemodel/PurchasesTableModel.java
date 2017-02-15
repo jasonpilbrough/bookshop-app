@@ -70,6 +70,8 @@ public class PurchasesTableModel implements TableModel {
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
+				}else if(evt.getPropertyName().equals("progress")){
+					notifyListeners((double)evt.getNewValue());
 				}
 				
 			}
@@ -147,4 +149,11 @@ public class PurchasesTableModel implements TableModel {
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
+	//using percent is a hack to pass it to the searchmodel
+		public void notifyListeners(double percentComplete){
+			int percent = (int) Math.round(percentComplete*100);
+			for (TableModelListener l : listeners) {
+				l.tableChanged(new TableModelEvent(this,0,0,0,percent));
+			}
+		}
 }
