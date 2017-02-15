@@ -167,6 +167,9 @@ public class SearchModel implements TableModelListener{
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		//setAllValues();
+		if(e.getType()>0){
+			changefirer.firePropertyChange("progress", null, e.getType());
+		}
 		changefirer.firePropertyChange("table_model", null, tableModel);
 	}
 	

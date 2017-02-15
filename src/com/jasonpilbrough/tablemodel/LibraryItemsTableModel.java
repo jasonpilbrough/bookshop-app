@@ -14,7 +14,7 @@ import javax.swing.table.TableModel;
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
 
-public class LibraryItemsTableModel implements TableModel {
+public class LibraryItemsTableModel implements TableModel{
 
 	private static final String[] labels = new String[]{"ID","Barcode","Title","Author","Type","Hire Fee", "Qty"};
 	private static final String[] tableNames = new String[]{"id","barcode","title","author","media_type","hire_price","quantity"};
@@ -26,13 +26,15 @@ public class LibraryItemsTableModel implements TableModel {
 	private List<TableModelListener> listeners;
 	private Object[][] data;
 	private int rowCount = 0;
+	private double progress = 0;
+	SwingWorker<Object[][], Object> worker;
 	
 	public LibraryItemsTableModel(final Database db, final String filter) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
 		
-		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
+		worker = new TableModelWorker(new SwingWorkerActions() {
 			
 			@Override
 			public Object getValueAt(int rowIndex, int columnIndex) {
@@ -76,6 +78,8 @@ public class LibraryItemsTableModel implements TableModel {
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
+				} else if(evt.getPropertyName().equals("progress")){
+					progress = (double)evt.getNewValue();
 				}
 				
 			}
@@ -157,4 +161,14 @@ public class LibraryItemsTableModel implements TableModel {
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
+	
+	//using percent is a hack to pass it to the searchmodel
+	public void notifyListeners(double percentComplete){
+		int percent = (int) Math.round(percentComplete*100);
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this,0,0,0,percent));
+		}
+	}
+
+	
 }

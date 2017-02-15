@@ -1,6 +1,7 @@
 package com.jasonpilbrough.tablemodel;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
@@ -15,6 +16,7 @@ public class TableModelWorker extends SwingWorker<Object[][], Object> {
 
 	@Override
 	protected Object[][] doInBackground() throws Exception {
+		
 		Object[][] ans = new Object[actions.getRowCount()][actions.getColumnCount()];
 		for (int i = 0; i < actions.getRowCount(); i++) {
 			Object[] temp = new Object[actions.getColumnCount()];
@@ -28,15 +30,28 @@ public class TableModelWorker extends SwingWorker<Object[][], Object> {
 			ans[i] = temp;
 		}
 		
-		firePropertyChange("data", null, ans);
-		firePropertyChange("row_count", null, actions.getRowCount());
 		return ans;
+		
 	}
 	
 	@Override
 	protected void process(List<Object> chunks) {
 		firePropertyChange("data", null, chunks.get(chunks.size()-1));
 		firePropertyChange("row_count", null, currentRowCount);
+		double progress = (double)currentRowCount/(double)actions.getRowCount();
+		firePropertyChange("progress", null, progress);
+	}
+	
+	@Override
+	protected void done() {
+		try {
+			firePropertyChange("data", null, get());
+			firePropertyChange("row_count", null, actions.getRowCount());
+			firePropertyChange("progress", null, 1.0);
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 
