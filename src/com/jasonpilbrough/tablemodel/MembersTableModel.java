@@ -27,11 +27,54 @@ public class MembersTableModel implements TableModel{
 	private Database db;
 	private List<TableModelListener> listeners;
 	
-	public MembersTableModel(Database db, String filter) {
+	public MembersTableModel(final Database db, final String filter) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
-		SwingWorker<Object[][], Object> worker = new MySwingWorker(db, filter, labels.length);
+		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
+			
+			@Override
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				if(columnIndex<3){
+					String property = columnIndex==0?"id":columnIndex==1?"name":"expire_date";
+					//TODO make more compact like in LoansModel
+					//TODO sql statement may cause problems with sqlite db - OFFSET
+					Map<String,Object> map = db.sql("SELECT ? FROM members WHERE name LIKE '%?%' ORDER BY name,id LIMIT 1 OFFSET ?")
+							.set(property)
+							.set(filter)
+							.set(rowIndex)
+							.retrieve();
+					return map.get(property);
+				}else if(columnIndex==3){
+					//TODO sql statement may cause problems with sqlite db - OFFSET
+					Map<String,Object> map = db.sql("SELECT COUNT(loans.id) AS loans , "
+							+ "COUNT(IF(loans.date_due < NOW(),1,NULL)) AS overdue FROM members "
+							+ "LEFT JOIN loans ON members.id = loans.member_id WHERE name LIKE '%?%' "
+							+ "GROUP BY members.id "
+							+ "ORDER BY name,members.id LIMIT 1 OFFSET ?")
+							.set(filter)
+							.set(rowIndex)
+							.retrieve();
+					
+					
+					return map.get("loans")+"  ("+map.get("overdue")+")";
+				}
+				return null;
+			}
+			
+			@Override
+			public int getRowCount() {
+				return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM members WHERE name LIKE '%?%'")
+						.set(filter)
+						.retrieve().get("num"));
+			}
+			
+			@Override
+			public int getColumnCount() {
+				return labels.length;
+			}
+		});
+		
 		worker.execute();
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
 			
@@ -126,88 +169,5 @@ public class MembersTableModel implements TableModel{
 	
 	
 
-}
-
-class MySwingWorker extends SwingWorker <Object[][], Object>{
-	
-	private Database db;
-	private String filter;
-	private int columnCount;
-	private int currentRowCount =0;
-	
-	public MySwingWorker(Database db, String filter, int columnnCount) {
-		this.db = db;
-		this.filter = filter;
-		this.columnCount = columnnCount;
-	}
-
-	@Override
-	protected Object[][] doInBackground() throws Exception {
-		Object[][] ans = new Object[getRowCount()][getColumnCount()];
-		for (int i = 0; i < getRowCount(); i++) {
-			Object[] temp = new Object[getColumnCount()];
-			for (int j = 0; j < getColumnCount(); j++) {
-				temp[j] = getValueFromDb(i, j);
-			}
-			currentRowCount++;
-			if(currentRowCount%10==0){
-				publish(ans);
-			}
-			ans[i] = temp;
-		}
-		
-		firePropertyChange("data", null, ans);
-		firePropertyChange("row_count", null, getRowCount());
-		return ans;
-	}
-	
-	@Override
-	protected void process(List<Object> chunks) {
-		firePropertyChange("data", null, chunks.get(chunks.size()-1));
-		firePropertyChange("row_count", null, currentRowCount);
-	}
-	
-	private Object getValueFromDb(int rowIndex, int columnIndex){
-			if(columnIndex<3){
-				String property = columnIndex==0?"id":columnIndex==1?"name":"expire_date";
-				//TODO make more compact like in LoansModel
-				//TODO sql statement may cause problems with sqlite db - OFFSET
-				Map<String,Object> map = db.sql("SELECT ? FROM members WHERE name LIKE '%?%' ORDER BY name,id LIMIT 1 OFFSET ?")
-						.set(property)
-						.set(filter)
-						.set(rowIndex)
-						.retrieve();
-				return map.get(property);
-			}else if(columnIndex==3){
-				//TODO sql statement may cause problems with sqlite db - OFFSET
-				Map<String,Object> map = db.sql("SELECT COUNT(loans.id) AS loans , "
-						+ "COUNT(IF(loans.date_due < NOW(),1,NULL)) AS overdue FROM members "
-						+ "LEFT JOIN loans ON members.id = loans.member_id WHERE name LIKE '%?%' "
-						+ "GROUP BY members.id "
-						+ "ORDER BY name,members.id LIMIT 1 OFFSET ?")
-						.set(filter)
-						.set(rowIndex)
-						.retrieve();
-				
-				
-				return map.get("loans")+"  ("+map.get("overdue")+")";
-			}
-			return null;
-	}
-	
-	private int getRowCount() {
-		return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM members WHERE name LIKE '%?%'")
-				.set(filter)
-				.retrieve().get("num"));
-	}
-	
-	private int getColumnCount() {
-		return columnCount;
-	}
-
-
-
-	
-	
 }
 
