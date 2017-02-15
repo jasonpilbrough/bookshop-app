@@ -152,6 +152,9 @@ public class MembersTableModel implements TableModel{
 		listeners.add(l);
 		
 	}
+
+	@Override
+	public void removeTableModelListener(TableModelListener l) {}
 	
 	public void notifyListeners(int rowIndex){
 		for (TableModelListener l : listeners) {
@@ -163,10 +166,6 @@ public class MembersTableModel implements TableModel{
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
-
-	@Override
-	public void removeTableModelListener(TableModelListener l) {}
-	
 	
 
 }

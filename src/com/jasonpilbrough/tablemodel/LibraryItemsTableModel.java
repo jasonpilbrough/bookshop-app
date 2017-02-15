@@ -1,9 +1,12 @@
 package com.jasonpilbrough.tablemodel;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -21,11 +24,62 @@ public class LibraryItemsTableModel implements TableModel {
 	private String filter;
 	private Database db;
 	private List<TableModelListener> listeners;
+	private Object[][] data;
+	private int rowCount = 0;
 	
-	public LibraryItemsTableModel(Database db, String filter) {
+	public LibraryItemsTableModel(final Database db, final String filter) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
+		
+		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
+			
+			@Override
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				String property = tableNames[columnIndex];
+				Map<String,Object> map = db.sql("SELECT ? FROM library_items WHERE title LIKE '%?%' OR barcode LIKE '%?%' OR"
+						+ " author LIKE '%?%' ORDER BY barcode, id LIMIT 1 OFFSET ?")
+						.set(property)
+						.set(filter)
+						.set(filter)
+						.set(filter)
+						.set(rowIndex)
+						.retrieve();
+				return map.get(property);
+			}
+			
+			@Override
+			public int getRowCount() {
+				return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM library_items WHERE title LIKE '%?%' OR barcode LIKE '%?%' OR"
+						+ " author LIKE '%?%'")
+						.set(filter)
+						.set(filter)
+						.set(filter)
+						.retrieve().get("num"));
+			}
+			
+			@Override
+			public int getColumnCount() {
+				return labels.length;
+			}
+		});
+		
+		worker.execute();
+		worker.addPropertyChangeListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("data")){
+					data = (Object[][])evt.getNewValue();
+					notifyListeners();
+					
+				}else if(evt.getPropertyName().equals("row_count")){
+					rowCount = (int)evt.getNewValue();
+					notifyListeners();
+				}
+				
+			}
+		});
 	}
 	
 	public LibraryItemsTableModel(Database db) {
@@ -42,12 +96,9 @@ public class LibraryItemsTableModel implements TableModel {
 		//work around because super class calling this method before constructor can init db
 		if(db==null || filter==null)
 			return 0;
-		return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM library_items WHERE title LIKE '%?%' OR barcode LIKE '%?%' OR"
-						+ " author LIKE '%?%'")
-						.set(filter)
-						.set(filter)
-						.set(filter)
-						.retrieve().get("num"));
+		
+		return rowCount;
+		
 	}
 
 
@@ -61,22 +112,7 @@ public class LibraryItemsTableModel implements TableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		//dont know why the index is ever -1, but sometimes it is
-		if(rowIndex<0){
-			return "";
-		}
-		String property = tableNames[columnIndex];
-		//TODO sql statement may cause problems with sqlite db - OFFSET
-		Map<String,Object> map = db.sql("SELECT ? FROM library_items WHERE title LIKE '%?%' OR barcode LIKE '%?%' OR"
-				+ " author LIKE '%?%' ORDER BY barcode, id LIMIT 1 OFFSET ?")
-				.set(property)
-				.set(filter)
-				.set(filter)
-				.set(filter)
-				.set(rowIndex)
-				.retrieve();
-		return map.get(property);
-		
+		return data[rowIndex][columnIndex];		
 	}
 
 	@Override
@@ -97,9 +133,7 @@ public class LibraryItemsTableModel implements TableModel {
 				.set(getValueAt(rowIndex, 0))
 				.update();
 		
-		for (TableModelListener l : listeners) {
-			l.tableChanged(new TableModelEvent(this, rowIndex));
-		}
+		notifyListeners(rowIndex);
 		
 		
 	}
@@ -112,4 +146,15 @@ public class LibraryItemsTableModel implements TableModel {
 
 	@Override
 	public void removeTableModelListener(TableModelListener l) {}
+	
+	public void notifyListeners(int rowIndex){
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this, rowIndex));
+		}
+	}
+	public void notifyListeners(){
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this));
+		}
+	}
 }

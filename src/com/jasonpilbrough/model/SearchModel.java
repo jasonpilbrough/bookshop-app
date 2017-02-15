@@ -146,26 +146,19 @@ public class SearchModel implements TableModelListener{
 	private TableModel makeTableModel(String tablename,String filter){
 		//TODO hate passing in code
 		if(tablename.equalsIgnoreCase("members")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new MembersTableModel(db,filter)))
-					, am, "ELOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new MembersTableModel(db,filter)), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("library items")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new LibraryItemsTableModel(db,filter)))
-					, am, "ELOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new LibraryItemsTableModel(db,filter)), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("loans")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new LoansTableModel(db,filter)))
-					, am, "ELOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new LoansTableModel(db,filter)), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("shop items")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new ShopItemsTableModel(db,filter)))
-					, am, "ESOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new ShopItemsTableModel(db,filter)), am, "ESOP");
 		}else if(tablename.equalsIgnoreCase("sales")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new SalesTableModel(db,filter)))
-					, am, "ESOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new SalesTableModel(db,filter)), am, "ESOP");
 		}else if(tablename.equalsIgnoreCase("other income")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new IncidentalsTableModel(db,filter)))
-					, am, "EOOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new IncidentalsTableModel(db,filter)), am, "EOOP");
 		}else if(tablename.equalsIgnoreCase("purchases")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new CachedTableModel(new PurchasesTableModel(db,filter)))
-					, am, "POP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new PurchasesTableModel(db,filter)), am, "POP");
 		}
 		
 		return null;
@@ -173,8 +166,8 @@ public class SearchModel implements TableModelListener{
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		setAllValues();
-		
+		//setAllValues();
+		changefirer.firePropertyChange("table_model", null, tableModel);
 	}
 	
 }

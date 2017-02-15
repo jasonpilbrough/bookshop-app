@@ -1,10 +1,13 @@
 package com.jasonpilbrough.tablemodel;
 
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -21,15 +24,64 @@ public class SalesTableModel implements TableModel {
 	private static final String[] tableNames = new String[]{"sales.id","sale_date","title", "payment","price_per_unit_sold","quantity_sold"};
 	private static final Class[] columnClasses = new Class[]{Integer.class,DateInTime.class,String.class,String.class,Double.class,Integer.class};
 	private static final boolean[] editable = new boolean[]{false,true,false,true,true,true};
+	private Object[][] data;
+	private int rowCount = 0;
 	
 	private String filter;
 	private Database db;
 	private List<TableModelListener> listeners;
 
-	public SalesTableModel(Database db, String filter) {
+	public SalesTableModel(final Database db, final String filter) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
+		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
+			
+			@Override
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				Map<String,Object> map = db.sql("SELECT sales.id, title, price_per_unit_sold, quantity_sold, sale_date, payment "
+						+ "FROM sales INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
+						+ "WHERE title LIKE '%?%' ORDER BY sale_date DESC,id DESC LIMIT 1 OFFSET ?")
+						.set(filter)
+						.set(rowIndex)
+						.retrieve();
+				if(columnIndex==0)
+					return map.get("id");
+				else
+					return map.get(tableNames[columnIndex]);
+			}
+			
+			@Override
+			public int getRowCount() {
+				return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM sales "
+						+ "INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
+						+ "WHERE title LIKE '%?%'")
+				.set(filter)
+				.retrieve().get("num"));
+			}
+			
+			@Override
+			public int getColumnCount() {
+				return labels.length;
+			}
+		});
+		
+		worker.execute();
+		worker.addPropertyChangeListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("data")){
+					data = (Object[][])evt.getNewValue();
+					notifyListeners();
+					
+				}else if(evt.getPropertyName().equals("row_count")){
+					rowCount = (int)evt.getNewValue();
+					notifyListeners();
+				}
+				
+			}
+		});
 	}
 	
 	public SalesTableModel(Database db) {
@@ -41,12 +93,8 @@ public class SalesTableModel implements TableModel {
 		//work around because super class calling this method before constructor can init db
 		if(db==null || filter==null)
 			return 0;
+		return rowCount;
 		
-		return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM sales "
-								+ "INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
-								+ "WHERE title LIKE '%?%'")
-						.set(filter)
-						.retrieve().get("num"));
 	}
 
 	@Override
@@ -76,18 +124,8 @@ public class SalesTableModel implements TableModel {
 		if(rowIndex<0){
 			return "";
 		}
+		return data[rowIndex][columnIndex];	
 		
-		//TODO sql statement may cause problems with sqlite db - OFFSET
-		Map<String,Object> map = db.sql("SELECT sales.id, title, price_per_unit_sold, quantity_sold, sale_date, payment "
-				+ "FROM sales INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
-				+ "WHERE title LIKE '%?%' ORDER BY sale_date DESC,id DESC LIMIT 1 OFFSET ?")
-				.set(filter)
-				.set(rowIndex)
-				.retrieve();
-		if(columnIndex==0)
-			return map.get("id");
-		else
-			return map.get(tableNames[columnIndex]);
 	}
 
 	@Override
@@ -114,9 +152,7 @@ public class SalesTableModel implements TableModel {
 				.set(getValueAt(rowIndex, 0))
 				.update();
 		
-		for (TableModelListener l : listeners) {
-			l.tableChanged(new TableModelEvent(this, rowIndex));
-		}
+		notifyListeners(rowIndex);
 
 	}
 
@@ -129,4 +165,14 @@ public class SalesTableModel implements TableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener l) {}
 
+	public void notifyListeners(int rowIndex){
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this, rowIndex));
+		}
+	}
+	public void notifyListeners(){
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this));
+		}
+	}
 }

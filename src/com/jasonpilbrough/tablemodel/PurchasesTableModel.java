@@ -1,9 +1,12 @@
 package com.jasonpilbrough.tablemodel;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
@@ -18,15 +21,59 @@ public class PurchasesTableModel implements TableModel {
 	private static final String[] tableNames = new String[]{"id","date","type","payment","amount"};
 	private static final Class[] columnClasses = new Class[]{Integer.class,DateInTime.class,String.class, String.class, Double.class};
 	private static final boolean[] editable = new boolean[]{false,true,true,true,true};
+	private Object[][] data;
+	private int rowCount = 0;
 	
 	private String filter;
 	private Database db;
 	private List<TableModelListener> listeners;
 	
-	public PurchasesTableModel(Database db, String filter) {
+	public PurchasesTableModel(final Database db, final String filter) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
+		SwingWorker<Object[][], Object> worker = new TableModelWorker(new SwingWorkerActions() {
+			
+			@Override
+			public Object getValueAt(int rowIndex, int columnIndex) {
+				String property = tableNames[columnIndex];
+				Map<String,Object> map = db.sql("SELECT ? FROM purchases WHERE type LIKE '%?%' ORDER BY date DESC,id DESC LIMIT 1 OFFSET ?")
+						.set(property)
+						.set(filter)
+						.set(rowIndex)
+						.retrieve();
+				return map.get(property);
+			}
+			
+			@Override
+			public int getRowCount() {
+				return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM purchases WHERE type LIKE '%?%'")
+						.set(filter)
+						.retrieve().get("num"));
+			}
+			
+			@Override
+			public int getColumnCount() {
+				return labels.length;
+			}
+		});
+		
+		worker.execute();
+		worker.addPropertyChangeListener(new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("data")){
+					data = (Object[][])evt.getNewValue();
+					notifyListeners();
+					
+				}else if(evt.getPropertyName().equals("row_count")){
+					rowCount = (int)evt.getNewValue();
+					notifyListeners();
+				}
+				
+			}
+		});
 	}
 	
 	public PurchasesTableModel(Database db) {
@@ -39,9 +86,7 @@ public class PurchasesTableModel implements TableModel {
 		if(db==null || filter==null)
 			return 0;
 		
-		return (int)(long)(db.sql("SELECT COUNT(*) AS num FROM purchases WHERE type LIKE '%?%'")
-						.set(filter)
-						.retrieve().get("num"));
+		return rowCount;
 	}
 
 	@Override
@@ -66,18 +111,8 @@ public class PurchasesTableModel implements TableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		//dont know why the index is ever -1, but sometimes it is
-		if(rowIndex<0){
-			return "";
-		}
-		String property = tableNames[columnIndex];
-		//TODO sql statement may cause problems with sqlite db - OFFSET
-		Map<String,Object> map = db.sql("SELECT ? FROM purchases WHERE type LIKE '%?%' ORDER BY date DESC,id DESC LIMIT 1 OFFSET ?")
-				.set(property)
-				.set(filter)
-				.set(rowIndex)
-				.retrieve();
-		return map.get(property);
+		return data[rowIndex][columnIndex];
+		
 	}
 
 	@Override
@@ -89,9 +124,7 @@ public class PurchasesTableModel implements TableModel {
 				.set(getValueAt(rowIndex, 0))
 				.update();
 
-		for (TableModelListener l : listeners) {
-			l.tableChanged(new TableModelEvent(this, rowIndex));
-		}
+		notifyListeners(rowIndex);
 
 	}
 
@@ -104,4 +137,14 @@ public class PurchasesTableModel implements TableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener l) {}
 
+	public void notifyListeners(int rowIndex){
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this, rowIndex));
+		}
+	}
+	public void notifyListeners(){
+		for (TableModelListener l : listeners) {
+			l.tableChanged(new TableModelEvent(this));
+		}
+	}
 }

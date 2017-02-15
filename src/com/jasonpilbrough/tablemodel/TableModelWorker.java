@@ -22,7 +22,7 @@ public class TableModelWorker extends SwingWorker<Object[][], Object> {
 				temp[j] = actions.getValueAt(i, j);
 			}
 			currentRowCount++;
-			if(currentRowCount%10==0){
+			if(currentRowCount%20==0){
 				publish(ans);
 			}
 			ans[i] = temp;
