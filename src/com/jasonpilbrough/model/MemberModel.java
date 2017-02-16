@@ -46,7 +46,7 @@ public class MemberModel implements TableModelListener{
 		this.am = am;
 		this.id = id;
 		changefirer = new PropertyChangeSupport(this);
-		tableModel = new ValidatedTableModel(new CachedTableModel(new LoansTableModel(db,id)));
+		setTable();
 		
 	}
 	
@@ -66,7 +66,7 @@ public class MemberModel implements TableModelListener{
 	}
 	
 	private void setTable(){
-		tableModel = new AccessControlledTableModel(new ValidatedTableModel(new LoansTableModel(db,id))
+		tableModel = new AccessControlledTableModel(new LoansTableModel(db,id)
 				, am, "ELOP");
 		tableModel.addTableModelListener(this);
 		changefirer.firePropertyChange("loans_table_model", "", tableModel);
