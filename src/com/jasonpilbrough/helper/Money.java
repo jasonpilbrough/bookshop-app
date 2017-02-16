@@ -8,6 +8,15 @@ public class Money {
 		this.amount = amount;
 	}
 	
+	public Money(Object amount){
+		if(amount instanceof String){
+			this.amount = Double.parseDouble(amount.toString());
+		}else{
+			amount = (double) amount;
+		}
+		
+	}
+	
 	public String toStringWithoutCurrency(){
 		String[] arr=String.valueOf(amount).split("\\.");
 	    int[] intArr=new int[2];
