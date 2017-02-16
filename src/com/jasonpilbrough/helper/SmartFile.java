@@ -30,6 +30,26 @@ public class SmartFile {
 		} 
 		return ans;
 	}
+	
+	//this method should only be used to read files that are stored inside the .jar
+		public String readWithFilter(String filter) throws FileNotFoundException{
+			String ans = "";
+			try(Scanner sc = new Scanner(getClass().getClassLoader().getResourceAsStream(directory+filename))) {
+				while(sc.hasNext()){
+					String line = sc.nextLine();
+					if(line.length()>0){
+						if(line.substring(0, 1).equals(filter)||line.substring(0, 1).equals("#")){
+							ans += line+"\n";
+						}
+					}
+					
+					
+				}
+			} catch (NullPointerException e) {
+				throw new FileNotFoundException("File '"+directory+filename+"' not found");
+			} 
+			return ans;
+		}
 
 	
 	public void write(String text) throws IOException{
