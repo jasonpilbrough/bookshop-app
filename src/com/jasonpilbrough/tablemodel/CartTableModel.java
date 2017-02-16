@@ -5,10 +5,14 @@ import java.util.List;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import com.jasonpilbrough.helper.Id;
+import com.jasonpilbrough.helper.Money;
+
 public class CartTableModel implements TableModel {
 
 	
-	private String[] labels = new String[]{"Item","Price per","Qty"};
+	private static final String[] labels = new String[]{"Item","Price per","Qty"};
+	private static final Class[] columnClasses = new Class[]{String.class,Money.class,Integer.class};
 	private List<String[]> data;
 	
 	public CartTableModel(List<String[]> data) {
@@ -33,7 +37,7 @@ public class CartTableModel implements TableModel {
 
 	@Override
 	public Class<?> getColumnClass(int columnIndex) {
-		return String.class;
+		return columnClasses[columnIndex];
 	}
 
 	@Override
