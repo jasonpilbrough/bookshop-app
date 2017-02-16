@@ -66,6 +66,9 @@ public class TableModelWorker extends SwingWorker<Object[][], Object> {
 		firePropertyChange("data", null, (Object[][])chunks.get(chunks.size()-1));
 		firePropertyChange("row_count", null, currentRowCount);
 		double progress = (double)currentRowCount/(double)actions.getRowCount();
+		if(progress<0.01){
+			progress = 0.01;
+		}
 		firePropertyChange("progress", null, progress);
 	}
 	
