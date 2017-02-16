@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.UIDefaults;
 import javax.swing.UIManager;
@@ -22,6 +23,8 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import com.jasonpilbrough.helper.SmartCellEditor;
+import com.jasonpilbrough.helper.SmartCellRenderer;
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJRadioButton;
 import com.jasonpilbrough.helper.SmartJSpinner;
@@ -157,6 +160,8 @@ public class SaleView extends JPanel implements Drawable {
 	    refund = new SmartJRadioButton().withSomeState(refund, transactionGroup);
 
 		resizeColumns();
+		setCustomCells();
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(420,130));
@@ -218,6 +223,15 @@ public class SaleView extends JPanel implements Drawable {
 	        int pWidth = Math.round(columnWidthPercentage[i] * tW);
 	        column.setPreferredWidth(pWidth);
     }
-}
+	    
+	    
+	}
+	private void setCustomCells(){
+		for (int i = 0; i < cart.getColumnModel().getColumnCount(); i++) {
+			cart.getColumnModel().getColumn(i).setCellRenderer(new SmartCellRenderer());
+			cart.getColumnModel().getColumn(i).setCellEditor(new SmartCellEditor(new JTextField(), cart.getModel().getColumnClass(i)));
+		}
+		
+	}
 
 }
