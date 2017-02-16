@@ -132,7 +132,7 @@ public class WelcomeView extends JPanel implements Drawable {
 		
 		
 		JLabel scripture1 = new JLabel("“For even the Son of Man did not come to be served, but to");
-		JLabel scripture2 = new JLabel("serve, and to give his life as a ransom for many.” Mark 10:35");
+		JLabel scripture2 = new JLabel("serve, and to give his life” Mark 10:35");
 		scripture1.setFont (scripture1.getFont().deriveFont (10.0f));
 		scripture2.setFont (scripture2.getFont().deriveFont (10.0f));
 		
