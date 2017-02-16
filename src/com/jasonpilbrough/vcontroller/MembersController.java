@@ -29,8 +29,13 @@ public class MembersController extends Controller{
 			model.setAllValues();
 			break;
 		case "select":
-			int i = (int)(long)(view.getFields().get("selected_row_id"));
-			viewHandler.displayView("MemberView", i);
+			try {
+				int i = (int)(long)(view.getFields().get("selected_row_id"));
+				viewHandler.displayView("MemberView", i);
+			} catch (NullPointerException e1) {
+				Drawable dialog4 = viewHandler.makeMessageDialog("No member selected","Error",this);
+				dialog4.draw();
+			}
 			break;
 		case "add":
 			viewHandler.displayView("AddMember");
