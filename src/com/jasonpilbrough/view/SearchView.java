@@ -60,7 +60,7 @@ public class SearchView extends SmartJFrame implements Drawable {
 				
 			break;
 			case "progress":
-				loading.setText(evt.getNewValue().toString()+" % complete");
+				loading.setText(evt.getNewValue().toString()+" complete");
 				break;
 			default:
 				throw new RuntimeException("Property " + evt.getPropertyName() + " not registered with view");

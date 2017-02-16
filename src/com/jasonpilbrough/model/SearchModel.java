@@ -5,7 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Set;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListDataListener;
@@ -15,6 +14,7 @@ import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.AccessManager;
 import com.jasonpilbrough.helper.Database;
+import com.jasonpilbrough.helper.Percent;
 import com.jasonpilbrough.tablemodel.AccessControlledTableModel;
 import com.jasonpilbrough.tablemodel.IncidentalsTableModel;
 import com.jasonpilbrough.tablemodel.LibraryItemsTableModel;
@@ -151,8 +151,8 @@ public class SearchModel implements TableModelListener{
 			@Override
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("progress")){
-					int percent = (int)Math.round(((double)evt.getNewValue())*100);
-					changefirer.firePropertyChange("progress", null,percent);
+					
+					changefirer.firePropertyChange("progress", null,new Percent((double)evt.getNewValue()));
 				}
 				
 			}
