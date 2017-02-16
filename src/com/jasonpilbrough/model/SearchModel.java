@@ -159,19 +159,19 @@ public class SearchModel implements TableModelListener{
 		};
 		//TODO hate passing in code
 		if(tablename.equalsIgnoreCase("members")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new MembersTableModel(db,filter,progressListener)), am, "ELOP");
+			return new AccessControlledTableModel(new MembersTableModel(db,filter,progressListener), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("library items")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new LibraryItemsTableModel(db,filter,progressListener)), am, "ELOP");
+			return new AccessControlledTableModel(new LibraryItemsTableModel(db,filter,progressListener), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("loans")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new LoansTableModel(db,filter,progressListener)), am, "ELOP");
+			return new AccessControlledTableModel(new LoansTableModel(db,filter,progressListener), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("shop items")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new ShopItemsTableModel(db,filter,progressListener)), am, "ESOP");
+			return new AccessControlledTableModel(new ShopItemsTableModel(db,filter,progressListener), am, "ESOP");
 		}else if(tablename.equalsIgnoreCase("sales")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new SalesTableModel(db,filter,progressListener)), am, "ESOP");
+			return new AccessControlledTableModel(new SalesTableModel(db,filter,progressListener), am, "ESOP");
 		}else if(tablename.equalsIgnoreCase("other income")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new IncidentalsTableModel(db,filter,progressListener)), am, "EOOP");
+			return new AccessControlledTableModel(new IncidentalsTableModel(db,filter,progressListener), am, "EOOP");
 		}else if(tablename.equalsIgnoreCase("purchases")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new PurchasesTableModel(db,filter,progressListener)), am, "POP");
+			return new AccessControlledTableModel(new PurchasesTableModel(db,filter,progressListener), am, "POP");
 		}
 		
 		return null;
