@@ -17,6 +17,7 @@ import com.jasonpilbrough.model.AddUserModel;
 import com.jasonpilbrough.model.ApplicationModel;
 import com.jasonpilbrough.model.ApplicationSettingsModel;
 import com.jasonpilbrough.model.CashUpModel;
+import com.jasonpilbrough.model.ChangeLogModel;
 import com.jasonpilbrough.model.ConsoleModel;
 import com.jasonpilbrough.model.HeaderModel;
 import com.jasonpilbrough.model.LoginModel;
@@ -39,6 +40,7 @@ import com.jasonpilbrough.vcontroller.AddUserController;
 import com.jasonpilbrough.vcontroller.ApplicationController;
 import com.jasonpilbrough.vcontroller.ApplicationSettingsController;
 import com.jasonpilbrough.vcontroller.CashUpController;
+import com.jasonpilbrough.vcontroller.ChangeLogController;
 import com.jasonpilbrough.vcontroller.ConsoleController;
 import com.jasonpilbrough.vcontroller.Controller;
 import com.jasonpilbrough.vcontroller.HeaderController;
@@ -62,6 +64,7 @@ import com.jasonpilbrough.view.AddUserView;
 import com.jasonpilbrough.view.ApplicationSettingsView;
 import com.jasonpilbrough.view.ApplicationView;
 import com.jasonpilbrough.view.CashUpView;
+import com.jasonpilbrough.view.ChangeLogView;
 import com.jasonpilbrough.view.ConsoleView;
 import com.jasonpilbrough.view.DialogView;
 import com.jasonpilbrough.view.Drawable;
@@ -197,6 +200,10 @@ public class ViewHandler {
 		case "AddBugReportView":
 			AddBugReportController abrc= new AddBugReportController(this,new AddBugReportModel(db,am), 
 					new AddBugReportView());
+			break;
+		case "ChangeLogView":
+			ChangeLogController clc= new ChangeLogController(this,new ChangeLogModel(db), 
+					new ChangeLogView());
 			break;
 		case "ConsoleView":
 			ConsoleModel stm = new ConsoleModel(db);

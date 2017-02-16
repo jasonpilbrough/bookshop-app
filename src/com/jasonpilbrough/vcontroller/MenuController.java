@@ -37,6 +37,9 @@ public class MenuController extends Controller {
 		case "about":
 			viewHandler.displayView("AboutView");
 			break;
+		case "change log":
+			viewHandler.displayView("ChangeLogView");
+			break;
 		case "update":
 			try{
 				if(!am.allowedAccess("ACAU")){
