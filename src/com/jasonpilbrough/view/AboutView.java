@@ -152,7 +152,6 @@ public class AboutView extends SmartJFrame implements Drawable {
 		getContentPane().add(scrollPane);   
         revalidate();
         repaint();
-        throw new RuntimeException("Failed Operation");
 	}
 
 	@Override
