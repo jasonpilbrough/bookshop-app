@@ -38,6 +38,9 @@ public class MembersController extends Controller{
 		case "filter search":
 			model.setFilter(view.getFields().get("filter").toString());
 			break;
+		case "enter pressed":
+			model.setFilter(view.getFields().get("filter").toString());
+			break;
 		case "key pressed":
 			//model.setFilter(view.getFields().get("filter").toString());
 			break;
