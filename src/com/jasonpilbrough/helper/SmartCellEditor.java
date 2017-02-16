@@ -1,6 +1,8 @@
 package com.jasonpilbrough.helper;
 
 import java.awt.Color;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.util.EventObject;
 
 import javax.swing.DefaultCellEditor;
@@ -21,12 +23,21 @@ public class SmartCellEditor extends DefaultCellEditor{
 	public SmartCellEditor(JTextField textField, Class thisClass) {
 		super(textField);
 		this.text = textField;
+		this.text.addFocusListener( new FocusAdapter()
+        {
+            public void focusGained( final FocusEvent e )
+            {
+                text.selectAll();
+            }
+        } );
 		this.thisClass = thisClass;
 	}
 	@Override
 	public boolean isCellEditable(EventObject anEvent) {
 		return super.isCellEditable(anEvent);
 	}
+	
+	
 	@Override
 	public boolean stopCellEditing() {
 		if(this.thisClass == Money.class){
