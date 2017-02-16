@@ -14,7 +14,7 @@ import com.jasonpilbrough.helper.Money;
 public class SalesReportTableModel implements TableModel {
 	private static final String[] labels = new String[]{"Title", "Qty", "Total (R)"};
 	private static final String[] tableNames = new String[]{"title","qty", "price"};
-	private static final Class[] columnClasses = new Class[]{String.class,String.class,String.class};
+	private static final Class[] columnClasses = new Class[]{String.class,Integer.class,Money.class};
 	private static final boolean[] editable = new boolean[]{false,false,false};
 	
 	private DateInTime lowerLimit;
@@ -142,11 +142,9 @@ public class SalesReportTableModel implements TableModel {
 					.set(upperLimit)
 					.set(rowIndex)
 					.retrieve();
-			if(columnIndex==tableNames.length-1){
-				return new Money(Double.parseDouble(map.get(tableNames[columnIndex]).toString())).toStringWithoutCurrency();
-			}else{
-				return map.get(tableNames[columnIndex]).toString().toUpperCase();
-			}
+			
+			return map.get(tableNames[columnIndex]).toString().toUpperCase();
+			
 			
 	}
 	
@@ -161,11 +159,7 @@ public class SalesReportTableModel implements TableModel {
 					.set(upperLimit)
 					.set(rowIndex-getSalesRowCount())
 					.retrieve();
-			if(columnIndex==tableNames.length-1){
-				return new Money(Double.parseDouble(map.get(tableNames[columnIndex]).toString())).toStringWithoutCurrency();
-			}else{
-				return map.get(tableNames[columnIndex]).toString().toUpperCase();
-			}
+			return map.get(tableNames[columnIndex]).toString().toUpperCase();
 	}
 	
 	private Object getValueAtFromIncidental(int rowIndex, int columnIndex){
@@ -176,11 +170,7 @@ public class SalesReportTableModel implements TableModel {
 					.set(upperLimit)
 					.set(rowIndex-getSalesRowCount()-getRefundsRowCount() -1)
 					.retrieve();
-			if(columnIndex==tableNames.length-1){
-				return new Money(Double.parseDouble(map.get(tableNames[columnIndex]).toString())).toStringWithoutCurrency();
-			}else{
-				return map.get(tableNames[columnIndex]).toString().toUpperCase();
-			}
+			return map.get(tableNames[columnIndex]).toString().toUpperCase();
 	}
 	
 	private Object getValueAtFromPurchases(int rowIndex, int columnIndex){
@@ -191,11 +181,7 @@ public class SalesReportTableModel implements TableModel {
 					.set(upperLimit)
 					.set(rowIndex-getSalesRowCount()-getIncidentalsRowCount()-getRefundsRowCount())
 					.retrieve();
-			if(columnIndex==tableNames.length-1){
-				return new Money(Double.parseDouble(map.get(tableNames[columnIndex]).toString())).toStringWithoutCurrency();
-			}else{
-				return map.get(tableNames[columnIndex]).toString().toUpperCase();
-			}
+			return map.get(tableNames[columnIndex]).toString().toUpperCase();
 	}
 	
 	

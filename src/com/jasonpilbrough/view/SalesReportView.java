@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -28,6 +29,8 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.UtilDateModel;
 import org.joda.time.DateTime;
 
+import com.jasonpilbrough.helper.SmartCellEditor;
+import com.jasonpilbrough.helper.SmartCellRenderer;
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJDatePicker;
 import com.jasonpilbrough.helper.SmartJFrame;
@@ -172,13 +175,12 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		profit = new JLabel(profit.getText());
 		profit.setFont (new Font("Menlo",Font.BOLD,12));
 		
-		formatJLabels(new JLabel[]{cashPayments, cardPayments, eftPayments, totalIncome, costSales, refunds, purchases, totalExpense, profit});
 		
         save = new SmartJButton().withSomeState(save);
         generate = new SmartJButton().withSomeState(generate);
         
         resizeColumns();
-        setRightAlignment();
+        setCustomCells();
         
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setPreferredSize(new Dimension(300,150));
@@ -246,37 +248,14 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		return map;
 	}
 	
-	private void setRightAlignment(){
-		DefaultTableCellRenderer leftRenderer = new DefaultTableCellRenderer();
-		leftRenderer.setHorizontalAlignment(JLabel.RIGHT);
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			if(i>0){
-				table.getColumnModel().getColumn(i).setCellRenderer(leftRenderer);
-			}
-			
+	private void setCustomCells(){
+		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(new SmartCellRenderer());
+			table.getColumnModel().getColumn(i).setCellEditor(new SmartCellEditor(new JTextField(), table.getModel().getColumnClass(i)));
 		}
 		
 	}
-	//not opperational
-	private void formatJLabels(JLabel[] labels){
-		return;
-		/*int maxLength = 0;
-		for (JLabel label : labels){ 
-			
-			if(label.getText().length()>maxLength){
-				maxLength = label.getText().length();
-			}
-			
-			
-		}
-		for (JLabel label : labels) {
-			int len = label.getText().length();
-			for (int i = 0; i < maxLength - len; i++) {
-				label.setText("_"+label.getText());
-			}
-		}*/
-		
-	}
+	
 	
 	//SUMS 100%
 		float[] columnWidthPercentage = {73.0f, 7.0f, 20.0f};
