@@ -16,7 +16,7 @@ import com.jasonpilbrough.helper.Money;
 
 public class LibraryItemsTableModel implements TableModel{
 
-	private static final String[] labels = new String[]{"ID","Barcode","Title","Author","Type","Hire Fee", "Qty"};
+	private static final String[] labels = new String[]{"ID","Barcode","Title","Author","Type","Hire Fee (R)", "Qty"};
 	private static final String[] tableNames = new String[]{"id","barcode","title","author","media_type","hire_price","quantity"};
 	private static final boolean[] editable = new boolean[]{false,true,true,true,true,true,true};
 	private static final Class[] columnClasses = new Class[]{Id.class,String.class,String.class,String.class,String.class,Money.class,Integer.class};

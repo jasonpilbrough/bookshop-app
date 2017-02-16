@@ -19,7 +19,7 @@ import com.jasonpilbrough.view.Drawable;
 
 public class SalesTableModel implements TableModel {
 	
-	private static final String[] labels = new String[]{"ID","Sale Date","Item Title", "Payment","Price per unit","Quantity"};
+	private static final String[] labels = new String[]{"ID","Sale Date","Item Title", "Payment","Price per unit (R)","Qty"};
 	private static final String[] tableNames = new String[]{"sales.id","sale_date","title", "payment","price_per_unit_sold","quantity_sold"};
 	private static final Class[] columnClasses = new Class[]{Id.class,DateInTime.class,String.class,String.class,Money.class,Integer.class};
 	private static final boolean[] editable = new boolean[]{false,true,false,true,true,true};

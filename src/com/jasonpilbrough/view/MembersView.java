@@ -161,7 +161,7 @@ public class MembersView extends JPanel implements Drawable{
 		
 	}
 	//SUMS 100%
-			float[] columnWidthPercentage = {7.0f, 44.0f, 26.0f, 23.0f};
+			float[] columnWidthPercentage = {7.0f, 37.0f, 26.0f, 30.0f};
 	private void resizeColumns() {
 		//have to reset otherwise calc is put off
 		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {

@@ -18,7 +18,7 @@ import com.jasonpilbrough.helper.Money;
 public class PurchasesTableModel implements TableModel {
 
 
-	private static final String[] labels = new String[]{"ID","Date","Type","Payment","Amount"};
+	private static final String[] labels = new String[]{"ID","Date","Type","Payment","Amount (R)"};
 	private static final String[] tableNames = new String[]{"id","date","type","payment","amount"};
 	private static final Class[] columnClasses = new Class[]{Id.class,DateInTime.class,String.class, String.class, Money.class};
 	private static final boolean[] editable = new boolean[]{false,true,true,true,true};
