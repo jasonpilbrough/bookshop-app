@@ -14,11 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import com.jasonpilbrough.helper.SmartCellEditor;
+import com.jasonpilbrough.helper.SmartCellRenderer;
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.helper.SmartJTextField;
@@ -160,22 +163,28 @@ public class MemberView extends SmartJFrame implements Drawable{
         extend = new SmartJButton().withSomeState(extend);
         returnLoan = new SmartJButton().withSomeState(returnLoan);
      
-        
+       
+  		
+  		//remove the id column from the table
+  		//TODO dont like this, too tightly coupled to model with column count
+  		if(table.getColumnCount()==5){
+  			//setting custom cells must occure before any column are removed, like in the next block of code
+  			setCustomCells();
+  			
+  			
+  			table.removeColumn(table.getColumnModel().getColumn(0));
+  			table.removeColumn(table.getColumnModel().getColumn(0));
+  		}
+      		
+      		
+      		
         JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(350,100));
 		scrollPane.setViewportView(table);
 		
-		
-		//remove the id column from the table
-		//TODO dont like this, too tightly coupled to model with column count
-		if(table.getColumnCount()==5){
-			table.removeColumn(table.getColumnModel().getColumn(0));
-			table.removeColumn(table.getColumnModel().getColumn(0));
-		}
-		
-		resizeColumns();
-		setLeftAlignment();
-		
+
+        resizeColumns();
+        
         DesignGridLayout layout = new DesignGridLayout(parent);
         
         RowGroup detailsGroup = new RowGroup();
@@ -210,14 +219,6 @@ public class MemberView extends SmartJFrame implements Drawable{
 		return map;
 	}
 	
-	private void setLeftAlignment(){
-		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-		rightRenderer.setHorizontalAlignment(JLabel.LEFT);
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			table.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
-		}
-		
-	}
 	
 	//SUMS 100%
 	float[] columnWidthPercentage = {50.0f, 25.0f, 25.0f};
@@ -236,6 +237,14 @@ public class MemberView extends SmartJFrame implements Drawable{
 	        column.setPreferredWidth(pWidth);
 	      
 	    }
+	}
+	
+	private void setCustomCells(){
+		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(new SmartCellRenderer());
+			table.getColumnModel().getColumn(i).setCellEditor(new SmartCellEditor(new JTextField(), table.getModel().getColumnClass(i)));
+		}
+		
 	}
 	
 	
