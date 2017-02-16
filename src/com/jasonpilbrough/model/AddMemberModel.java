@@ -28,9 +28,7 @@ public class AddMemberModel {
 		changefirer.addPropertyChangeListener(listener);
 	}
 	
-	
-	public void addMember(String name, String phone, boolean paid) throws FailedValidationException{
-		
+	public void validMember(String name, String phone) throws FailedValidationException{
 		if(name.length()>maxNameLength){
 			throw new FailedValidationException("Name too long");
 		}
@@ -50,6 +48,11 @@ public class AddMemberModel {
 				throw new FailedValidationException("Phone number wrong format");
 			}
 		}
+	}
+	
+	public void addMember(String name, String phone, boolean paid) throws FailedValidationException{
+		
+		validMember(name, phone);
 		
 		db.sql("INSERT INTO members(name, phone_number, join_date, expire_date) "
 				+ "VALUES('?', '?', '?','?')")
