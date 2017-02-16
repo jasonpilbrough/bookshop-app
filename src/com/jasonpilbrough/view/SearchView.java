@@ -1,6 +1,5 @@
 package com.jasonpilbrough.view;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
@@ -12,13 +11,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.UIDefaults;
-import javax.swing.UIManager;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
+import com.jasonpilbrough.helper.SmartCellEditor;
+import com.jasonpilbrough.helper.SmartCellRenderer;
 import com.jasonpilbrough.helper.SmartJButton;
 import com.jasonpilbrough.helper.SmartJComboBox;
 import com.jasonpilbrough.helper.SmartJFrame;
@@ -52,8 +52,8 @@ public class SearchView extends SmartJFrame implements Drawable {
 					draw();
 					initialDrawn = true;
 				}else{
-					setLeftAlignment();
 					resizeColumns();
+					setCustomCells();
 				}
 				//filterTxt.requestFocusInWindow();
 				//filterTxt.getCaret().setDot(filterTxt.getText().length());
@@ -79,6 +79,7 @@ public class SearchView extends SmartJFrame implements Drawable {
 	    table.setShowVerticalLines(false);
 	    table.setShowHorizontalLines(false);
 		table.setAutoCreateRowSorter(true);
+		
 	    combobox = new SmartJComboBox<>("box selection").withRegisteredController(controller);
        
 	    delete = new SmartJButton("Delete").withRegisteredController(controller);
@@ -101,6 +102,8 @@ public class SearchView extends SmartJFrame implements Drawable {
 		combobox = new SmartJComboBox<String>().withSomeState(combobox);
 		loading = new JLabel();
 		
+		
+
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(500,300));
 		scrollPane.setViewportView(table);
@@ -111,7 +114,8 @@ public class SearchView extends SmartJFrame implements Drawable {
 			//table.removeColumn(table.getColumnModel().getColumn(0));
         
 		resizeColumns();
-		setLeftAlignment();
+		setCustomCells();
+		
 		
         DesignGridLayout layout = new DesignGridLayout(parent);
         layout.row().grid().add(combobox).add(filterTxt,2).add(filterBtn);
@@ -137,17 +141,6 @@ public class SearchView extends SmartJFrame implements Drawable {
 	}
 	
 	
-	private void setLeftAlignment(){
-		DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
-		rightRenderer.setHorizontalAlignment(JLabel.LEFT);
-		for (int i = 0; i < table.getColumnCount(); i++) {
-			if(table.getColumnModel().getColumn(i).getIdentifier().toString().equalsIgnoreCase("id")){
-				table.getColumnModel().getColumn(i).setCellRenderer(rightRenderer);
-			}
-			
-		}
-		
-	}
 	
 	//SUMS 100%
 	float[] columnWidthPercentage = {50.0f, 25.0f, 25.0f};
@@ -171,5 +164,23 @@ public class SearchView extends SmartJFrame implements Drawable {
 	      
 	    }
 	}
+	
+	private void setCustomCells(){
+		for (int i = 0; i < table.getColumnModel().getColumnCount(); i++) {
+			table.getColumnModel().getColumn(i).setCellRenderer(new SmartCellRenderer());
+			table.getColumnModel().getColumn(i).setCellEditor(new SmartCellEditor(new JTextField(), table.getModel().getColumnClass(i)));
+		}
+		
+	}
 
 }
+
+
+
+	
+	
+	
+	
+	
+
+
