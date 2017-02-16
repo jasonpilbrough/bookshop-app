@@ -6,6 +6,8 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
+import com.jasonpilbrough.helper.LogException;
+
 public class TableModelWorker extends SwingWorker<Object[][], Object> {
 
 	private int currentRowCount = 0;
@@ -79,8 +81,7 @@ public class TableModelWorker extends SwingWorker<Object[][], Object> {
 			firePropertyChange("row_count", null, actions.getRowCount());
 			firePropertyChange("progress", null, 1.0);
 		} catch (InterruptedException | ExecutionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			 throw new LogException(e);
 		}
 	}
 	
