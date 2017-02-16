@@ -26,7 +26,6 @@ public class LibraryItemsTableModel implements TableModel{
 	private List<TableModelListener> listeners;
 	private Object[][] data;
 	private int rowCount = 0;
-	private double progress = 0;
 	SwingWorker<Object[][], Object> worker;
 	
 	public LibraryItemsTableModel(final Database db, final String filter, final PropertyChangeListener progressListener) {
@@ -133,8 +132,7 @@ public class LibraryItemsTableModel implements TableModel{
 				.set(aValue)
 				.set(getValueAt(rowIndex, 0))
 				.update();
-		
-		notifyListeners(rowIndex);
+		data[rowIndex][columnIndex] = aValue;
 		
 		
 	}
@@ -148,11 +146,6 @@ public class LibraryItemsTableModel implements TableModel{
 	@Override
 	public void removeTableModelListener(TableModelListener l) {}
 	
-	public void notifyListeners(int rowIndex){
-		for (TableModelListener l : listeners) {
-			l.tableChanged(new TableModelEvent(this, rowIndex));
-		}
-	}
 	public void notifyListeners(){
 		for (TableModelListener l : listeners) {
 			l.tableChanged(new TableModelEvent(this));

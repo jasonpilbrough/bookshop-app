@@ -143,8 +143,8 @@ public class LoansTableModel implements TableModel {
 		.set(aValue)
 		.set(getValueAt(rowIndex, 0))
 		.update();
-		
-		notifyListeners(rowIndex);
+
+		data[rowIndex][columnIndex] = aValue;
 		
 		
 	}
@@ -158,11 +158,6 @@ public class LoansTableModel implements TableModel {
 	@Override
 	public void removeTableModelListener(TableModelListener l) {}
 	
-	public void notifyListeners(int rowIndex){
-		for (TableModelListener l : listeners) {
-			l.tableChanged(new TableModelEvent(this, rowIndex));
-		}
-	}
 	public void notifyListeners(){
 		for (TableModelListener l : listeners) {
 			l.tableChanged(new TableModelEvent(this));
