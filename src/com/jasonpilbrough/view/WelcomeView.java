@@ -118,17 +118,31 @@ public class WelcomeView extends JPanel implements Drawable {
 		
 		DesignGridLayout layout = new DesignGridLayout(parent);
 		
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < 8; i++) {
 			layout.row().grid().add(new JLabel(""));
 		}
-		layout.row().center().add(name);
-		layout.row().center().add(title);
+		layout.row().grid().add(name);
+		layout.row().grid().add(title);
 		
 		
 		for (int i = 0; i < 6; i++) {
 			layout.row().grid().add(new JLabel(""));
 		}
 		layout.row().grid().add(goLib).add(goStore);
+		
+		
+		JLabel scripture1 = new JLabel("“For even the Son of Man did not come to be served, but to");
+		JLabel scripture2 = new JLabel("serve, and to give his life as a ransom for many.” Mark 10:35");
+		scripture1.setFont (scripture1.getFont().deriveFont (10.0f));
+		scripture2.setFont (scripture2.getFont().deriveFont (10.0f));
+		
+		for (int i = 0; i < 2; i++) {
+			layout.row().grid().add(new JLabel(""));
+		}
+		
+		layout.row().grid().add(scripture1);
+		layout.row().grid().add(scripture2);
+		
 		for (int i = 0; i < 5; i++) {
 			layout.row().grid().add(new JLabel(""));
 		}
