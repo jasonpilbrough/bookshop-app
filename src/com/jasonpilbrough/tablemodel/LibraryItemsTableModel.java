@@ -29,7 +29,7 @@ public class LibraryItemsTableModel implements TableModel{
 	private double progress = 0;
 	SwingWorker<Object[][], Object> worker;
 	
-	public LibraryItemsTableModel(final Database db, final String filter) {
+	public LibraryItemsTableModel(final Database db, final String filter, final PropertyChangeListener progressListener) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
@@ -66,6 +66,9 @@ public class LibraryItemsTableModel implements TableModel{
 		});
 		
 		worker.execute();
+		if(progressListener!=null){
+			worker.addPropertyChangeListener(progressListener);
+		}
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
 			
 			@Override
@@ -77,18 +80,12 @@ public class LibraryItemsTableModel implements TableModel{
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
-				} else if(evt.getPropertyName().equals("progress")){
-					progress = (double)evt.getNewValue();
-					notifyListeners(progress);
-				}
+				} 
 				
 			}
 		});
 	}
 	
-	public LibraryItemsTableModel(Database db) {
-		this(db,"");
-	}
 	
 	@Override
 	public boolean isCellEditable(int row, int column) {
@@ -162,13 +159,6 @@ public class LibraryItemsTableModel implements TableModel{
 		}
 	}
 	
-	//using percent is a hack to pass it to the searchmodel
-	public void notifyListeners(double percentComplete){
-		int percent = (int) Math.round(percentComplete*100);
-		for (TableModelListener l : listeners) {
-			l.tableChanged(new TableModelEvent(this,0,0,0,percent));
-		}
-	}
 
 	
 }

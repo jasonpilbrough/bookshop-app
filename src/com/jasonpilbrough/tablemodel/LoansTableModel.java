@@ -27,7 +27,7 @@ public class LoansTableModel implements TableModel {
 	private int memberId = -1;
 	private List<TableModelListener> listeners;
 	
-	public LoansTableModel(final Database db, final String filter) {
+	public LoansTableModel(final Database db, final String filter, final PropertyChangeListener progressListener) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
@@ -71,6 +71,9 @@ public class LoansTableModel implements TableModel {
 		});
 		
 		worker.execute();
+		if(progressListener!=null){
+			worker.addPropertyChangeListener(progressListener);
+		}
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
 			
 			@Override
@@ -82,21 +85,15 @@ public class LoansTableModel implements TableModel {
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
-				} else if(evt.getPropertyName().equals("progress")){
-					notifyListeners((double)evt.getNewValue());
-				}
+				} 
 				
 			}
 		});
 	}
 	
 	public LoansTableModel(Database db, int memberId) {
-		this(db,"");
+		this(db,"", null);
 		this.memberId = memberId;
-	}
-	
-	public LoansTableModel(Database db) {
-		this(db,"");
 	}
 	
 	@Override
@@ -171,11 +168,4 @@ public class LoansTableModel implements TableModel {
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
-	//using percent is a hack to pass it to the searchmodel
-			public void notifyListeners(double percentComplete){
-				int percent = (int) Math.round(percentComplete*100);
-				for (TableModelListener l : listeners) {
-					l.tableChanged(new TableModelEvent(this,0,0,0,percent));
-				}
-			}
 }

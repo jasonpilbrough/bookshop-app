@@ -26,9 +26,8 @@ public class MembersTableModel implements TableModel{
 	private String filter;
 	private Database db;
 	private List<TableModelListener> listeners;
-	private double progress = 0;
 	
-	public MembersTableModel(final Database db, final String filter) {
+	public MembersTableModel(final Database db, final String filter, final PropertyChangeListener progressListener) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
@@ -74,6 +73,9 @@ public class MembersTableModel implements TableModel{
 		});
 		
 		worker.execute();
+		if(progressListener!=null){
+			worker.addPropertyChangeListener(progressListener);
+		}
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
 			
 			@Override
@@ -85,17 +87,14 @@ public class MembersTableModel implements TableModel{
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
-				} else if(evt.getPropertyName().equals("progress")){
-					progress = (double)evt.getNewValue();
-					notifyListeners(progress);
-				}
+				} 
 				
 			}
 		});
 	}
 	
-	public MembersTableModel(Database db) {
-		this(db,"");
+	public MembersTableModel(Database db, String filter) {
+		this(db,filter,null);
 	}
 	
 	@Override
@@ -157,23 +156,16 @@ public class MembersTableModel implements TableModel{
 	@Override
 	public void removeTableModelListener(TableModelListener l) {}
 	
-	public void notifyListeners(int rowIndex){
+	private void notifyListeners(int rowIndex){
 		for (TableModelListener l : listeners) {
 			l.tableChanged(new TableModelEvent(this, rowIndex));
 		}
 	}
-	public void notifyListeners(){
+	private void notifyListeners(){
 		for (TableModelListener l : listeners) {
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
-	//using percent is a hack to pass it to the searchmodel
-		public void notifyListeners(double percentComplete){
-			int percent = (int) Math.round(percentComplete*100);
-			for (TableModelListener l : listeners) {
-				l.tableChanged(new TableModelEvent(this,0,0,0,percent));
-			}
-		}
 	
 
 }

@@ -1,5 +1,6 @@
 package com.jasonpilbrough.model;
 
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class SearchModel implements TableModelListener{
 
 	private Database db;
 	private AccessManager am;
+	//to notify view of changes
 	private PropertyChangeSupport changefirer;
 	private final static String[] labels = new String[]{"Members","Library Items","Loans","Shop Items","Sales","Other Income","Purchases"};
 	private final static String[] table_names = new String[]{"members","library_items","loans","shop_items","sales","incidentals","purchases"};
@@ -144,23 +146,32 @@ public class SearchModel implements TableModelListener{
 	}
 	
 	private TableModel makeTableModel(String tablename,String filter){
-		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-		Thread[] threadArray = threadSet.toArray(new Thread[threadSet.size()]);
+		PropertyChangeListener progressListener = new PropertyChangeListener() {
+			
+			@Override
+			public void propertyChange(PropertyChangeEvent evt) {
+				if(evt.getPropertyName().equals("progress")){
+					int percent = (int)Math.round(((double)evt.getNewValue())*100);
+					changefirer.firePropertyChange("progress", null,percent);
+				}
+				
+			}
+		};
 		//TODO hate passing in code
 		if(tablename.equalsIgnoreCase("members")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new MembersTableModel(db,filter)), am, "ELOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new MembersTableModel(db,filter,progressListener)), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("library items")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new LibraryItemsTableModel(db,filter)), am, "ELOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new LibraryItemsTableModel(db,filter,progressListener)), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("loans")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new LoansTableModel(db,filter)), am, "ELOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new LoansTableModel(db,filter,progressListener)), am, "ELOP");
 		}else if(tablename.equalsIgnoreCase("shop items")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new ShopItemsTableModel(db,filter)), am, "ESOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new ShopItemsTableModel(db,filter,progressListener)), am, "ESOP");
 		}else if(tablename.equalsIgnoreCase("sales")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new SalesTableModel(db,filter)), am, "ESOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new SalesTableModel(db,filter,progressListener)), am, "ESOP");
 		}else if(tablename.equalsIgnoreCase("other income")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new IncidentalsTableModel(db,filter)), am, "EOOP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new IncidentalsTableModel(db,filter,progressListener)), am, "EOOP");
 		}else if(tablename.equalsIgnoreCase("purchases")){
-			return new AccessControlledTableModel(new ValidatedTableModel(new PurchasesTableModel(db,filter)), am, "POP");
+			return new AccessControlledTableModel(new ValidatedTableModel(new PurchasesTableModel(db,filter,progressListener)), am, "POP");
 		}
 		
 		return null;
@@ -168,14 +179,15 @@ public class SearchModel implements TableModelListener{
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
+		System.out.println(e.getType());
 		//setAllValues();
-		if(e.getSource().toString().equals(tableModel.toString())){
-			if(e.getType()>0){
-				changefirer.firePropertyChange("progress", null, e.getType());
-			}
+		if(e.getType()==0){
+			//setAllValues();
+		}else{
+			changefirer.firePropertyChange("table_model", null, tableModel);
 		}
 		
-		changefirer.firePropertyChange("table_model", null, tableModel);
+		
 	}
 	
 }

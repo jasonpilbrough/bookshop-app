@@ -28,7 +28,7 @@ public class PurchasesTableModel implements TableModel {
 	private Database db;
 	private List<TableModelListener> listeners;
 	
-	public PurchasesTableModel(final Database db, final String filter) {
+	public PurchasesTableModel(final Database db, final String filter, final PropertyChangeListener progressListener) {
 		this.db = db;
 		this.filter = filter;
 		listeners = new ArrayList<>();
@@ -59,6 +59,9 @@ public class PurchasesTableModel implements TableModel {
 		});
 		
 		worker.execute();
+		if(progressListener!=null){
+			worker.addPropertyChangeListener(progressListener);
+		}
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
 			
 			@Override
@@ -70,16 +73,10 @@ public class PurchasesTableModel implements TableModel {
 				}else if(evt.getPropertyName().equals("row_count")){
 					rowCount = (int)evt.getNewValue();
 					notifyListeners();
-				}else if(evt.getPropertyName().equals("progress")){
-					notifyListeners((double)evt.getNewValue());
 				}
 				
 			}
 		});
-	}
-	
-	public PurchasesTableModel(Database db) {
-		this(db,"");
 	}
 	
 	@Override
@@ -149,11 +146,4 @@ public class PurchasesTableModel implements TableModel {
 			l.tableChanged(new TableModelEvent(this));
 		}
 	}
-	//using percent is a hack to pass it to the searchmodel
-		public void notifyListeners(double percentComplete){
-			int percent = (int) Math.round(percentComplete*100);
-			for (TableModelListener l : listeners) {
-				l.tableChanged(new TableModelEvent(this,0,0,0,percent));
-			}
-		}
 }
