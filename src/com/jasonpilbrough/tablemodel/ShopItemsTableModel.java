@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
@@ -12,14 +11,16 @@ import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.Database;
+import com.jasonpilbrough.helper.Id;
+import com.jasonpilbrough.helper.Money;
 
 public class ShopItemsTableModel implements TableModel {
 
 	private String[] labels = new String[]{"ID","Barcode","Title","Author","Type","Cost Price","Selling Price","Qty"};
 	private String[] tableNames = new String[]{"id","barcode","title","author","media_type","cost_price","selling_price","quantity",null};
 	private boolean[] editable = new boolean[]{false,true,true,true,true,true,true,true};
-	private static final Class[] columnClasses = new Class[]{Integer.class,String.class,String.class,String.class,
-			String.class,Double.class,Double.class,Integer.class};
+	private static final Class[] columnClasses = new Class[]{Id.class,String.class,String.class,String.class,
+			String.class,Money.class,Money.class,Integer.class};
 	private Object[][] data;
 	private int rowCount = 0;
 	

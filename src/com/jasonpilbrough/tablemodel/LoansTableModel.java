@@ -12,13 +12,14 @@ import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.Id;
 
 public class LoansTableModel implements TableModel {
 	
 	private static final String[] labels = new String[]{"ID","Member Name","Item Title","Date Issued","Date Due"};
 	private static final String[] tableNames = new String[]{"loans.id","name","title","date_issued","date_due"};
 	private static final boolean[] editable = new boolean[]{false,false,false,true,true};
-	private static final Class[] columnNames = new Class[]{Integer.class,String.class,String.class,DateInTime.class,DateInTime.class};
+	private static final Class[] columnNames = new Class[]{Id.class,String.class,String.class,DateInTime.class,DateInTime.class};
 	private Object[][] data;
 	private int rowCount = 0;
 	

@@ -1,11 +1,9 @@
 package com.jasonpilbrough.tablemodel;
 
-import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
@@ -14,15 +12,16 @@ import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.Id;
+import com.jasonpilbrough.helper.Money;
 import com.jasonpilbrough.helper.ViewHandler;
-import com.jasonpilbrough.vcontroller.Controller;
 import com.jasonpilbrough.view.Drawable;
 
 public class SalesTableModel implements TableModel {
 	
 	private static final String[] labels = new String[]{"ID","Sale Date","Item Title", "Payment","Price per unit","Quantity"};
 	private static final String[] tableNames = new String[]{"sales.id","sale_date","title", "payment","price_per_unit_sold","quantity_sold"};
-	private static final Class[] columnClasses = new Class[]{Integer.class,DateInTime.class,String.class,String.class,Double.class,Integer.class};
+	private static final Class[] columnClasses = new Class[]{Id.class,DateInTime.class,String.class,String.class,Money.class,Integer.class};
 	private static final boolean[] editable = new boolean[]{false,true,false,true,true,true};
 	private Object[][] data;
 	private int rowCount = 0;

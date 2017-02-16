@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.swing.SwingWorker;
 import javax.swing.event.TableModelEvent;
@@ -13,13 +12,14 @@ import javax.swing.table.TableModel;
 
 import com.jasonpilbrough.helper.Database;
 import com.jasonpilbrough.helper.DateInTime;
+import com.jasonpilbrough.helper.Id;
 
 public class MembersTableModel implements TableModel{
 	
 	private String[] labels = new String[]{"ID","Name","Membership Expires","Loans (Overdue)"};
 	private String[] tableNames = new String[]{"id","name","expire_date",null};
 	private boolean[] editable = new boolean[]{false,true,true,false};
-	private static final Class[] columnClasses = new Class[]{Integer.class,String.class,DateInTime.class,String.class};
+	private static final Class[] columnClasses = new Class[]{Id.class,String.class,DateInTime.class,String.class};
 	private Object[][] data;
 	private int rowCount = 0;
 	
