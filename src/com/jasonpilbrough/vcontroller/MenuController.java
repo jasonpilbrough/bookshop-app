@@ -42,7 +42,8 @@ public class MenuController extends Controller {
 				if(!am.allowedAccess("ACAU")){
 					throw new AccessException();
 				}
-				Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This will close the current application","Confirmation needed", this);
+				Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure you want to launch AutoUpdate?\n"
+						+ "This will close the current application","Confirmation needed", this);
 				dialog3.draw();
 				
 				boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
