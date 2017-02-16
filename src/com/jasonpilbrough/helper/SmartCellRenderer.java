@@ -17,7 +17,10 @@ public class SmartCellRenderer extends DefaultTableCellRenderer{
 			setHorizontalAlignment(JLabel.LEFT);
 		} else if(table.getModel().getColumnClass(column)==Money.class){
 			setHorizontalAlignment(JLabel.RIGHT);
-			l.setText(new Money(value).toStringWithoutCurrency());
+			if(value.toString().length()>0){
+				l.setText(new Money(value).toStringWithoutCurrency());
+			}
+			
 		} else if(table.getModel().getColumnClass(column)==Integer.class){
 			setHorizontalAlignment(JLabel.RIGHT);
 		}
