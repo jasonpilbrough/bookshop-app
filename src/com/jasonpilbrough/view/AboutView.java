@@ -144,6 +144,7 @@ public class AboutView extends SmartJFrame implements Drawable {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(290,265));
 		scrollPane.setViewportView(parent);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		

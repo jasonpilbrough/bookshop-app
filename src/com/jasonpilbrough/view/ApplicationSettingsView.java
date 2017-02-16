@@ -130,6 +130,7 @@ public class ApplicationSettingsView extends SmartJFrame implements Drawable {
 	    JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(400,250));
 		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 		scrollPane.setViewportView(parent);
         
         DesignGridLayout layout = new DesignGridLayout(parent);
