@@ -179,14 +179,7 @@ public class SearchModel implements TableModelListener{
 
 	@Override
 	public void tableChanged(TableModelEvent e) {
-		System.out.println(e.getType());
-		//setAllValues();
-		if(e.getType()==0){
-			//setAllValues();
-		}else{
-			changefirer.firePropertyChange("table_model", null, tableModel);
-		}
-		
+		changefirer.firePropertyChange("table_model", null, tableModel);
 		
 	}
 	
