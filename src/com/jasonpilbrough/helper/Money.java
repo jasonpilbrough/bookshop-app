@@ -5,15 +5,12 @@ public class Money {
 	private double amount;
 	
 	public Money(double amount){
+		System.out.println(amount);
 		this.amount = amount;
 	}
 	
 	public Money(Object amount){
-		if(amount instanceof String){
-			this.amount = Double.parseDouble(amount.toString());
-		}else{
-			amount = (double) amount;
-		}
+		this.amount = Double.valueOf(amount.toString()).doubleValue();
 		
 	}
 	
@@ -23,9 +20,9 @@ public class Money {
 	    intArr[0]=Integer.parseInt(arr[0]);
 	    intArr[1]=Integer.parseInt(arr[1]);
 	    if(amount>=0){
-	    	return String.format("%6s.%02d", intArr[0],intArr[1]);
+	    	return String.format("%s.%02d", intArr[0],intArr[1]);
 	    }else{
-	    	return String.format("(%5s.%02d)", Math.abs(intArr[0]),intArr[1]);
+	    	return String.format("(%s.%02d)", Math.abs(intArr[0]),intArr[1]);
 	    }
 		
 	}
