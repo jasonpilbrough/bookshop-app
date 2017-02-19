@@ -157,23 +157,23 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		JPanel parent = new JPanel();
         
 		cashPayments = new JLabel(cashPayments.getText());
-		cashPayments.setFont (new Font("Menlo",Font.PLAIN,12));
+		cashPayments.setFont (new Font("monospaced",Font.PLAIN,12));
 		cardPayments = new JLabel(cardPayments.getText());
-		cardPayments.setFont (new Font("Menlo",Font.PLAIN,12));
+		cardPayments.setFont (new Font("monospaced",Font.PLAIN,12));
 		eftPayments = new JLabel(eftPayments.getText());
-		eftPayments.setFont (new Font("Menlo",Font.PLAIN,12));
+		eftPayments.setFont (new Font("monospaced",Font.PLAIN,12));
 		totalIncome = new JLabel(totalIncome.getText());
-		totalIncome.setFont (new Font("Menlo",Font.BOLD,12));
+		totalIncome.setFont (new Font("monospaced",Font.BOLD,12));
 		costSales = new JLabel(costSales.getText());
-		costSales.setFont (new Font("Menlo",Font.PLAIN,12));
+		costSales.setFont (new Font("monospaced",Font.PLAIN,12));
 		refunds = new JLabel(refunds.getText());
-		refunds.setFont (new Font("Menlo",Font.PLAIN,12));
+		refunds.setFont (new Font("monospaced",Font.PLAIN,12));
 		purchases = new JLabel(purchases.getText());
-		purchases.setFont (new Font("Menlo",Font.PLAIN,12));
+		purchases.setFont (new Font("monospaced",Font.PLAIN,12));
 		totalExpense = new JLabel(totalExpense.getText());
-		totalExpense.setFont (new Font("Menlo",Font.BOLD,12));
+		totalExpense.setFont (new Font("monospaced",Font.BOLD,12));
 		profit = new JLabel(profit.getText());
-		profit.setFont (new Font("Menlo",Font.BOLD,12));
+		profit.setFont (new Font("monospaced",Font.BOLD,12));
 		
 		
         save = new SmartJButton().withSomeState(save);

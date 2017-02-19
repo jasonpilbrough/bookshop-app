@@ -18,12 +18,13 @@ import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import com.jasonpilbrough.helper.SmartJFrame;
 import com.jasonpilbrough.vcontroller.Controller;
 
 import net.java.dev.designgridlayout.DesignGridLayout;
 import net.java.dev.designgridlayout.RowGroup;
 
-public class ChangeLogView extends JFrame implements Drawable {
+public class ChangeLogView extends SmartJFrame implements Drawable {
 	
 	private String[] details;
 
@@ -66,7 +67,8 @@ public class ChangeLogView extends JFrame implements Drawable {
 	        String[] lines = details[i].split(":");
 			for (String line : lines) {
 				JLabel label = new JLabel(line);
-				label.setFont (new Font("Menlo",Font.PLAIN,12));
+				
+				label.setFont (new Font("monospaced",Font.PLAIN,12));
 				layout.row().grid().add(label);
 			}
 			RowGroup group = new RowGroup();

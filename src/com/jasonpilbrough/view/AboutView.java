@@ -99,7 +99,7 @@ public class AboutView extends SmartJFrame implements Drawable {
 		String[] parts1 = title.split("---");
 		for (String string : parts1) {
 			JLabel label = new JLabel(string);
-			label.setFont (new Font("Menlo",Font.PLAIN,12));
+			label.setFont (new Font("monospaced",Font.PLAIN,12));
 			layout.row().grid().add(label);
 		}
 		
@@ -108,7 +108,7 @@ public class AboutView extends SmartJFrame implements Drawable {
 		String[] parts2 = version.split("---");
 		for (String string : parts2) {
 			JLabel label = new JLabel(string);
-			label.setFont (new Font("Menlo",Font.PLAIN,12));
+			label.setFont (new Font("monospaced",Font.PLAIN,12));
 			layout.row().grid().add(label);
 			
 			
@@ -119,7 +119,7 @@ public class AboutView extends SmartJFrame implements Drawable {
 		String[] parts3 = copyright.split("---");
 		for (String string : parts3) {
 			JLabel label = new JLabel(string);
-			label.setFont (new Font("Menlo",Font.PLAIN,12));
+			label.setFont (new Font("monospaced",Font.PLAIN,12));
 			layout.row().grid().add(label);
 		}
 		
@@ -128,7 +128,7 @@ public class AboutView extends SmartJFrame implements Drawable {
 		String[] parts4 = developer.split("---");
 		for (String string : parts4) {
 			JLabel label = new JLabel(string);
-			label.setFont (new Font("Menlo",Font.PLAIN,12));
+			label.setFont (new Font("monospaced",Font.PLAIN,12));
 			layout.row().grid().add(label);
 		}
 		
@@ -137,7 +137,7 @@ public class AboutView extends SmartJFrame implements Drawable {
 		String[] parts5 = disclaimer.split("---");
 		for (String string : parts5) {
 			JLabel label = new JLabel(string);
-			label.setFont (new Font("Menlo",Font.PLAIN,12));
+			label.setFont (new Font("monospaced",Font.PLAIN,12));
 			layout.row().grid().add(label);
 		}
 		

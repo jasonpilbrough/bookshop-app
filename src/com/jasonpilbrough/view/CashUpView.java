@@ -33,6 +33,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
 	private JTextArea explaination;
     private SmartJButton save, apply;
     
+    
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		switch(evt.getPropertyName()){
@@ -90,15 +91,15 @@ public class CashUpView extends SmartJFrame implements Drawable {
         
         
         cashInBox = new SmartJTextField().withSomeState(cashInBox);
-        cashInBox.setFont (new Font("Menlo",Font.PLAIN,12));
+        cashInBox.setFont (new Font("monospaced",Font.PLAIN,12));
         cashFloat = new JLabel(cashFloat.getText());
-        cashFloat.setFont (new Font("Menlo",Font.PLAIN,12));
+        cashFloat.setFont (new Font("monospaced",Font.PLAIN,12));
         cashSales = new JLabel(cashSales.getText());
-        cashSales.setFont (new Font("Menlo",Font.PLAIN,12));
+        cashSales.setFont (new Font("monospaced",Font.PLAIN,12));
         recordedCashSales = new JLabel(recordedCashSales.getText());
-        recordedCashSales.setFont (new Font("Menlo",Font.PLAIN,12));
+        recordedCashSales.setFont (new Font("monospaced",Font.PLAIN,12));
         varience = new JLabel(varience.getText());
-        varience.setFont (new Font("Menlo",Font.PLAIN,12));
+        varience.setFont (new Font("monospaced",Font.PLAIN,12));
         save = new SmartJButton().withSomeState(save);
         apply = new SmartJButton().withSomeState(apply);
         //TODO component state doesnt persist
