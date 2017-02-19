@@ -199,7 +199,7 @@ public class MenuController extends Controller {
 			viewHandler.displayView("SearchView","Sales");
 			break;
 		case "search incidentals":
-			viewHandler.displayView("SearchView","Other income");
+			viewHandler.displayView("SearchView","Other Income");
 			break;
 		case "search purchases":
 			viewHandler.displayView("SearchView","Purchases");
