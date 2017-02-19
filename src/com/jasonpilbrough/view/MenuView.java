@@ -41,7 +41,7 @@ public class MenuView extends JMenuBar implements Drawable {
     	toolsMenu.add(new JMenuItem("Analytics"));
     	toolsMenu.add(new SmartJMenuItem("Cash Up","cash up").withRegisteredController(controller));
     	toolsMenu.add(new SmartJMenuItem("Sales Report","sales report").withRegisteredController(controller));
-    	toolsMenu.add(new SmartJMenuItem("Stock Take","stack trace").withRegisteredController(controller));
+    	toolsMenu.add("Stock Take");
     	toolsMenu.add(new SmartJMenuItem("User Management","manage users").withRegisteredController(controller));
     	toolsMenu.add(new SmartJMenuItem("Console","stack trace").withRegisteredController(controller));
     	this.add(toolsMenu);
