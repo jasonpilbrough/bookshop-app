@@ -215,7 +215,7 @@ public class MemberModel implements TableModelListener{
 	}
 	
 	public double getHireFee(String barcode) throws FailedValidationException{
-		Map map = db.sql("SELECT hire_price FROM library_items WHERE barcode = ? LIMIT 1")
+		Map map = db.sql("SELECT hire_price FROM library_items WHERE barcode = '?' LIMIT 1")
 				.set(barcode)
 				.retrieve();
 
