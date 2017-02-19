@@ -213,7 +213,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
         DesignGridLayout layout = new DesignGridLayout(parent);
         addGroup(layout, "Date From -> To");
         layout.row().grid().add(p1).add(p2);
-        layout.row().grid().empty().empty().add(generate);
+        layout.row().grid().empty().empty().empty().add(generate);
         layout.emptyRow();
         addGroup(layout, "Transactions");
         layout.row().grid(new JLabel()).add(scrollPane);
@@ -233,7 +233,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
         p.setFont (new Font(p.getFont().getFontName(),Font.BOLD,13));
         layout.row().grid().add(p).add(profit).grid().empty();
         
-        layout.row().grid().empty().empty().add(save);
+        layout.row().grid().empty().empty().empty().add(save);
         getContentPane().removeAll();
         getContentPane().add(parent);
         revalidate();
