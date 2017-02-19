@@ -1,4 +1,21 @@
 --------------------------------------------  
+#VERSION        0.9.3
+:RELEASE        2017-02-19
+: 
+:Set all dialog titles
+:Prevented error when cancelling new loan
+:Formated all currency values correctly
+:Fixed bug from filtering search
+:Added sale confirmation dialog
+:Increased table performance
+:Formatted all table values correctly
+:Used inline table value validation
+:Fix member validation bug
+:Added scripture to welcome screen
+:Increased scroll speed
+:Added change log access
+:Visual improvements
+--------------------------------------------  
 #VERSION        0.9.2
 :RELEASE        2017-02-12
 : 
