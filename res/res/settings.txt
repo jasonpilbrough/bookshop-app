@@ -5,3 +5,8 @@ Database
 
 App logs
 #path--dev/app_logs/
+
+FTP
+#ftp_url--ftp.jasonpilbrough.co.za
+#ftp_user--bookshop@jasonpilbrough.co.za
+#ftp_password--hcc2142
