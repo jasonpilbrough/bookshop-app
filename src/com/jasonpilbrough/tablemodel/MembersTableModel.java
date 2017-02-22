@@ -44,7 +44,7 @@ public class MembersTableModel implements TableModel{
 				
 					
 				List<List<Object>> data2 = db.sql("SELECT COUNT(loans.id) AS loans , "
-						+ "COUNT(IF(loans.date_due < NOW(),1,NULL)) AS overdue FROM members "
+						+ "COUNT(IF(loans.date_due < DATE(NOW()),1,NULL)) AS overdue FROM members "
 						+ "LEFT JOIN loans ON members.id = loans.member_id WHERE name LIKE '%?%' "
 						+ "GROUP BY members.id "
 						+ "ORDER BY name,members.id LIMIT ? OFFSET ?")
