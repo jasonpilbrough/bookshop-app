@@ -1,11 +1,12 @@
 package com.jasonpilbrough.helper;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+
+import org.apache.commons.io.FileUtils;
 
 public class SmartFile {
 	
@@ -14,6 +15,10 @@ public class SmartFile {
 	
 	public SmartFile(String directory, String filename) {
 		this.directory = directory;
+		this.filename = filename;
+	}
+	public SmartFile(String filename) {
+		this.directory = "";
 		this.filename = filename;
 	}
 	
@@ -67,6 +72,16 @@ public class SmartFile {
     		fw.write(text);
     		
     	}
+	}
+	
+	public void delete() throws IOException{
+		if(new File(directory+filename).isDirectory()){
+			FileUtils.deleteDirectory(new File(directory+filename));
+		}else{
+			FileUtils.deleteQuietly(new File(directory+filename));
+		}
+		
+
 	}
 	
 	public void makeDirs(){
