@@ -2,6 +2,10 @@ package com.jasonpilbrough.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +36,35 @@ public class LoginView extends JPanel implements Drawable {
 	}
 
 	@Override
-	public void initialise(Controller controller) {
+	public void initialise(final Controller controller) {
+		
 		setVisible(true);
 	       setBounds(0, 0, 600, 600);
 			
-	        username = new SmartJTextField();
+	        username = new SmartJTextField().withKeyListener(controller);
 	        password = new JPasswordField();
+	        password.addKeyListener(new KeyListener() {
+				
+				@Override
+				public void keyTyped(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER){
+						controller.actionPerformed(new ActionEvent(e.getSource(), ActionEvent.ACTION_PERFORMED, "enter pressed"));
+					}
+					
+				}
+				
+				@Override
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
 			login = new SmartJButton("Login","login").withRegisteredController(controller);
 			title = new JLabel("Highway Christian Community");
 	        name = new JLabel("Login");
@@ -47,7 +74,11 @@ public class LoginView extends JPanel implements Drawable {
 	@Override
 	public void draw() {
 		username = new SmartJTextField().withSomeState(username);
+		KeyListener[] listeners = password.getKeyListeners();
 		password = new JPasswordField();
+		for(KeyListener kl:listeners){
+        	password.addKeyListener(kl);
+        }
 
 		name = new JLabel(name.getText());
 		name.setFont (name.getFont().deriveFont (36.0f));
