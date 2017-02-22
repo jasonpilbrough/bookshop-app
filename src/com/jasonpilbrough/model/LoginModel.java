@@ -47,4 +47,8 @@ public class LoginModel {
 		
 	}
 	
+	public boolean accessAutoUpdate(){
+		return am.allowedAccess("ACAU");
+	}
+	
 }

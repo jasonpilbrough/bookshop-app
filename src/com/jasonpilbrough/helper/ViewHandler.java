@@ -122,7 +122,7 @@ public class ViewHandler {
 				JOptionPane.showMessageDialog(null, "Could not launch AutoUpdate");
 				throw new LogException(e);	
 			}
-			// Then retreive the process output
+			//Then retreive the process output
 			InputStream in = proc.getInputStream();
 			InputStream err = proc.getErrorStream();
 		case "LoginView":
