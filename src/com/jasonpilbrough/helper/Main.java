@@ -29,7 +29,7 @@ public class Main {
 		
 		logger.setAccessManager(am);
 		
-		ViewHandler viewHandler = new ViewHandler(db,am);
+		ViewHandler viewHandler = new ViewHandler(db,am, settingsFile);
 		
 		viewHandler.displayView("Application");
 		

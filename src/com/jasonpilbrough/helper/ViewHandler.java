@@ -23,6 +23,7 @@ import com.jasonpilbrough.model.HeaderModel;
 import com.jasonpilbrough.model.LoginModel;
 import com.jasonpilbrough.model.MemberModel;
 import com.jasonpilbrough.model.MembersModel;
+import com.jasonpilbrough.model.PushDevFilesModel;
 import com.jasonpilbrough.model.SaleModel;
 import com.jasonpilbrough.model.SalesReportModel;
 import com.jasonpilbrough.model.SearchModel;
@@ -49,6 +50,7 @@ import com.jasonpilbrough.vcontroller.ManageUsersController;
 import com.jasonpilbrough.vcontroller.MemberController;
 import com.jasonpilbrough.vcontroller.MembersController;
 import com.jasonpilbrough.vcontroller.MenuController;
+import com.jasonpilbrough.vcontroller.PushDevFilesController;
 import com.jasonpilbrough.vcontroller.SaleController;
 import com.jasonpilbrough.vcontroller.SalesReportController;
 import com.jasonpilbrough.vcontroller.SearchController;
@@ -74,6 +76,7 @@ import com.jasonpilbrough.view.ManageUsersView;
 import com.jasonpilbrough.view.MemberView;
 import com.jasonpilbrough.view.MembersView;
 import com.jasonpilbrough.view.MenuView;
+import com.jasonpilbrough.view.PushDevFilesView;
 import com.jasonpilbrough.view.SaleView;
 import com.jasonpilbrough.view.SalesReportView;
 import com.jasonpilbrough.view.SearchView;
@@ -91,6 +94,7 @@ public class ViewHandler {
 	
 	private Database db;
 	private AccessManager am;
+	private SettingsFile settings;
 	
 	//TODO dont like having to do this
 	private MembersController membersController;
@@ -99,10 +103,17 @@ public class ViewHandler {
 	//TODO do NOT like this at all
 	private HeaderModel headerModel = new HeaderModel();
 	
+	public ViewHandler(Database db, AccessManager am, SettingsFile settings) {
+		super();
+		this.db = db;
+		this.am = am;
+		this.settings = settings;
+	}
 	public ViewHandler(Database db, AccessManager am) {
 		super();
 		this.db = db;
 		this.am = am;
+		this.settings = settings;
 	}
 
 	public JComponent displayView(String name){
@@ -210,6 +221,10 @@ public class ViewHandler {
 			Logger.setConsoleModel(stm);
 			ConsoleController stc= new ConsoleController(this,stm, 
 					new ConsoleView());
+			break;
+		case "PushDevFilesView":
+			PushDevFilesController pdfc= new PushDevFilesController(this,new PushDevFilesModel(db, settings), 
+					new PushDevFilesView());
 			break;
 		default:
 			throw new RuntimeException("View " + name + " is not registered with view handler OR wrong view"
