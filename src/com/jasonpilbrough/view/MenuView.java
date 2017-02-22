@@ -22,15 +22,12 @@ public class MenuView extends JMenuBar implements Drawable {
 	@Override
 	public void initialise(Controller controller) {
 		//Where the GUI is created:
-    	JMenu fileMenu,searchMenu,addMenu,toolsMenu, settingsMenu, betaMenu, gotoMenu;
+    	JMenu fileMenu,searchMenu,addMenu,toolsMenu, settingsMenu, betaMenu, gotoMenu, appMenu;
 
 
     	//Build the first menu.
     	fileMenu = new JMenu("File");
     	fileMenu.add(new SmartJMenuItem("About","about").withRegisteredController(controller));
-    	fileMenu.add(new SmartJMenuItem("Change Log","change log").withRegisteredController(controller));
-    	fileMenu.add(new SmartJMenuItem("Auto Update...","update").withRegisteredController(controller));
-    	fileMenu.addSeparator();
     	fileMenu.add(new SmartJMenuItem("Report a bug","report bug").withRegisteredController(controller));
     	fileMenu.add(new SmartJMenuItem("Logout","logout").withRegisteredController(controller));
     	fileMenu.add(new SmartJMenuItem("Exit Application","exit").withRegisteredController(controller));
@@ -81,6 +78,12 @@ public class MenuView extends JMenuBar implements Drawable {
     	settingsMenu.add(new SmartJMenuItem("User Settings","user settings").withRegisteredController(controller));
     	this.add(settingsMenu);
     	
+    	appMenu = new JMenu("App");
+
+    	appMenu.add(new SmartJMenuItem("Change Log","change log").withRegisteredController(controller));
+    	appMenu.add(new SmartJMenuItem("Auto Update...","update").withRegisteredController(controller));
+    	appMenu.add(new SmartJMenuItem("Push Error Reports","push error").withRegisteredController(controller));
+    	this.add(appMenu);
     	
 
 	}
