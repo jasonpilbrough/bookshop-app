@@ -41,7 +41,16 @@ public class MenuController extends Controller {
 			viewHandler.displayView("ChangeLogView");
 			break;
 		case "push dev":
-			viewHandler.displayView("PushDevFilesView");
+			try{
+				if(!am.allowedAccess("ACPD")){
+					throw new AccessException();
+				}
+				viewHandler.displayView("PushDevFilesView");
+			}catch(AccessException e1){
+				Drawable dialog4 = viewHandler.makeMessageDialog(e1.getMessage(),"Error",this);
+				dialog4.draw();
+			}
+			
 			break;
 		case "update":
 			try{
