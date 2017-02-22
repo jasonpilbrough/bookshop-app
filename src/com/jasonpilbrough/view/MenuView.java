@@ -82,7 +82,7 @@ public class MenuView extends JMenuBar implements Drawable {
 
     	appMenu.add(new SmartJMenuItem("Change Log","change log").withRegisteredController(controller));
     	appMenu.add(new SmartJMenuItem("Auto Update...","update").withRegisteredController(controller));
-    	appMenu.add(new SmartJMenuItem("Push Error Reports","push error").withRegisteredController(controller));
+    	appMenu.add(new SmartJMenuItem("Push Dev Files","push dev").withRegisteredController(controller));
     	this.add(appMenu);
     	
 

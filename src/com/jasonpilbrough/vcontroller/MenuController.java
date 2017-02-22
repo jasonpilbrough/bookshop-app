@@ -40,6 +40,9 @@ public class MenuController extends Controller {
 		case "change log":
 			viewHandler.displayView("ChangeLogView");
 			break;
+		case "push dev":
+			viewHandler.displayView("PushDevFilesView");
+			break;
 		case "update":
 			try{
 				if(!am.allowedAccess("ACAU")){
