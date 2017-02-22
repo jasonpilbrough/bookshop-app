@@ -38,10 +38,7 @@ public class ChangeLogModel {
 		String text = file.readWithFilter(":");
 		//System.out.println(text);
 		String[] versions = text.split("#");
-		
-		for (int i = 0; i < versions.length; i++) {
-			System.out.println(versions[i]);
-		}
+
 
 		changefirer.firePropertyChange("versions", "", versions);	
 		
