@@ -40,7 +40,7 @@ public class Logger {
 					} catch (IOException e1) {
 						e1.printStackTrace();
 						//TODO dont like
-						JOptionPane.showMessageDialog(null, "Error writing to app logs: "+e1.toString());
+						JOptionPane.showMessageDialog(null, "Error writing to app logs, contact developer immediately","Critical Error", JOptionPane.ERROR_MESSAGE);
 					} 
 					
 					
