@@ -98,7 +98,7 @@ class MySwingWorker extends SwingWorker<Object, Object>{
 				
 		       double progress = (totalBytesTransferred/fileSize);
 		       if(progress==1){
-		    	   publish("Finalising upload");
+		    	   publish("Finalising upload...");
 		       }else{
 		    	   publish("Uploading: "+new Percent(progress)+ " complete");
 		       }
