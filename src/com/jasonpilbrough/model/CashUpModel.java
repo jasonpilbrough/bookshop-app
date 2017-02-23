@@ -75,8 +75,8 @@ public class CashUpModel {
     		text+=String.format("\n%-20s %s","FLOAT", "R "+getFloat());
     		text+=String.format("\n%-20s %s","CASH SALES ",cashStr);
     		text+=String.format("\n%-20s %s","RECORDED SALES","R "+getRecordedCashSales());
-    		text+=String.format("\n%-20s %s","VARIENCE", varStr);
-    		text+=String.format("\n\n%-20s %s","EXPLANATION ",formatString(explaination));
+    		text+=String.format("\n\n%-20s %s","VARIENCE", varStr);
+    		text+=String.format("\n%-20s %s","EXPLANATION ",formatString(explaination));
     		text+="\n\n-----------------------------------------------------------";
     		
     		file.write(text);
