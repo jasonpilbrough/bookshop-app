@@ -76,6 +76,8 @@ public class CashUpView extends SmartJFrame implements Drawable {
 	        recordedCashSales = new JLabel();
 	        varience = new JLabel();
 	        explaination = new JTextArea();
+	        explaination.setLineWrap(true);
+	        explaination.setWrapStyleWord(true);
 	        
 	        apply = new SmartJButton("Apply").withRegisteredController(controller);
 	        save = new SmartJButton("Save").withRegisteredController(controller);
@@ -104,6 +106,8 @@ public class CashUpView extends SmartJFrame implements Drawable {
         apply = new SmartJButton().withSomeState(apply);
         //TODO component state doesnt persist
         explaination = new JTextArea();
+        explaination.setLineWrap(true);
+        explaination.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setPreferredSize(new Dimension(400,100));
 		scrollPane.setViewportView(explaination);
