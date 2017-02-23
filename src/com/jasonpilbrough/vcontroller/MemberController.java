@@ -39,7 +39,10 @@ public class MemberController extends Controller {
 			case "init":
 				model.setAllValues();
 				if(model.hasMembershipExpired()){
-					Drawable dialog4 = viewHandler.makeMessageDialog("Membership has expired","Error",this);
+					Drawable dialog4 = viewHandler.makeMessageDialog("Membership has expired\nClick 'Renew' to renew this membership"
+							+ "\n\nNOTE: It is possible to loan items with"
+							+ "\nan expired membership, but this should only"
+							+ "\nbe allowed under special circumstances","Warning",this);
 					dialog4.draw();
 				}
 				
