@@ -27,9 +27,6 @@ public class CachedTableModel implements TableModel {
 	public int getRowCount() {
 		if(rowCount<0){
 			rowCount =  origin.getRowCount();
-		}else{
-			Database.saves++;
-			Database.print();
 		}
 		
 		return rowCount;
@@ -44,9 +41,6 @@ public class CachedTableModel implements TableModel {
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		if(data[rowIndex][columnIndex]==null){
 			data[rowIndex][columnIndex] = origin.getValueAt(rowIndex, columnIndex);
-		}else{
-			Database.saves++;
-			Database.print();
 		}
 		return data[rowIndex][columnIndex];
 	}

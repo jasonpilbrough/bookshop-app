@@ -27,8 +27,6 @@ public class Database {
     
     private Connection conn;
     private Statement statement;
-    private static int connections = 0;
-    public static int saves = 0;
 
     public Database(DataSource src) {
         this(src,"");
@@ -40,20 +38,13 @@ public class Database {
         
     }
     
-    //TODO remove - for dev purposes, also remove all counts
-    public static void print(){
-    	if(connections%100==0||saves%1000==0){
-    		//System.out.println("CONNECTIONS "+(connections)+"  SAVES "+saves);
-    	}
-    }
+  
     
     //used for returning more than one column and row at the same time
     public List<List<Object>> retrieve2D(){
     	if(query.contains("?")){
             throw new IllegalStateException("Query string still has unset parameters");
         }
-        connections++;
-        print();
         ResultSet rs = null;
         
         try {
@@ -92,8 +83,6 @@ public class Database {
         if(query.contains("?")){
             throw new IllegalStateException("Query string still has unset parameters");
         }
-        connections++;
-        print();
         ResultSet rs = null;
         try {
             conn =  src.getConnection();
@@ -146,7 +135,6 @@ public class Database {
         if(query.contains("?")){
             throw new IllegalStateException("Query string still has unset parameters");
         }
-       // System.out.println("CONNECTION "+count++);
         try {
             conn =  src.getConnection();
             statement = conn.createStatement();
