@@ -60,6 +60,9 @@ public class ApplicationController extends Controller {
 		case "login context":
 			model.setLoginContext();
 			break;
+		case "window closing":
+			model.windowClosing();
+			break;
 		default:
 			throw new RuntimeException("Command "+e.getActionCommand()+" not registered with controller");
 	}

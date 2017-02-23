@@ -6,10 +6,12 @@ import java.beans.PropertyChangeSupport;
 public class ApplicationModel {
 
 	private PropertyChangeSupport changefirer;
+	private PushDevFilesModel model;
 	
 	
-	public ApplicationModel() {
+	public ApplicationModel(PushDevFilesModel model) {
 		changefirer = new PropertyChangeSupport(this);
+		this.model = model;
 		
 	}
 	
@@ -37,6 +39,10 @@ public class ApplicationModel {
 	
 	public void setWelcomeContext(){
 		changefirer.firePropertyChange("context", null, "welcome");
+	}
+	
+	public void windowClosing(){
+		model.pushDevFiles();
 	}
 		
 		

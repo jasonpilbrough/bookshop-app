@@ -1,5 +1,7 @@
 package com.jasonpilbrough.view;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.PropertyChangeEvent;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,15 +38,34 @@ public class ApplicationView extends SmartJFrame implements Drawable{
 		
 	}
 	
-	public void initialise(Controller controller){
-		setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+	public void initialise(final Controller controller){
+		setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
        
        setVisible(true);
        setBounds(0, 0, 540, 540);
        
       
        setTitle("Highway Christian Community Bookshop");
-       
+       this.addWindowListener(new WindowListener() {
+		
+		@Override
+		public void windowOpened(WindowEvent e) {}
+		@Override
+		public void windowIconified(WindowEvent e) {}
+		@Override
+		public void windowDeiconified(WindowEvent e) {}
+		@Override
+		public void windowDeactivated(WindowEvent e) {}
+		@Override
+		public void windowClosing(WindowEvent e) {
+			 controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "window closing"));
+			
+		}
+		@Override
+		public void windowClosed(WindowEvent e) {}
+		@Override
+		public void windowActivated(WindowEvent e) {}
+	});
 
        //init command from view causes the model to push all values view
        controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
