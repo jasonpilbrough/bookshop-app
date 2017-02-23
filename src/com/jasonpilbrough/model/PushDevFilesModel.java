@@ -33,13 +33,15 @@ public class PushDevFilesModel {
 	private Database db;
 	private PropertyChangeSupport changefirer;
 	private SwingWorker<Object, Object> worker;
+	private boolean terminateOnComplete;
 	
 	
-	public PushDevFilesModel(Database db, SettingsFile settings) {
+	public PushDevFilesModel(Database db, SettingsFile settings, boolean terminateOnComplete) {
 		super();
 		this.db = db;
 		changefirer = new PropertyChangeSupport(this);
 		worker = new MySwingWorker(settings);
+		this.terminateOnComplete = terminateOnComplete;
 		
 	}
 
@@ -58,6 +60,9 @@ public class PushDevFilesModel {
 			public void propertyChange(PropertyChangeEvent evt) {
 				switch(evt.getPropertyName()){
 				case "complete":
+					if(terminateOnComplete){
+						System.exit(0);
+					}
 					changefirer.firePropertyChange("complete", null, evt.getNewValue());
 					break;
 				case "progress":
