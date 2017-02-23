@@ -62,7 +62,7 @@ public class ManageUsersView extends SmartJFrame implements Drawable {
 	       
 	       
 	       setVisible(true);
-	       setBounds(0, 0, 330, 270);
+	       setBounds(0, 0, 380, 270);
 	       setTitle("User Management");
 	       
 	       table = new JTable();
