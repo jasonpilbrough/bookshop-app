@@ -107,6 +107,10 @@ public class SearchModel implements TableModelListener{
 		setTable(selectedLabel);
 	}
 	
+	public boolean isLibraryOrShopItemTableModel(){
+		return selectedLabel.equalsIgnoreCase("Shop Items")||selectedLabel.equalsIgnoreCase("Library Items");
+	}
+	
 	private ComboBoxModel<String> makeComboModel(){
 		ComboBoxModel<String> model = new ComboBoxModel<String>() {
 

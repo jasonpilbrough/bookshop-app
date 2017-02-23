@@ -39,8 +39,16 @@ public class SearchController extends Controller {
 				}
 				int[] ids = (int[])view.getFields().get("selected_ids");
 				if(ids.length>0){
-					Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone","Warning", this);
-					dialog3.draw();
+					Drawable dialog3;
+					if(model.isLibraryOrShopItemTableModel()){
+						dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone\n"
+								+ "NOTE: This will delete any related loans or sales","Warning", this);
+						dialog3.draw();
+					}else{
+						dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone","Warning", this);
+						dialog3.draw();
+					}
+					
 					
 					boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
 					if(confirmed){
