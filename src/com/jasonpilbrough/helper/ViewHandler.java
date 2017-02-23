@@ -120,7 +120,7 @@ public class ViewHandler {
 		switch(name){
 		case "Application":
 			ApplicationView av = new ApplicationView(this);
-			ApplicationModel apm = new ApplicationModel();
+			ApplicationModel apm = new ApplicationModel(new PushDevFilesModel(db, settings, true));
 			appController = new ApplicationController(this, apm, av,am);
 			appController.initController();
 			break;
@@ -223,7 +223,7 @@ public class ViewHandler {
 					new ConsoleView());
 			break;
 		case "PushDevFilesView":
-			PushDevFilesController pdfc= new PushDevFilesController(this,new PushDevFilesModel(db, settings), 
+			PushDevFilesController pdfc= new PushDevFilesController(this,new PushDevFilesModel(db, settings, false), 
 					new PushDevFilesView());
 			break;
 		default:
