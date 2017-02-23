@@ -36,7 +36,6 @@ public class ManageUsersController extends Controller {
 			Drawable dialog3 = viewHandler.makeConfirmDialog("Are you sure? This action cannot be undone","Confirmation needed", this);
 			dialog3.draw();
 			
-			//System.out.println(dialog3.getFields().get("dialog_input").toString());
 			boolean confirmed = Boolean.parseBoolean(dialog3.getFields().get("dialog_input").toString());
 			if(confirmed){
 				model.deleteUser(Integer.parseInt(view.getFields().get("selected_row_id").toString()));

@@ -156,7 +156,6 @@ class MySwingWorker extends SwingWorker<Object, Object>{
          parameters.setCompressionMethod(Zip4jConstants.COMP_DEFLATE);
          parameters.setCompressionLevel(Zip4jConstants.DEFLATE_LEVEL_NORMAL);
          zipFile.addFolder(source, parameters);
-         System.out.println(destination);
          return destination;
 	}
 	

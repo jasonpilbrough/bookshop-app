@@ -143,7 +143,6 @@ public class MembersView extends JPanel implements Drawable{
 
 		if(table.getSelectedRow()>-1){
 			map.put("selected_row_id", table.getValueAt(table.getSelectedRow(), 0));
-			//System.out.println(table.getValueAt(table.getSelectedRow(), 0));
 		}
 		
 		return map;

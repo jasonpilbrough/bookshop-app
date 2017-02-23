@@ -36,7 +36,6 @@ public class ChangeLogModel {
 		String filename = "change_log.txt";
 		SmartFile file = new SmartFile(directory, filename);
 		String text = file.readWithFilter(":");
-		//System.out.println(text);
 		String[] versions = text.split("#");
 
 

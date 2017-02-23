@@ -5,7 +5,6 @@ public class Money {
 	private double amount;
 	
 	public Money(double amount){
-		System.out.println(amount);
 		this.amount = amount;
 	}
 	

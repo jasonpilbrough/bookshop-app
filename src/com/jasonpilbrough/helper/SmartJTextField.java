@@ -33,7 +33,6 @@ public class SmartJTextField extends JTextField {
 			@Override
 			public void focusGained(FocusEvent e) {
 				if(getText().equalsIgnoreCase(prompt)){
-					System.out.println("HERE sjtf");
 					setText("");
 					revalidate();
 					repaint();
@@ -48,7 +47,6 @@ public class SmartJTextField extends JTextField {
 	
 	@Override
 	public void setText(String t) {
-		//System.out.println(t);
 		super.setText(t);
 	}
 	
@@ -102,7 +100,6 @@ public class SmartJTextField extends JTextField {
     public SmartJTextField withSomeState(SmartJTextField field){
     	String fieldText = field.getText();
     	String thisText = getText();
-    	//System.out.println(fieldText);
     	this.setText(field.getText());
      	this.setEnabled(field.isEnabled());
         this.setVisible(field.isVisible());

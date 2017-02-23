@@ -87,7 +87,6 @@ public class SaleView extends JPanel implements Drawable {
 		
 
 
-		//System.out.println(barcode.getSelectedText());
 
 	}
 
