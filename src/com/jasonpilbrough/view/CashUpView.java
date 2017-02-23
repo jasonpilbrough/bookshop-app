@@ -105,7 +105,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
         save = new SmartJButton().withSomeState(save);
         apply = new SmartJButton().withSomeState(apply);
         //TODO component state doesnt persist
-        explaination = new JTextArea();
+        explaination = new JTextArea(explaination.getText());
         explaination.setLineWrap(true);
         explaination.setWrapStyleWord(true);
         JScrollPane scrollPane = new JScrollPane();
