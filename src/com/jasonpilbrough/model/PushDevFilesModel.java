@@ -52,6 +52,9 @@ public class PushDevFilesModel {
 	public void pushDevFiles(){
 		if(!new File("dev").exists()){
 			changefirer.firePropertyChange("failed", null, "No files to upload");
+			if(terminateOnComplete){
+				System.exit(0);
+			}
 			return;
 		}
 		worker.addPropertyChangeListener(new PropertyChangeListener() {
@@ -69,6 +72,9 @@ public class PushDevFilesModel {
 					changefirer.firePropertyChange("progress", null, evt.getNewValue());
 					break;
 				case "failed":
+					if(terminateOnComplete){
+						System.exit(0);
+					}
 					changefirer.firePropertyChange("failed", null, evt.getNewValue());
 					break;
 				}
