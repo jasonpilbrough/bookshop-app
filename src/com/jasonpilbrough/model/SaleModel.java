@@ -87,7 +87,6 @@ public class SaleModel {
 	}
 	
 	public void addToCart(String barcode, double price, boolean saleTransacion, int qty) throws FailedValidationException{
-		
 		if(price<0){
 			throw new FailedValidationException("Price must be positive");
 		}
@@ -130,7 +129,7 @@ public class SaleModel {
 			else if (num==0 && !Boolean.parseBoolean(strings[3]))
 				num = -1;
 			
-			db.sql("UPDATE shop_items SET quantity = quantity - ? WHERE title = '?' LIMIT 1")
+			db.sql("UPDATE shop_items SET quantity = IF(CAST(quantity AS signed)- 1 < 0, 0, quantity - 1) WHERE title = '?' LIMIT 1")
 				.set(Integer.parseInt(strings[2]) * num)
 				.set(strings[0])
 				.update();
