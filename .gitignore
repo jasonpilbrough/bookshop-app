@@ -4,6 +4,6 @@ lib/
 dist/
 screenshots/
 user_files/
-AutoUpdate.jar
+*.jar
 .*
 !/.gitignore
