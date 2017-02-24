@@ -124,15 +124,19 @@ public class SaleModel {
 					.update();
 			
 			int num = (int) Math.signum(Double.parseDouble(strings[1]));
+			System.out.println(num);
 			if(num==0 && Boolean.parseBoolean(strings[3]))
 				num=1;
 			else if (num==0 && !Boolean.parseBoolean(strings[3]))
 				num = -1;
 			
-			db.sql("UPDATE shop_items SET quantity = IF(CAST(quantity AS signed)- 1 < 0, 0, quantity - 1) WHERE title = '?' LIMIT 1")
-				.set(Integer.parseInt(strings[2]) * num)
-				.set(strings[0])
-				.update();
+			db.sql("UPDATE shop_items SET quantity = IF(CAST(quantity AS signed)- ? < 0, 0, quantity - ?) WHERE title = '?' LIMIT 1")
+			.set(Integer.parseInt(strings[2]) * num)
+			.set(Integer.parseInt(strings[2]) * num)
+			.set(strings[0])
+			.update();
+			
+			
 			
 			cart = new ArrayList<>();
 			tableModel = new CartTableModel(cart);
