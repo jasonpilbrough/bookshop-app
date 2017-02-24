@@ -4,7 +4,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -120,7 +119,8 @@ class MySwingWorker extends SwingWorker<Object, Object>{
 		folder.delete();
 		SmartFile file = new SmartFile(zipFilename);
 		file.delete();
-		
+		ProcessBuilder pb = new ProcessBuilder("java", "-jar", "EmailTool.jar");
+		Process p = pb.start();
 		publish("Upload complete");
 		return new Object();
 	}
@@ -158,5 +158,7 @@ class MySwingWorker extends SwingWorker<Object, Object>{
          zipFile.addFolder(source, parameters);
          return destination;
 	}
+	
+	
 	
 }
