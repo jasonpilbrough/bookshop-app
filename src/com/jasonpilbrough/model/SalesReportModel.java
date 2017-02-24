@@ -317,9 +317,8 @@ public class SalesReportModel {
 	}
 	
 	private Money getCostOfSales(String lowerBound, String upperBound){
-		Map map = db.sql(" SELECT SUM(cost_price * quantity_sold) AS sum FROM sales "
-				+ "INNER JOIN shop_items ON sales.shop_item_id = shop_items.id WHERE price_per_unit_sold > -1 "
-				+ "AND sale_date >= '?' AND sale_date <= '?'")
+		Map map = db.sql(" SELECT SUM(cost_price *SIGN(price_per_unit_sold) * quantity_sold) AS sum FROM sales "
+				+ "INNER JOIN shop_items ON sales.shop_item_id = shop_items.id WHERE sale_date >= '?' AND sale_date <= '?'")
 				.set(lowerBound)
 				.set(upperBound)
 				.retrieve();
