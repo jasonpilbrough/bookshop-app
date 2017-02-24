@@ -1,6 +1,7 @@
 package com.jasonpilbrough.vcontroller;
 
 import java.awt.event.ActionEvent;
+import java.awt.print.PrinterException;
 import java.io.IOException;
 
 import com.jasonpilbrough.helper.LogException;
@@ -44,6 +45,21 @@ public class SalesReportController extends Controller {
 				
 			} catch (IOException e1) {
 				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to save Sales report. "+e1.getMessage(),"Error",this);
+				dialog4.draw();
+				throw new LogException(e1);
+			}
+			break;
+		case "print":
+			try {
+				boolean saved = model.print(view.getFields().get("date1").toString(), 
+						view.getFields().get("date2").toString());
+				if(saved){
+					Drawable dialog4 = viewHandler.makeMessageDialog("Sales report sent to printer successfully","Success",this);
+					dialog4.draw();
+				}
+				
+			} catch (IOException| PrinterException e1) {
+				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to print Sales report. "+e1.getMessage(),"Error",this);
 				dialog4.draw();
 				throw new LogException(e1);
 			}

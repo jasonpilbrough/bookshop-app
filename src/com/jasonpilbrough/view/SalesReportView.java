@@ -43,7 +43,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 
 	
 	private JLabel cashPayments, cardPayments, eftPayments, totalIncome, costSales, refunds, purchases,totalExpense, profit;
-    private SmartJButton save, generate;
+    private SmartJButton save,print, generate;
     private JTable table;
     private SmartJDatePicker datePicker1, datePicker2;
 	
@@ -146,6 +146,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 	        
 	        generate = new SmartJButton("Generate").withRegisteredController(controller);
 	        save = new SmartJButton("Save").withRegisteredController(controller);
+	        print = new SmartJButton("Print").withRegisteredController(controller);
 	        
 	      //init command from view causes the model to push all values view
 	        controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
@@ -177,6 +178,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 		
 		
         save = new SmartJButton().withSomeState(save);
+        print = new SmartJButton().withSomeState(print);
         generate = new SmartJButton().withSomeState(generate);
         
         resizeColumns();
@@ -233,7 +235,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
         p.setFont (new Font(p.getFont().getFontName(),Font.BOLD,13));
         layout.row().grid().add(p).add(profit).grid().empty();
         
-        layout.row().grid().empty().empty().empty().add(save);
+        layout.row().grid().empty().empty().add(print).add(save);
         getContentPane().removeAll();
         getContentPane().add(parent);
         revalidate();
