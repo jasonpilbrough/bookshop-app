@@ -12,10 +12,10 @@ import com.jasonpilbrough.helper.DateInTime;
 import com.jasonpilbrough.helper.Money;
 
 public class SalesReportTableModel implements TableModel {
-	private static final String[] labels = new String[]{"Title", "Qty", "Total (R)"};
-	private static final String[] tableNames = new String[]{"title","qty", "price"};
-	private static final Class[] columnClasses = new Class[]{String.class,Integer.class,Money.class};
-	private static final boolean[] editable = new boolean[]{false,false,false};
+	private static final String[] labels = new String[]{"Title", "Qty","Cost (R)", "Total (R)"};
+	private static final String[] tableNames = new String[]{"title","qty","cost", "price"};
+	private static final Class[] columnClasses = new Class[]{String.class,Integer.class,Money.class,Money.class};
+	private static final boolean[] editable = new boolean[]{false,false,false,false};
 	
 	private DateInTime lowerLimit;
 	private DateInTime upperLimit;
@@ -133,8 +133,8 @@ public class SalesReportTableModel implements TableModel {
 	
 	private Object getValueAtFromSale(int rowIndex, int columnIndex){
 		//TODO sql statement may cause problems with sqlite db - OFFSET
-			Map<String,Object> map = db.sql("SELECT title, SUM(price_per_unit_sold*quantity_sold) AS 'price', "
-					+ "SUM(quantity_sold) AS 'qty' FROM sales "
+			Map<String,Object> map = db.sql("SELECT title, SUM(cost_price*quantity_sold) AS 'cost', "
+					+ "SUM(price_per_unit_sold*quantity_sold) AS 'price', SUM(quantity_sold) AS 'qty' FROM sales "
 					+ "INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
 					+ "WHERE price_per_unit_sold > -1 AND sale_date >= '?' AND sale_date <= '?' GROUP BY title  "
 					+ "ORDER BY title LIMIT 1 OFFSET ?")
@@ -150,8 +150,8 @@ public class SalesReportTableModel implements TableModel {
 	
 	private Object getValueAtFromRefunds(int rowIndex, int columnIndex){
 		//TODO sql statement may cause problems with sqlite db - OFFSET
-			Map<String,Object> map = db.sql("SELECT title, SUM(price_per_unit_sold*quantity_sold) AS 'price', "
-					+ "SUM(quantity_sold) AS 'qty' FROM sales "
+			Map<String,Object> map = db.sql("SELECT title, SUM(cost_price*quantity_sold*-1) AS 'cost', "
+					+ "SUM(price_per_unit_sold*quantity_sold) AS 'price', SUM(quantity_sold) AS 'qty' FROM sales "
 					+ "INNER JOIN shop_items ON sales.shop_item_id = shop_items.id "
 					+ "WHERE price_per_unit_sold < 0 AND sale_date >= '?' AND sale_date <= '?' GROUP BY title "
 					+ "ORDER BY title LIMIT 1 OFFSET ?")
@@ -164,7 +164,7 @@ public class SalesReportTableModel implements TableModel {
 	
 	private Object getValueAtFromIncidental(int rowIndex, int columnIndex){
 		//TODO sql statement may cause problems with sqlite db - OFFSET
-			Map<String,Object> map = db.sql("SELECT type AS title, SUM(amount) AS price, COUNT(*) AS qty FROM incidentals "
+			Map<String,Object> map = db.sql("SELECT type AS title, 0 AS cost, SUM(amount) AS price, COUNT(*) AS qty FROM incidentals "
 					+ "WHERE amount> -1 AND date >= '?' AND date <= '?' GROUP BY type ORDER BY title LIMIT 1 OFFSET ?")
 					.set(lowerLimit)
 					.set(upperLimit)
@@ -175,7 +175,7 @@ public class SalesReportTableModel implements TableModel {
 	
 	private Object getValueAtFromPurchases(int rowIndex, int columnIndex){
 		//TODO sql statement may cause problems with sqlite db - OFFSET
-			Map<String,Object> map = db.sql("SELECT type AS title, (0-SUM(amount)) AS price, COUNT(*) AS qty FROM purchases "
+			Map<String,Object> map = db.sql("SELECT type AS title, 0 AS cost, (0-SUM(amount)) AS price, COUNT(*) AS qty FROM purchases "
 					+ "WHERE amount> -1 AND date >= '?' AND date <= '?' GROUP BY type ORDER BY title LIMIT 1 OFFSET ?")
 					.set(lowerLimit)
 					.set(upperLimit)

@@ -260,7 +260,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
 	
 	
 	//SUMS 100%
-		float[] columnWidthPercentage = {73.0f, 7.0f, 20.0f};
+		float[] columnWidthPercentage = {53.0f, 7.0f, 20.0f, 20.0f};
 		
 	private void resizeColumns() {
 	    int tW = table.getWidth();
