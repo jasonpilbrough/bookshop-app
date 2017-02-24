@@ -150,14 +150,15 @@ public class SalesReportModel {
 				text+="TRANSACTIONS";
 				text+="\n===============================================================\n\n";
 
-				String[] columnName = new String[]{"TITLE", "QTY","TOTAL"};
-				text+=String.format("%-40s %-5s %-15s", columnName[0], columnName[1], columnName[2]);
+				String[] columnName = new String[]{"TITLE", "QTY","COST","TOTAL"};
+				text+=String.format("%-32s %-8s %-12s %-12s", columnName[0], columnName[1], columnName[2], columnName[3]);
 				text+="\n---------------------------------------------------------------";
 				
 				for (int i = 0; i < tableModel.getRowCount(); i++) {
-					text+=String.format("\n%-40s %-5s %8s", trim(tableModel.getValueAt(i, 0).toString()), 
+					text+=String.format("\n%-32s %-5s %-12s %-12s", trim(tableModel.getValueAt(i, 0).toString()), 
 							tableModel.getValueAt(i, 1) , 
-							(tableModel.getValueAt(i, 2).toString().length()==0?"":new Money(tableModel.getValueAt(i, 2))));
+							(tableModel.getValueAt(i, 2).toString().length()==0?"":new Money(tableModel.getValueAt(i, 2)).toStringWithoutCurrency()),
+							(tableModel.getValueAt(i, 3).toString().length()==0?"":new Money(tableModel.getValueAt(i, 3)).toStringWithoutCurrency()));
 				}
 				
 				text+="\n\n\nCASHFLOW";
@@ -201,31 +202,33 @@ public class SalesReportModel {
 		SmartFile file = new SmartFile(dir,filename);
     	String text = "";
     	
-		text+="\nSALES REPORT\n";
+    	text+="\nSALES REPORT\n";
 		text+=String.format("%-20s %s -> %s", "DATE" ,fmt2.print(new DateTime(date1)),fmt2.print(new DateTime(date2)));
 		text+="\n===============================================================\n\n";
 		text+="TRANSACTIONS";
 		text+="\n===============================================================\n\n";
 
-		String[] columnName = new String[]{"TITLE", "QTY","TOTAL"};
-		text+=String.format("%-40s %-5s %-15s", columnName[0], columnName[1], columnName[2]);
+		String[] columnName = new String[]{"TITLE", "QTY","COST","TOTAL"};
+		text+=String.format("%-32s %-8s %-12s %-12s", columnName[0], columnName[1], columnName[2], columnName[3]);
 		text+="\n---------------------------------------------------------------";
 		
 		for (int i = 0; i < tableModel.getRowCount(); i++) {
-			text+=String.format("\n%-40s %-5s R %-15s", trim(tableModel.getValueAt(i, 0).toString()), 
-					tableModel.getValueAt(i, 1) , tableModel.getValueAt(i, 2));
+			text+=String.format("\n%-32s %-5s %-12s %-12s", trim(tableModel.getValueAt(i, 0).toString()), 
+					tableModel.getValueAt(i, 1) , 
+					(tableModel.getValueAt(i, 2).toString().length()==0?"":new Money(tableModel.getValueAt(i, 2)).toStringWithoutCurrency()),
+					(tableModel.getValueAt(i, 3).toString().length()==0?"":new Money(tableModel.getValueAt(i, 3)).toStringWithoutCurrency()));
 		}
 		
 		text+="\n\n\nCASHFLOW";
 		text+="\n===============================================================\n";
-		text+=String.format("\n%-20s R %-10s %-20s R %s", "CASH PAYMENTS" ,getCashPayments(date1, date2), "COST OF SALES" ,getCostOfSales(date1, date2));
-		text+=String.format("\n%-20s R %-10s %-20s R %s", "CARD PAYMENTS" ,getCardPayments(date1, date2), "REFUNDS" ,getRefunds(date1, date2));
-		text+=String.format("\n%-20s R %-10s %-20s R %s", "EFT PAYMENTS" ,getEftPayments(date1, date2), "PURCHASES " ,getPurchases(date1, date2));
+		text+=String.format("\n%-15s %-17s %-15s %s", "CASH PAYMENTS" ,getCashPayments(date1, date2), "COST OF SALES" ,getCostOfSales(date1, date2));
+		text+=String.format("\n%-15s %-17s %-15s %s", "CARD PAYMENTS" ,getCardPayments(date1, date2), "REFUNDS" ,getRefunds(date1, date2));
+		text+=String.format("\n%-15s %-17s %-15s %s", "EFT PAYMENTS" ,getEftPayments(date1, date2), "PURCHASES " ,getPurchases(date1, date2));
 		text+="\n-----------------------------     -----------------------------";
-		text+=String.format("\n%-20s R %-10s %-20s R %s", "TOTAL INCOME" ,getTotalIncome(date1, date2), "TOTAL EXPENSES" ,getTotalExpense(date1, date2));
+		text+=String.format("\n%-15s %-17s %-15s %s", "TOTAL INCOME" ,getTotalIncome(date1, date2), "TOTAL EXPENSES" ,getTotalExpense(date1, date2));
 		
 		text+="\n\n------------------------------\n";
-		text+=String.format("%-20s R %s", "PROFIT" ,getProfit(date1, date2));
+		text+=String.format("%-15s %s", "PROFIT" ,getProfit(date1, date2));
 		text+="\n------------------------------\n";
 		
 		file.write(text);
@@ -233,7 +236,7 @@ public class SalesReportModel {
 	}
 	
 	private String trim(String val){
-		int thresh = 35;
+		int thresh = 27;
 		
 		if(val.length()>thresh){
 			return val.substring(0, thresh-3)+ "...";
