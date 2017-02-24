@@ -13,6 +13,14 @@ public class Money {
 		
 	}
 	
+	public Money add(Money other){
+		return new Money(this.amount + other.amount);
+	}
+	
+	public Money subtract(Money other){
+		return new Money(this.amount - other.amount);
+	}
+	
 	public String toStringWithoutCurrency(){
 		String[] arr=String.valueOf(amount).split("\\.");
 	    int[] intArr=new int[2];
