@@ -31,7 +31,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
 	private SmartJTextField cashInBox;
 	private JLabel cashFloat, cashSales, recordedCashSales, varience;
 	private JTextArea explaination;
-    private SmartJButton save, apply;
+    private SmartJButton save,print, apply;
     
     
 	@Override
@@ -81,6 +81,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
 	        
 	        apply = new SmartJButton("Apply").withRegisteredController(controller);
 	        save = new SmartJButton("Save").withRegisteredController(controller);
+	        print = new SmartJButton("Print").withRegisteredController(controller);
 	        
 	      //init command from view causes the model to push all values view
 	        controller.actionPerformed(new ActionEvent(this, ActionEvent.ACTION_PERFORMED, "init"));
@@ -103,6 +104,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
         varience = new JLabel(varience.getText());
         varience.setFont (new Font("monospaced",Font.PLAIN,12));
         save = new SmartJButton().withSomeState(save);
+        print = new SmartJButton().withSomeState(print);
         apply = new SmartJButton().withSomeState(apply);
         //TODO component state doesnt persist
         explaination = new JTextArea(explaination.getText());
@@ -127,7 +129,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
         addGroup(layout, "Reason for varience");
         layout.row().grid(new JLabel("Explaination:")).add(scrollPane);
         layout.emptyRow();
-        layout.row().grid().empty(2).add(save);
+        layout.row().grid().empty(1).add(print).add(save);
         getContentPane().removeAll();
         getContentPane().add(parent);
         revalidate();

@@ -1,6 +1,7 @@
 package com.jasonpilbrough.vcontroller;
 
 import java.awt.event.ActionEvent;
+import java.awt.print.PrinterException;
 import java.io.IOException;
 
 import com.jasonpilbrough.helper.FailedValidationException;
@@ -61,6 +62,26 @@ public class CashUpController extends Controller {
 				dialog4.draw();
 				throw new LogException(e1);
 			}
+			
+			break;
+		case "print":
+			try {
+				boolean saved = model.sendToPrinter(Double.parseDouble(view.getFields().get("cash_in_box").toString()), 
+						view.getFields().get("explaination").toString());
+				if(saved){
+					Drawable dialog4 = viewHandler.makeMessageDialog("Cash up sent to printer successfully","Success",this);
+					dialog4.draw();
+				}
+				
+				
+			} catch (NumberFormatException e1) {
+				Drawable dialog4 = viewHandler.makeMessageDialog("'Cash in Box' wrong format. Number expected","Error",this);
+				dialog4.draw();
+			} catch (IOException | PrinterException e1) {
+				Drawable dialog4 = viewHandler.makeMessageDialog("Failed to print cash up. "+e1.getMessage(),"Error",this);
+				dialog4.draw();
+				throw new LogException(e1);
+			} 
 			
 			break;
 		default:

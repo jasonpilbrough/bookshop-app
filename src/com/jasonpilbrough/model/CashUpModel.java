@@ -1,5 +1,12 @@
 package com.jasonpilbrough.model;
 
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -39,23 +46,9 @@ public class CashUpModel {
 	}
 	
 	public boolean save(double cashInBox, String explaination) throws IOException{
-		
-		if(explaination.length()==0){
-			explaination = "N/A";
-		}
-		
+		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
 		String directory = db.sql("SELECT value FROM settings WHERE name = 'cash_ups_path' LIMIT 1")
 				.retrieve().get("value").toString();
-		
-		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
-		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss aa");
-		String user = am.formatUsername(am.getLoggedInUser());
-		//TODO dont like this should have a money object
-		double varience = (cashInBox - getFloat()) - getRecordedCashSales();
-		String varStr = varience<0 ? "(R "+Math.abs(varience)+")" : "R "+varience ;
-		double cashSales = cashInBox-getFloat();
-		String cashStr = cashSales<0 ? "(R "+Math.abs(cashSales)+")" : "R "+cashSales ;
-		
 		SmartFile dir = new SmartFile(directory, "");
 		dir.makeDirs();
 	    JFileChooser chooser = new JFileChooser();
@@ -63,7 +56,95 @@ public class CashUpModel {
 	    chooser.setSelectedFile(new File("cashup__"+fmt1.print(new DateTime())+".txt"));
 	    int retrival = chooser.showSaveDialog(null);
 	    if (retrival == JFileChooser.APPROVE_OPTION) {
-	    	SmartFile file = new SmartFile(chooser.getCurrentDirectory().getPath()+"/",chooser.getName(chooser.getSelectedFile()));
+	    	changefirer.firePropertyChange("close", null, null);
+	    	return actualSave(chooser.getCurrentDirectory().getPath(),chooser.getName(chooser.getSelectedFile()), cashInBox, explaination);
+	    }else{
+	    	return false;
+	    }
+		  
+		
+	}
+	
+	public boolean sendToPrinter(final double cashInBox, final String explaination) throws IOException, PrinterException{
+		DateTimeFormatter fmt1 = DateTimeFormat.forPattern("yyyy-MM-dd__HH-mm-ss");
+		String directory = db.sql("SELECT value FROM settings WHERE name = 'cash_ups_path' LIMIT 1")
+				.retrieve().get("value").toString();
+		SmartFile dir = new SmartFile(directory, "");
+		dir.makeDirs();
+	    actualSave(directory,"cashup__"+fmt1.print(new DateTime())+".txt", cashInBox, explaination);
+	    PrinterJob pj = PrinterJob.getPrinterJob();
+	    
+	    pj.setPrintable(new Printable() {
+			
+			@Override
+			public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+				 // We have only one page, and 'page'
+			    // is zero-based
+			    if (pageIndex > 0) {
+			         return NO_SUCH_PAGE;
+			    }
+
+			    // User (0,0) is typically outside the
+			    // imageable area, so we must translate
+			    // by the X and Y values in the PageFormat
+			    // to avoid clipping.
+			    Graphics2D g2d = (Graphics2D)graphics;
+			    g2d.translate(pageFormat.getImageableX(), pageFormat.getImageableY());
+
+			    // Now we perform our rendering
+			   
+			    
+				DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss aa");
+				String user = am.formatUsername(am.getLoggedInUser());
+				//TODO dont like this should have a money object
+			    String text = "";
+		    	
+	    		text+="\nCASH UP REPORT";
+	    		text+="\n-----------------------------------------------------------\n";
+	    		text+=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
+	    		text+=String.format("\n%-20s %s","PERFORMED BY",user);
+	    		text+="\n\n-----------------------------------------------------------\n";
+	    		text+=String.format("\n%-20s %s","CASH IN BOX" ,new Money(cashInBox).toString());
+	    		text+=String.format("\n%-20s %s","FLOAT", new Money(getFloat()).toString());
+	    		text+=String.format("\n%-20s %s","CASH SALES ",new Money(cashInBox-getFloat()).toString());
+	    		text+=String.format("\n%-20s %s","RECORDED SALES",new Money(getRecordedCashSales()).toString());
+	    		text+=String.format("\n\n%-20s %s","VARIENCE", new Money((cashInBox - getFloat()) - getRecordedCashSales()).toString());
+	    		text+=String.format("\n%-20s %s","EXPLANATION ",formatString(explaination.length()==0?"N/A":explaination));
+	    		text+="\n\n-----------------------------------------------------------";
+	    		String[] lines = text.split("\n");
+	    		graphics.setFont(new Font("monospaced", Font.PLAIN, graphics.getFont().getSize())); 
+	    		for (int i = 0; i < lines.length; i++) {
+	    			 graphics.drawString(lines[i], 35, 15*(i+3));
+				}
+
+			    // tell the caller that this page is part
+			    // of the printed document
+	    		//throw new PrinterException();
+			    return PAGE_EXISTS;
+			}
+		});
+	   
+        if (pj.printDialog()) {
+        	pj.print();
+        	changefirer.firePropertyChange("close", null, null);
+        	return true;
+        }else{
+        	return false;
+        }
+	    
+	    
+	}
+	
+	private boolean actualSave(String dirPath,String filename, double cashInBox, String explaination) throws IOException{
+		if(explaination.length()==0){
+			explaination = "N/A";
+		}
+		DateTimeFormatter fmt2 = DateTimeFormat.forPattern("yyyy-MM-dd hh:mm:ss aa");
+		String user = am.formatUsername(am.getLoggedInUser());
+		
+		
+	    
+	    	SmartFile file = new SmartFile(dirPath+"/",filename);
 	    	String text = "";
 	    	
     		text+="\nCASH UP REPORT";
@@ -71,23 +152,16 @@ public class CashUpModel {
     		text+=String.format("\n%-20s %s", "TIMESTAMP" ,fmt2.print(new DateTime()));
     		text+=String.format("\n%-20s %s","PERFORMED BY",user);
     		text+="\n\n-----------------------------------------------------------\n";
-    		text+=String.format("\n%-20s %s","CASH IN BOX" ,"R "+cashInBox);
-    		text+=String.format("\n%-20s %s","FLOAT", "R "+getFloat());
-    		text+=String.format("\n%-20s %s","CASH SALES ",cashStr);
-    		text+=String.format("\n%-20s %s","RECORDED SALES","R "+getRecordedCashSales());
-    		text+=String.format("\n\n%-20s %s","VARIENCE", varStr);
+    		text+=String.format("\n%-20s %s","CASH IN BOX" ,new Money(cashInBox).toString());
+    		text+=String.format("\n%-20s %s","FLOAT", new Money(getFloat()).toString());
+    		text+=String.format("\n%-20s %s","CASH SALES ",new Money(cashInBox-getFloat()).toString());
+    		text+=String.format("\n%-20s %s","RECORDED SALES",new Money(getRecordedCashSales()).toString());
+    		text+=String.format("\n\n%-20s %s","VARIENCE", new Money((cashInBox - getFloat()) - getRecordedCashSales()).toString());
     		text+=String.format("\n%-20s %s","EXPLANATION ",formatString(explaination));
     		text+="\n\n-----------------------------------------------------------";
     		
     		file.write(text);
-    		changefirer.firePropertyChange("close", null, null);
-    		
     		return true;
-	    	
-	       
-	    }
-	    return false;
-		
 	}
 	
 	public void setAllValues(){
