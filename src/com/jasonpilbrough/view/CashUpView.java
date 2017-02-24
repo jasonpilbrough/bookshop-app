@@ -129,7 +129,7 @@ public class CashUpView extends SmartJFrame implements Drawable {
         addGroup(layout, "Reason for varience");
         layout.row().grid(new JLabel("Explaination:")).add(scrollPane);
         layout.emptyRow();
-        layout.row().grid().empty(1).add(print).add(save);
+        layout.row().grid().empty(1).add(save).add(print);
         getContentPane().removeAll();
         getContentPane().add(parent);
         revalidate();

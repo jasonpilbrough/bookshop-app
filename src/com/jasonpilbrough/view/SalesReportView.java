@@ -235,7 +235,7 @@ public class SalesReportView extends SmartJFrame implements Drawable {
         p.setFont (new Font(p.getFont().getFontName(),Font.BOLD,13));
         layout.row().grid().add(p).add(profit).grid().empty();
         
-        layout.row().grid().empty().empty().add(print).add(save);
+        layout.row().grid().empty().empty().add(save).add(print);
         getContentPane().removeAll();
         getContentPane().add(parent);
         revalidate();
