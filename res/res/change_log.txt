@@ -1,4 +1,19 @@
 --------------------------------------------  
+#VERSION        0.9.4
+:RELEASE        2017-02-25
+: 
+:Integrated new AutoUpdate version
+:Added 'App' menu bar sub menu
+:Added ability to push dev files to server
+:Fixed stock quantity changing incorrectly 
+:Added developer email notifications
+:Added option to print cash ups and sales reports
+:Fixed bug incorrectly calculating cost of sales
+:	in sales report
+:Improved sales report and cash up save/print 
+:	format
+:Visual improvements
+--------------------------------------------  
 #VERSION        0.9.3a
 :RELEASE        2017-02-19
 : 
