@@ -176,7 +176,7 @@ public class SalesReportModel {
 	    		String[] lines = text.split("\n");
 	    		graphics.setFont(new Font("monospaced", Font.PLAIN, 10)); 
 	    		for (int i = 0; i < lines.length; i++) {
-	    			 graphics.drawString(lines[i], 35, 15*(i+3));
+	    			 graphics.drawString(lines[i], 50, 15*(i+3));
 				}
 
 			    // tell the caller that this page is part
