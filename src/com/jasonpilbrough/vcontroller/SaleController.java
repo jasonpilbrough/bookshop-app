@@ -88,6 +88,9 @@ public class SaleController extends Controller {
 		case "key pressed":
 			model.setPreview(view.getFields().get("barcode").toString());
 			break;
+		case "enter pressed":
+			model.setPreview(view.getFields().get("barcode").toString());
+			break;
 		default:
 			throw new RuntimeException("Command "+e.getActionCommand()+" not registered with controller");
 	}
