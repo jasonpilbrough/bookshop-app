@@ -43,7 +43,7 @@ public class PushDevFilesView extends SmartJFrame implements Drawable{
 	@Override
 	public void initialise(Controller controller) {
 		setVisible(true);
-	    setBounds(0, 0, 200, 50);
+	    setBounds(0, 0, 200, 100);
 	    setTitle("Push Dev Files");
 	    
 	    progress = new JLabel();
